@@ -17,6 +17,7 @@ LicenseFile=COPYING.txt
 Name: "ja"; MessagesFile: "Japanese.isl";
 
 [Files]
+Source: "msvcr71.dll"; DestDir: "{app}\bin";
 Source: "Release\eb.dll"; DestDir: "{app}\bin";
 Source: "Release\ebfont.exe"; DestDir: "{app}\bin";
 Source: "Release\ebinfo.exe"; DestDir: "{app}\bin";
@@ -49,5 +50,4 @@ Source: "po\eb.mo"; DestDir: "{app}\locale\Japanese_Japan.932\LC_MESSAGES";
 Source: "po\ebutils.mo"; DestDir: "{app}\locale\Japanese_Japan.932\LC_MESSAGES";
 Source: "doc\*.html"; DestDir: "{app}\doc";
 Source: "doc\*.css"; DestDir: "{app}\doc";
-Source: "README.txt"; DestDir: "{app}";
 Source: "COPYING.txt"; DestDir: "{app}";

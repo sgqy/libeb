@@ -3,13 +3,13 @@
 ;
 [Setup]
 AppName=EB Library
-AppVerName=EB Library 4.1.2
+AppVerName=EB Library 4.1.3
 AppPublisher=Motoyuki Kasahara
 AppPublisherURL=http://www.sra.co.jp/people/m-kasahr/eb/
 DefaultDirName={pf}\EB Library
 DefaultGroupName=EB Library
 OutputDir=.
-OutputBaseFileName=eb-4.1.2-win32
+OutputBaseFileName=eb-4.1.3-win32
 AllowNoIcons=yes
 LicenseFile=COPYING.txt
 
@@ -17,6 +17,7 @@ LicenseFile=COPYING.txt
 Name: "ja"; MessagesFile: "Japanese.isl";
 
 [Files]
+Source: "msvcr71.dll"; DestDir: "{app}\bin";
 Source: "Release\eb.dll"; DestDir: "{app}\bin";
 Source: "Release\ebfont.exe"; DestDir: "{app}\bin";
 Source: "Release\ebinfo.exe"; DestDir: "{app}\bin";
@@ -49,5 +50,4 @@ Source: "po\eb.mo"; DestDir: "{app}\locale\Japanese_Japan.932\LC_MESSAGES";
 Source: "po\ebutils.mo"; DestDir: "{app}\locale\Japanese_Japan.932\LC_MESSAGES";
 Source: "doc\*.html"; DestDir: "{app}\doc";
 Source: "doc\*.css"; DestDir: "{app}\doc";
-Source: "README.txt"; DestDir: "{app}";
 Source: "COPYING.txt"; DestDir: "{app}";

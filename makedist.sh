@@ -2,7 +2,7 @@
 #
 # Make a source distribution package.
 #
-VERSION="4.1.2"
+VERSION="4.1.3"
 
 rm -f .distfiles
 sed -e 's/^    //' > .distfiles <<__END__
@@ -11,7 +11,6 @@ sed -e 's/^    //' > .distfiles <<__END__
     README-ja.txt
     makedist.sh
     makedist.sh.in
-    mkinstalldirs
     eb.iss
     eb.iss.in
     eb.sln
@@ -81,7 +80,7 @@ cat .distfiles | while read I; do
 	[ -f $J ] || continue
 	[ -f eb-$VERSION-win32/$J ] && continue
 	DIR="`dirname $J`"
-	./mkinstalldirs eb-$VERSION-win32/$DIR > /dev/null
+	mkdir -p eb-$VERSION-win32/$DIR > /dev/null
 	cp $J eb-$VERSION-win32/$J
     done
 done
