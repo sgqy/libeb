@@ -8,6 +8,8 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
 
+<link rel="stylesheet" type="text/css" href="eb.css">
+
 <link rev="made" href="mailto:m-kasahr@sra.co.jp">
 
 <title>EB ライブラリ</title>
@@ -176,7 +178,7 @@ EB ライブラリで外字のフォントデータ (ビットマップデータ) を取り出すには、
 以下のプログラムは、高さ 24 ピクセルのフォントを選択する場合の例です。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 /* <code>book</code> が <code>EB_Book</code> のオブジェクトで、すでに
  * 書籍に結び付けられ、副本を選択中だと仮定しています。*/
@@ -207,7 +209,7 @@ if (eb_set_font(&amp;book, EB_FONT_24) != EB_SUCCESS) {
 使い方が良く似ています。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 EB_Font_Code font_list[EB_MAX_FONTS];
 int font_count;
@@ -231,7 +233,7 @@ for (i = 0; i &lt; font_count; i++) {
 調べることができます。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 if (eb_have_font(&amp;book, EB_FONT_24)) {
     printf("this subbook has EB_FONT_24\n");
@@ -245,7 +247,7 @@ if (eb_have_font(&amp;book, EB_FONT_24)) {
 を使って調べることができます。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 if (eb_have_narrow_font(&amp;book))
     printf("this subbook has narrow font\n");
@@ -281,7 +283,7 @@ if (eb_have_wide_font(&amp;book))
 半角外字の場合は、呼び出す関数名が変わるだけです。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 /* <code>book</code> が <code>EB_Book</code> のオブジェクトで、すでに
  * 書籍に結び付けられ、副本と外字の高さを選択中だと仮定しています。*/
@@ -371,7 +373,7 @@ EB ライブラリには、外字のビットマップデータを XBM, XPM, GIF, BMP, PNG
 を示します。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 /* <code>bitmap</code> に高さ 16 の全角外字のビットマップデータが格納
  * されていると仮定しています。*/
@@ -423,7 +425,7 @@ XBM はモノクロ図版用のデータ形式なので、色の設定はありません。
 読み込んで下さい。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 #include &lt;eb/eb.h&gt;
 </pre>
@@ -464,7 +466,7 @@ XBM はモノクロ図版用のデータ形式なので、色の設定はありません。
 読み込んで下さい。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 #include &lt;eb/eb.h&gt;
 </pre>
@@ -672,7 +674,7 @@ XBM はモノクロ図版用のデータ形式なので、色の設定はありません。
 下さい。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 #include &lt;eb/font.h&gt;
 </pre>
@@ -1036,7 +1038,7 @@ XBM はモノクロ図版用のデータ形式なので、色の設定はありません。
 この場合、次の呼び出しと等価になります。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 /* n &lt; 0 とする */
 eb_backward_narrow_font_character (book, -n, character_number);
@@ -1073,7 +1075,7 @@ eb_backward_narrow_font_character (book, -n, character_number);
 等価になります。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 /* 半角外字の場合 (n &lt; 0) */
 eb_forward_narrow_font_character (book, -n, character_number);

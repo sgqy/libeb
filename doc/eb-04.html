@@ -8,6 +8,8 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
 
+<link rel="stylesheet" type="text/css" href="eb.css">
+
 <link rev="made" href="mailto:m-kasahr@sra.co.jp">
 
 <title>EB ライブラリ</title>
@@ -37,7 +39,7 @@
 という関数を呼び出します。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 if (eb_initialize_library() != EB_SUCCESS) {
     printf("eb_initialize_library() failed\n");
@@ -51,7 +53,7 @@ if (eb_initialize_library() != EB_SUCCESS) {
 という関数を呼び出して後始末をします。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 eb_finalize_library();
 </pre>
@@ -133,7 +135,7 @@ main(int argc, char *argv[])
 この項で説明している関数を使うには、<code>eb/eb.h</code> を読み込んで下さい。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 #include &lt;eb/eb.h&gt;
 </pre>

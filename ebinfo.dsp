@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "Release\ebinfo"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "_CONSOLE" /D "WIN32" /D "_MBCS" /YX /FD /c /D "NDEBUG"
-# ADD CPP /nologo /W3 /GX /O2 /D "_CONSOLE" /D "WIN32" /D "_MBCS" /YX /FD /c /I ".\portsrc" /I ".\intl" /I ".\iconv" /I "..\eb-4.1"   /I "..\eb-4.1\libebutils" /D "HAVE_CONFIG_H" /MD /D "NDEBUG"
+# ADD CPP /nologo /W3 /GX /O2 /D "_CONSOLE" /D "WIN32" /D "_MBCS" /YX /FD /c /I ".\portsrc" /I ".\intl" /I ".\iconv" /I "..\eb-4.1.1"   /I "..\eb-4.1.1\libebutils" /D "HAVE_CONFIG_H" /MD /D "NDEBUG"
 # ADD BASE RSC /l 0x411 /D "NDEBUG"
 # ADD RSC /l 0x411 /D "NDEBUG"
 BSC32=bscmake.exe
@@ -65,7 +65,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "Debug\ebinfo"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /Od /ZI /D "_CONSOLE" /D "WIN32" /D "_MBCS" /YX /FD /c /D "_DEBUG"
-# ADD CPP /nologo /W3 /GX /Od /ZI /D "_CONSOLE" /D "WIN32" /D "_MBCS" /YX /FD /c /I ".\portsrc" /I ".\intl" /I ".\iconv" /I "..\eb-4.1"   /I "..\eb-4.1\libebutils" /D "HAVE_CONFIG_H" /MDd /D "_DEBUG"
+# ADD CPP /nologo /W3 /GX /Od /ZI /D "_CONSOLE" /D "WIN32" /D "_MBCS" /YX /FD /c /I ".\portsrc" /I ".\intl" /I ".\iconv" /I "..\eb-4.1.1"   /I "..\eb-4.1.1\libebutils" /D "HAVE_CONFIG_H" /MDd /D "_DEBUG"
 # ADD BASE RSC /l 0x411 /D "_DEBUG"
 # ADD RSC /l 0x411 /D "_DEBUG"
 BSC32=bscmake.exe
@@ -86,7 +86,7 @@ LIB32=link.exe -lib
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=..\eb-4.1\ebinfo\ebinfo.c
+SOURCE=..\eb-4.1.1\ebinfo\ebinfo.c
 # End Source File
 # End Group
 # Begin Group "Header Files"

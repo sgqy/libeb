@@ -8,6 +8,8 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
 
+<link rel="stylesheet" type="text/css" href="eb.css">
+
 <link rev="made" href="mailto:m-kasahr@sra.co.jp">
 
 <title>EB ライブラリ</title>
@@ -83,7 +85,7 @@ EB ライブラリでは、検索を行うことができるのは、選択中の副本に対して
 います。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 /* <code>book</code> が <code>EB_Book</code> のオブジェクトで、すでに
  * 書籍に結び付けられ、副本を選択中だと仮定しています。*/
@@ -150,7 +152,7 @@ if (eb_hit_list(&amp;book, MAX_HITS, hits, &amp;hit_count)
 他はすべて同じです。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 if (eb_search_endword(&amp;book, "nalization") != EB_SUCCESS) {
     printf("eb_search_endword() failed\n");
@@ -165,7 +167,7 @@ if (eb_search_endword(&amp;book, "nalization") != EB_SUCCESS) {
 です。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 if (eb_search_exactword(&amp;book, "library") != EB_SUCCESS) {
     printf("eb_search_exactword() failed\n");
@@ -188,7 +190,7 @@ if (eb_search_exactword(&amp;book, "library") != EB_SUCCESS) {
 一致するエントリを、選択中の副本の中から探し出すプログラムの断片です。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 /* <code>book</code> が <code>EB_Book</code> のオブジェクトで、すでに
  * 書籍に結び付けられ、副本を選択中だと仮定しています。*/
@@ -217,7 +219,7 @@ if (eb_search_word(&amp;book, keywords) != EB_SUCCESS) {
 使います。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 EB_Hit hits[MAX_HITS];
 int hit_count;
@@ -280,7 +282,7 @@ if (eb_hit_list(&amp;book, MAX_HITS, hits, &amp;hit_count)
 な複合検索の一覧が得られます。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 /* <code>book</code> が <code>EB_Book</code> のオブジェクトで、すでに
  * 書籍に結び付けられ、副本を選択中だと仮定しています。*/
@@ -304,7 +306,7 @@ if (eb_multi_search_list(&amp;book, multi_codes, &amp;multi_count)
 を指定しています。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 char title[EB_MAX_MULTI_TITLE_LENGTH + 1];
 
@@ -325,7 +327,7 @@ if (eb_multi_title(&amp;book, multi_codes[0], title)
 します。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 char label[EB_MAX_MULTI_LABEL_LENGTH + 1];
 
@@ -350,7 +352,7 @@ if (eb_multi_entry_label(&amp;book, multi_code[0], 0, label)
 取得するには <code>eb_hit_list()</code> を使います。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 EB_Hit hits[MAX_HITS];
 int hit_count;
@@ -382,7 +384,7 @@ if (eb_hit_list(&amp;book, MAX_HITS, hits, &amp;hit_count)
 領域に書き込みます。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 /* <code>book</code> が <code>EB_Book</code> のオブジェクトで、すでに書籍に結び付け
  * られ、副本を選択中だと仮定しています。*/
@@ -434,7 +436,7 @@ if (eb_hit_list(&amp;book, MAX_HITS, hits, &amp;hit_count)
 エントリの数をアプリケーションプログラムに教えます。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 error_code = eb_hit_list(&amp;book, MAX_HITS, hits, &amp;hit_count);
 if (error_code == EB_SUCCESS)
@@ -448,7 +450,7 @@ if (error_code == EB_SUCCESS)
 取得することができます。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 for (;;) {
     if (eb_hit_list(&amp;book, MAX_HITS, hits, &amp;hit_count)
@@ -699,7 +701,7 @@ main(int argc, char *argv[])
 読み込んで下さい。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 #include &lt;eb/eb.h&gt;
 </pre>
@@ -714,7 +716,7 @@ main(int argc, char *argv[])
 内部構造は、次のように定義されています。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 typedef struct EB_Hit_Struct EB_Hit;
 
@@ -738,7 +740,7 @@ struct EB_Hit_Struct {
 内部構造は、次のように定義されています。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 typedef struct EB_Position_Struct EB_Position;
 
@@ -788,7 +790,7 @@ struct EB_Position_Struct {
 下さい。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 #include &lt;eb/eb.h&gt;
 </pre>
@@ -1096,8 +1098,8 @@ struct EB_Position_Struct {
 </p>
 
 <p>
-<code>eb_hit_list()</code> は最大で <var>hit_count</var> 個の一致エントリ
-を <var>hit_list</var> に書き込みます。
+<code>eb_hit_list()</code> は最大で <var>max_hit_count</var> 個の
+一致エントリを <var>hit_list</var> に書き込みます。
 そして、書き込んだ一致エントリの数を <var>hit_count</var> が指す領域に
 書き込みます。
 それ以上の個数の一致エントリが存在する場合、残ったエントリの情報は、

@@ -8,6 +8,8 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
 
+<link rel="stylesheet" type="text/css" href="eb.css">
+
 <link rev="made" href="mailto:m-kasahr@sra.co.jp">
 
 <title>EB ライブラリ</title>
@@ -46,7 +48,7 @@ CD-ROM 書籍へアクセスするには、まず <code>EB_Book</code> 型のオブジェクトを
 作る必要があります。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 EB_Book book;
 </pre>
@@ -57,7 +59,7 @@ EB_Book book;
 構いません。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 EB_Book *book_pointer;
 
@@ -71,7 +73,7 @@ book_pointer = (EB_Book *) malloc(sizeof(EB_Book));
 次の要領でオブジェクトを初期化します。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 eb_initialize_book(&amp;book);
 eb_initialize_book(book_pointer);
@@ -106,7 +108,7 @@ CD-ROM 書籍の実体に結び付けます。
 実際のプログラムでは、次のようにします。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 if (eb_bind(&amp;book, "/mnt/cdrom") != EB_SUCCESS) {
     printf("eb_bind() failed\n");
@@ -128,7 +130,7 @@ if (eb_bind(&amp;book, "/mnt/cdrom") != EB_SUCCESS) {
 メモリは解放され、開いていたファイルもすべて閉じられます。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 eb_finalize_book(&amp;book);
 eb_finalize_book(book_pointer);
@@ -141,7 +143,7 @@ eb_finalize_book(book_pointer);
 安全に解放することができます。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 free(book_pointer);
 </pre>
@@ -176,7 +178,7 @@ ebnet://<var>ホスト</var>:<var>ポート</var>/<var>書籍名</var>
 以下に <code>eb_bind()</code> のコード例を記します。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 if (eb_bind(&amp;book, "ebnet://localhost/cdrom") != EB_SUCCESS) {
     printf("eb_bind() failed\n");
@@ -307,7 +309,7 @@ main(int argc, char *argv[])
 読み込んで下さい。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 #include &lt;eb/eb.h&gt;
 </pre>
@@ -407,7 +409,7 @@ JIS X 0208 (日本語のかな漢字) と GB 2312 (中国語の簡体字) を併用している
 下さい。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 #include &lt;eb/eb.h&gt;
 </pre>

@@ -8,6 +8,8 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
 
+<link rel="stylesheet" type="text/css" href="eb.css">
+
 <link rev="made" href="mailto:m-kasahr@sra.co.jp">
 
 <title>EB ライブラリ</title>
@@ -75,7 +77,7 @@ CD-ROM 書籍本体を扱うには <code>EB_Book</code> オブジェクトを
 ずつ作る必要があります。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 EB_Appendix app;
 </pre>
@@ -86,7 +88,7 @@ EB_Appendix app;
 構いません。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 EB_Appendix *app_pointer;
 
@@ -101,7 +103,7 @@ app_pointer = (EB_Appendix *) malloc(sizeof(EB_Appendix));
 で初期化する必要がありましたが、それと同じです。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 eb_initialize_appendix(&amp;app);
 eb_initialize_appendix(app_pointer);
@@ -130,7 +132,7 @@ eb_initialize_appendix(app_pointer);
 実際のプログラムでは、次のようにします。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 if (eb_bind_appendix(&amp;app, "/mnt/dict") != EB_SUCCESS) {
     printf("eb_bind_appendix() failed\n");
@@ -156,7 +158,7 @@ if (eb_bind_appendix(&amp;app, "/mnt/dict") != EB_SUCCESS) {
 閉じられます。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 eb_finalize_appendix(&amp;app);
 eb_finalize_appendix(app_pointer);
@@ -169,7 +171,7 @@ eb_finalize_appendix(app_pointer);
 領域を安全に解放することができます。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 free(app_pointer);
 </pre>
@@ -190,7 +192,7 @@ CD-ROM 書籍内のすべての副本の副本コードを取得する関数として
 <code>eb_appendix_subbook_list()</code> という同様の関数があります。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 /* <code>app</code> が <code>EB_Appendix</code> のオブジェクトで、
  * すでに書籍に結び付けられていると仮定しています。*/
@@ -226,7 +228,7 @@ if (eb_appendix_subbook_list(&amp;app, sub_codes, &amp;sub_count)
 以下は、先頭の副本 (<code>sub_codes[0]</code>) を選択する場合の例です。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 /* <code>app</code> が <code>EB_Appendix</code> のオブジェクトで、
  * すでに書籍に結び付けられていると仮定しています。*/
@@ -261,7 +263,7 @@ CD-ROM 書籍の本文を取得する関数 <code>eb_read_text()</code> は
 オブジェクトを渡してやるようにします。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 /* <code>book</code>, <code>app</code> は、それぞれ <code>EB_Book</code>
  * および <code>EB_Appendix</code> のオブジェクトで、どちらもすでに
@@ -318,7 +320,7 @@ appendix に定義されている代替文字列を取り出す関数は、2 つあります。
 <samp>buffer</samp> に格納しています。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 /* <code>app</code> が <code>EB_Appendix</code> のオブジェクトで、
  * すでに副本を選択中であると仮定しています。*/
@@ -354,7 +356,7 @@ if (eb_narrow_alt_character_text(&amp;app, buffer, 0xa121)
 読み込んで下さい。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 #include &lt;eb/appendix.h&gt;
 </pre>
@@ -391,7 +393,7 @@ CD-ROM 書籍へのアクセスは、すべてこの型のオブジェクトを介して行います。
 下さい。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 #include &lt;eb/appendix.h&gt;
 </pre>
@@ -869,7 +871,7 @@ appendix に結び付けられていなければなりません。
 この場合、次の呼び出しと等価になります。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 /* n &lt; 0 とする */
 eb_backward_narrow_font_character (book, -n, character_number);

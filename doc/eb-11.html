@@ -8,6 +8,8 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
 
+<link rel="stylesheet" type="text/css" href="eb.css">
+
 <link rev="made" href="mailto:m-kasahr@sra.co.jp">
 
 <title>EB ライブラリ</title>
@@ -140,7 +142,7 @@ CD-ROM 書籍から取得する機能だけです。
 収録している副本をあらかじめ選択しておく必要があります。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 /* <code>eb_set_binary_mono_graphic()</code> の関数プロトタイプ */
 EB_Error_Code
@@ -160,7 +162,7 @@ eb_set_binary_mono_graphic(EB_Book *book, EB_Position *position,
 これには、<code>eb_read_binary()</code> を使います。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 #define MAX_LENGTH 1000
 char bitmap[MAX_LENGTH];
@@ -214,7 +216,7 @@ EB ライブラリに伝えます。
 オフセットを渡します。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 /* <code>eb_set_binary_color_graphic()</code> の関数プロトタイプ */
 EB_Error_Code
@@ -304,7 +306,7 @@ WAVE 形式の音声データを取り出すには、まずテキストデータ中から WAVE 音声
 その位置にある音声データをこれから取り出すことを EB ライブラリに伝えます。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 /* <code>eb_set_binary_wave()</code> の関数プロトタイプ */
 EB_Error_Code
@@ -351,7 +353,7 @@ MPEG 動画のデータを得るには、このファイル名を
 (<code>&amp;argv[2]</code> でも同じ) を渡します。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 if (eb_set_binary_mpeg(&amp;book, argv + 2) != EB_SUCCESS) {
     fprintf(stderr, "an error occurs.\n");
@@ -376,7 +378,7 @@ if (eb_set_binary_mpeg(&amp;book, argv + 2) != EB_SUCCESS) {
 下さい。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 #include &lt;eb/binary.h&gt;
 </pre>

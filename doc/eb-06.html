@@ -8,6 +8,8 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
 
+<link rel="stylesheet" type="text/css" href="eb.css">
+
 <link rev="made" href="mailto:m-kasahr@sra.co.jp">
 
 <title>EB ライブラリ</title>
@@ -52,7 +54,7 @@ EB ライブラリの関数の多くは、戻り値として <code>EB_Error_Code</code>
 がよく行われます。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 EB_Error_Code error_code;
 
@@ -71,7 +73,7 @@ if (error_code != EB_SUCCESS) {
 もう少し分かりやすく伝えることができます。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 error_code = eb_bind(&amp;book, "/mnt/cdrom");
 if (error_code != EB_SUCCESS) {
@@ -138,7 +140,7 @@ too long filename
 渡したらどうなるでしょうか。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 EB_Book book;
 EB_Error_Code error_code;
@@ -163,7 +165,7 @@ EB ライブラリの関数は、必要なパラメタがセットされていないオブジェクトを
 次のようなことをすると、プログラムを異常終了させてしまいます。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 eb_bind(NULL, "/mnt/cdrom");    /* 異常終了! */
 eb_bind(&amp;book, NULL);           /* これも異常終了! */
@@ -178,7 +180,7 @@ eb_bind(&amp;book, NULL);           /* これも異常終了! */
 読み込んで下さい。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 #include &lt;eb/error.h&gt;
 </pre>
@@ -210,7 +212,7 @@ EB ライブラリでは、全部で <code>EB_NUMBER_OF_ERRORS</code> 個の
 読み込んで下さい。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 #include &lt;eb/error.h&gt;
 </pre>
@@ -735,14 +737,14 @@ appendix は副本を一つも持っていない。
 下さい。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 #include &lt;eb/error.h&gt;
 </pre>
 </blockquote>
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
-<h4><a name="func:error_string"><code>{const char *} eb_error_string (EB_Error_Code <var>error_code</var>)</code></a></h4>
+<h4><a name="func:error_string"><code>const char *eb_error_string (EB_Error_Code <var>error_code</var>)</code></a></h4>
 
 <p>
 関数 <code>eb_error_string()</code> は、エラーコード <var>error_code</var>
@@ -754,7 +756,7 @@ appendix は副本を一つも持っていない。
 </p>
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
-<h4><a name="func:error_message"><code>{const char *} eb_error_message (EB_Error_Code <var>error_code</var>)</code></a></h4>
+<h4><a name="func:error_message"><code>const char *eb_error_message (EB_Error_Code <var>error_code</var>)</code></a></h4>
 
 <p>
 関数 <code>eb_error_message()</code> は、エラーコード <var>error_code</var>

@@ -8,6 +8,8 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
 
+<link rel="stylesheet" type="text/css" href="eb.css">
+
 <link rev="made" href="mailto:m-kasahr@sra.co.jp">
 
 <title>EB ライブラリ</title>
@@ -86,7 +88,7 @@ EBNET サーバの提供する書籍および appendix データの一覧を取得するには、
 まず <code>EB_BookList</code> 型のオブジェクトを用意する必要があります。
 </p>
 
-<blockquote>
+<blockquote="program">
 <pre>
 EB_BookList bl;
 </pre>
@@ -96,7 +98,7 @@ EB_BookList bl;
 オブジェクトの領域は、<code>malloc()</code> で確保しても構いません。
 </p>
 
-<blockquote>
+<blockquote="program">
 <pre>
 EB_BookList *bl_pointer;
 
@@ -110,7 +112,7 @@ bl_pointer = (EB_BookList *) malloc(sizeof(EB_BookList));
 これは、<code>eb_initialize_booklist()</code> という関数で行います。
 </p>
 
-<blockquote>
+<blockquote="program">
 <pre>
 eb_initialize_booklist(&amp;bl);
 eb_initialize_booklist(bl_pointer);
@@ -123,7 +125,7 @@ eb_initialize_booklist(bl_pointer);
 オブジェクトを結びつけるには次のようにします。
 </p>
 
-<blockquote>
+<blockquote="program">
 <pre>
 if (eb_bind_booklist(&amp;bl, "ebnet://localhost") != EB_SUCCESS) {
     printf("eb_bind_booklist() failed\n");
@@ -147,7 +149,7 @@ if (eb_bind_booklist(&amp;bl, "ebnet://localhost") != EB_SUCCESS) {
 と appendix データの題名を得ることができます。
 </p>
 
-<blockquote>
+<blockquote="program">
 <pre>
 char *name, *title;
 int count, i;
@@ -172,7 +174,7 @@ for (i = 0; i &lt; count; i++) {
 行います。
 </p>
 
-<blockquote>
+<blockquote="program">
 <pre>
 eb_finalize_booklist(&amp;bl);
 eb_finalize_booklist(bl_pointer);
@@ -185,7 +187,7 @@ eb_finalize_booklist(bl_pointer);
 を安全に解放することができます。
 </p>
 
-<blockquote>
+<blockquote="program">
 <pre>
 free(bl_pointer);
 </pre>
@@ -199,7 +201,7 @@ free(bl_pointer);
 読み込んで下さい。
 </p>
 
-<blockquote>
+<blockquote="program">
 <pre>
 #include &lt;eb/booklist.h&gt;
 </pre>
@@ -227,7 +229,7 @@ appendix の一覧を取得する際に用いるオクジェクトの型です。
 下さい。
 </p>
 
-<blockquote>
+<blockquote="program">
 <pre>
 #include &lt;eb/booklist.h&gt;
 </pre>

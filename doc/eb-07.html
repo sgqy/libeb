@@ -8,6 +8,8 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
 
+<link rel="stylesheet" type="text/css" href="eb.css">
+
 <link rev="made" href="mailto:m-kasahr@sra.co.jp">
 
 <title>EB ライブラリ</title>
@@ -75,7 +77,7 @@ EB ライブラリでは、それぞれの副本に対して <dfn>副本コード (subbook code)</dfn>
 この関数は、書籍内のすべての副本の副本コードを取得することができます。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 /* <code>book</code> が <code>EB_Book</code> のオブジェクトで、すでに
  * 書籍に結び付けられていると仮定しています。*/
@@ -104,7 +106,7 @@ if (eb_subbook_list(&amp;book, sub_codes, &amp;sub_count)
 得ることができます。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 char title[EB_MAX_TITLE_LENGTH + 1];
 
@@ -162,7 +164,7 @@ if (eb_subbook_title2(&amp;book, sub_codes[0], title)
 以下は、先頭の副本 (<code>sub_codes[0]</code>) を選択する場合の例です。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 /* <code>book</code> が <code>EB_Book</code> のオブジェクトで、すでに
  * 書籍に結び付けられていると仮定しています。*/
@@ -319,7 +321,7 @@ main(int argc, char *argv[])
 読み込んで下さい。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 #include &lt;eb/eb.h&gt;
 </pre>
@@ -350,7 +352,7 @@ main(int argc, char *argv[])
 下さい。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 #include &lt;eb/eb.h&gt;
 </pre>

@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "Release\eb"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /O2 /D "WIN32" /D "_MBCS" /YX /FD /c /D "_EB" /D "EB_EXPORTS" /D "NDEBUG"
-# ADD CPP /nologo /W3 /Gm /GX /O2 /D "WIN32" /D "_MBCS" /YX /FD /c /I ".\portsrc" /I ".\portsrc\eb" /I ".\intl"   /I "..\eb-4.1\zlib" /D "EB_BUILD_LIBRARY"   /D "HAVE_CONFIG_H" /MD /D "_EB" /D "EB_EXPORTS" /D "NDEBUG"
+# ADD CPP /nologo /W3 /Gm /GX /O2 /D "WIN32" /D "_MBCS" /YX /FD /c /I ".\portsrc" /I ".\portsrc\eb" /I ".\intl"   /I "..\eb-4.1.1\zlib" /D "EB_BUILD_LIBRARY"   /D "HAVE_CONFIG_H" /MD /D "_EB" /D "EB_EXPORTS" /D "NDEBUG"
 # ADD BASE MTL /nologo /mktyplib203 /win32 /D "NDEBUG"
 # ADD MTL /nologo /mktyplib203 /win32 /D "NDEBUG"
 # ADD BASE RSC /l 0x411 /D "NDEBUG"
@@ -67,7 +67,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "Debug\eb"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_MBCS" /YX /FD /GZ /c /D "_EB" /D "EB_EXPORTS" /D "_DEBUG"
-# ADD CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_MBCS" /YX /FD /GZ /c /I ".\portsrc" /I ".\portsrc\eb" /I ".\intl"   /I "..\eb-4.1\zlib" /D "EB_BUILD_LIBRARY"   /D "HAVE_CONFIG_H" /MDd /D "_EB" /D "EB_EXPORTS" /D "_DEBUG"
+# ADD CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_MBCS" /YX /FD /GZ /c /I ".\portsrc" /I ".\portsrc\eb" /I ".\intl"   /I "..\eb-4.1.1\zlib" /D "EB_BUILD_LIBRARY"   /D "HAVE_CONFIG_H" /MDd /D "_EB" /D "EB_EXPORTS" /D "_DEBUG"
 # ADD BASE MTL /nologo /mktyplib203 /win32 /D "_DEBUG"
 # ADD MTL /nologo /mktyplib203 /win32 /D "_DEBUG"
 # ADD BASE RSC /l 0x411 /D "_DEBUG"
@@ -90,167 +90,167 @@ LIB32=link.exe -lib
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\appendix.c
+SOURCE=..\eb-4.1.1\eb\appendix.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\appsub.c
+SOURCE=..\eb-4.1.1\eb\appsub.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\bcd.c
+SOURCE=..\eb-4.1.1\eb\bcd.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\binary.c
+SOURCE=..\eb-4.1.1\eb\binary.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\bitmap.c
+SOURCE=..\eb-4.1.1\eb\bitmap.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\book.c
+SOURCE=..\eb-4.1.1\eb\book.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\booklist.c
+SOURCE=..\eb-4.1.1\eb\booklist.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\copyright.c
+SOURCE=..\eb-4.1.1\eb\copyright.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\eb.c
+SOURCE=..\eb-4.1.1\eb\eb.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\endword.c
+SOURCE=..\eb-4.1.1\eb\endword.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\error.c
+SOURCE=..\eb-4.1.1\eb\error.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\exactword.c
+SOURCE=..\eb-4.1.1\eb\exactword.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\filename.c
+SOURCE=..\eb-4.1.1\eb\filename.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\font.c
+SOURCE=..\eb-4.1.1\eb\font.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\hook.c
+SOURCE=..\eb-4.1.1\eb\hook.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\jacode.c
+SOURCE=..\eb-4.1.1\eb\jacode.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\keyword.c
+SOURCE=..\eb-4.1.1\eb\keyword.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\lock.c
+SOURCE=..\eb-4.1.1\eb\lock.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\log.c
+SOURCE=..\eb-4.1.1\eb\log.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\match.c
+SOURCE=..\eb-4.1.1\eb\match.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\menu.c
+SOURCE=..\eb-4.1.1\eb\menu.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\multi.c
+SOURCE=..\eb-4.1.1\eb\multi.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\narwalt.c
+SOURCE=..\eb-4.1.1\eb\narwalt.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\narwfont.c
+SOURCE=..\eb-4.1.1\eb\narwfont.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\readtext.c
+SOURCE=..\eb-4.1.1\eb\readtext.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\search.c
+SOURCE=..\eb-4.1.1\eb\search.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\setword.c
+SOURCE=..\eb-4.1.1\eb\setword.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\stopcode.c
+SOURCE=..\eb-4.1.1\eb\stopcode.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\strcasecmp.c
+SOURCE=..\eb-4.1.1\eb\strcasecmp.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\subbook.c
+SOURCE=..\eb-4.1.1\eb\subbook.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\text.c
+SOURCE=..\eb-4.1.1\eb\text.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\word.c
+SOURCE=..\eb-4.1.1\eb\word.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\zio.c
+SOURCE=..\eb-4.1.1\eb\zio.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\ebnet.c
+SOURCE=..\eb-4.1.1\eb\ebnet.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\multiplex.c
+SOURCE=..\eb-4.1.1\eb\multiplex.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\linebuf.c
+SOURCE=..\eb-4.1.1\eb\linebuf.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\urlparts.c
+SOURCE=..\eb-4.1.1\eb\urlparts.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\getaddrinfo.c
+SOURCE=..\eb-4.1.1\eb\getaddrinfo.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\dummyin6.c
+SOURCE=..\eb-4.1.1\eb\dummyin6.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\widealt.c
+SOURCE=..\eb-4.1.1\eb\widealt.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.1\eb\widefont.c
+SOURCE=..\eb-4.1.1\eb\widefont.c
 # End Source File
 # Begin Source File
 

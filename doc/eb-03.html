@@ -8,6 +8,8 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
 
+<link rel="stylesheet" type="text/css" href="eb.css">
+
 <link rev="made" href="mailto:m-kasahr@sra.co.jp">
 
 <title>EB ライブラリ</title>
@@ -149,7 +151,7 @@ Autoconf はバージョン 2.50 以降が必要です。
 (もしくは <code>configure.in</code>) に、次の行を加えます。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 eb_LIB_EB4
 </pre>
@@ -202,7 +204,7 @@ aclocal -I m4
 <code>aclocal</code> へ渡すオプションを書いておきます。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 ACLOCAL_AMFLAGS = -I m4
 </pre>
@@ -227,7 +229,7 @@ libtoolize
 します。
 </p>
 
-<blockquote>
+<blockquote class="program">
 <pre>
 program_LDFLAGS = $(EBCONF_EBLIBS) $(EBCONF_ZLIBLIBS) $(EBCONF_INTLLIBS)
 INCLUDES = $(EBCONF_EBINCS)
