@@ -9,7 +9,7 @@ END-INFO-DIR-ENTRY
    ebrefile: Refile a catalog file in a CD-ROM book, by Motoyuki
 Kasahara.
 
-   Copyright (C) 1998, 1999  Motoyuki Kasahara
+   Copyright (C) 1998, 99, 2000  Motoyuki Kasahara
 
    Permission is granted to make and distribute verbatim copies of this
 manual provided the copyright notice and this permission notice are
@@ -28,7 +28,7 @@ translation approved by Free Software Foundation, Inc.
 
 File: ebrefile.info,  Node: Top,  Next: Introduction,  Prev: (dir),  Up: (dir)
 
-   This is edition 2.3.7, for EB Library version 2.3.7.
+   This is edition 3.0alpha0, for EB Library version 3.0alpha0.
 
 * Menu:
 
@@ -91,7 +91,7 @@ Though `ebzip' is free software, your books may not be free.
 `ebrefile' modifies contents of a certain file in a CD-ROM book.
 Please be careful.
 
-   This is edition 2.3.7, for EB Library version 2.3.7.
+   This is edition 3.0alpha0, for EB Library version 3.0alpha0.
 
 
 File: ebrefile.info,  Node: Invoking ebrefile,  Next: Summary of Options,  Prev: Introduction,  Up: Top
@@ -139,7 +139,6 @@ directory is a top directory of a CD-ROM book.
      disc type: EB/EBG/EBXA/EBXA-C/S-EBXA
      character code: JIS X 0208
      the number of subbooks: 3
-     
      subbook 1:
        title: New English Japanese Dictionary (4th edition)
        directory: ENGLISH
@@ -341,12 +340,12 @@ allowed as long as they are unique.
 
 
 Tag Table:
-Node: Top1054
-Node: Introduction1580
-Node: Invoking ebrefile3643
-Node: Select Subbooks4339
-Node: Adjust Filename8151
-Node: Combination with ebzip9885
-Node: Summary of Options11197
+Node: Top1058
+Node: Introduction1592
+Node: Invoking ebrefile3663
+Node: Select Subbooks4359
+Node: Adjust Filename8165
+Node: Combination with ebzip9899
+Node: Summary of Options11211
 
 End Tag Table

@@ -9,7 +9,7 @@ END-INFO-DIR-ENTRY
    ebzip: Utility for compressing and uncompressing CD-ROM books, by
 Motoyuki Kasahara.
 
-   Copyright (C) 1998, 1999  Motoyuki Kasahara
+   Copyright (C) 1998, 99, 2000  Motoyuki Kasahara
 
    Permission is granted to make and distribute verbatim copies of this
 manual provided the copyright notice and this permission notice are
@@ -28,7 +28,7 @@ translation approved by Free Software Foundation, Inc.
 
 File: ebzip.info,  Node: Top,  Next: Introduction,  Prev: (dir),  Up: (dir)
 
-   This is edition 2.3.7, for EB Library version 2.3.7.
+   This is edition 3.0alpha0, for EB Library version 3.0alpha0.
 
 * Menu:
 
@@ -103,7 +103,7 @@ Though `ebzip' is free software, your books may not be free.  If the
 publishers of your CD-ROM don't permit to copy the book onto a hard
 disk (nor other strage devices), please give up compress the book.
 
-   This is edition 2.3.7, for EB Library version 2.3.7.
+   This is edition 3.0alpha0, for EB Library version 3.0alpha0.
 
 
 File: ebzip.info,  Node: Action and Command Name,  Next: Invoking ebzip,  Prev: Introduction,  Up: Top
@@ -391,7 +391,6 @@ and what their directory names are.
      disc type: EB/EBG/EBXA/EBXA-C/S-EBXA
      character code: JIS X 0208
      the number of subbooks: 3
-     
      subbook 1:
        title: New English Japanese Dictionary (4th edition)
        directory: ENGLISH
@@ -621,13 +620,11 @@ compressed CD-ROM book at `/dict'.
 `ebzipinfo' outputs information to standard out like as following:
 
      ==> /dict/spanish/spanish/start.ebz <==
-     compressed: 154290176 -> 54881862 bytes (35.6%)
-     compresssion level: 0
+     154290176 -> 54881862 bytes (35.6%, ebzip level 0 compression)
      ==> /dict/spanish/language.ebz <==
-     compressed: 12288 -> 4121 bytes (33.5%)
-     compresssion level: 0
+     compressed: 12288 -> 4121 bytes (33.5%, ebzip level 0 compression)
      ==> /dict/spanish/catalog <==
-     not compressed
+     2048 bytes (not compressed)
 
 
 File: ebzip.info,  Node: Options for Information,  Prev: Information Example,  Up: Information
@@ -1015,8 +1012,8 @@ fields.
 
 `zip mode (4 bits of the most significant bit side)'
      This identifies the compression mode.  In EB Library version
-     2.3.7, only 1 (0001 in binary digits) can be prescribed as this
-     version.
+     3.0alpha0, only 1 (0001 in binary digits) can be prescribed as
+     this version.
 
 `compression level (4 bits of the least-significant-bit side)'
      This identifies the compression level.
@@ -1052,33 +1049,33 @@ significant byte first.
 
 
 Tag Table:
-Node: Top1060
-Node: Introduction2803
-Node: Action and Command Name4188
-Node: Invoking ebzip5797
-Node: Compression6568
-Node: Compression Example 17225
-Node: Compression Example 28805
-Node: Compression Level10348
-Node: Adjust Filenames10951
-Node: Test13087
-Node: Partial Compression13432
-Node: Overwrite Old Files16035
-Node: Compress Compressed EPWING16783
-Node: Uncompression17282
-Node: Uncompression Example17724
-Node: Options for Uncompression19281
-Node: Uncompress Compressed EPWING20789
-Node: Information21291
-Node: Information Example21678
-Node: Options for Information22330
-Node: Delete a Book22919
-Node: Summary of Options23217
-Node: Comparision Result27566
-Node: Compressed File Format30133
-Node: Format Overview30559
-Node: Data Part31415
-Node: Index Part34216
-Node: Header Part36604
+Node: Top1064
+Node: Introduction2815
+Node: Action and Command Name4208
+Node: Invoking ebzip5817
+Node: Compression6588
+Node: Compression Example 17245
+Node: Compression Example 28825
+Node: Compression Level10368
+Node: Adjust Filenames10971
+Node: Test13107
+Node: Partial Compression13452
+Node: Overwrite Old Files16049
+Node: Compress Compressed EPWING16797
+Node: Uncompression17296
+Node: Uncompression Example17738
+Node: Options for Uncompression19295
+Node: Uncompress Compressed EPWING20803
+Node: Information21305
+Node: Information Example21692
+Node: Options for Information22345
+Node: Delete a Book22934
+Node: Summary of Options23232
+Node: Comparision Result27581
+Node: Compressed File Format30148
+Node: Format Overview30574
+Node: Data Part31430
+Node: Index Part34231
+Node: Header Part36619
 
 End Tag Table
