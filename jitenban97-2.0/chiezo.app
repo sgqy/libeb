@@ -1,0 +1,99 @@
+#
+# Copyright (C) 1997  Motoyuki Kasahara
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+
+character-code	jisx0208
+stop-code	0x1f09 0x0001
+
+begin narrow
+	range-start	0xa621
+	range-end	0xa65a
+
+	0xa621	(+)
+	0xa622	0e
+	0xa623	'a
+	0xa624	'e
+	0xa625	'o
+	0xa626	`a
+	0xa627	`e
+	0xa628	^a
+	0xa629	^e
+	0xa62a	^i
+	0xa62b	^o
+	0xa62c	"a
+	0xa62d	"e
+	0xa62e	"o
+	0xa62f	"u
+	0xa630	~n
+	0xa631	=a
+	0xa632	c,
+	0xa633	S
+	0xa634	'i
+	0xa635	=n
+	0xa636	=u
+	0xa637	^u
+	0xa638	'u
+	0xa639	<r
+	0xa63a	*a
+	0xa63b	#?
+	0xa63c	'E
+	0xa63d	2
+	0xa63e	3
+	0xa63f	0
+	0xa640	1
+	0xa641	2
+	0xa642	3
+	0xa643	4
+	0xa644	5
+	0xa645	6
+	0xa646	8
+	0xa647	1
+	0xa648	4
+	0xa649	5
+	0xa64a	7
+	0xa64b	8
+	0xa64c	9
+	0xa64d	a
+	0xa64e	o
+	0xa64f	p
+	0xa650	`u
+	0xa651	x
+	0xa652	+
+	0xa653	-
+	0xa654	+
+	0xa655	=i
+	0xa656	oo
+	0xa657	0
+	0xa658	6
+	0xa659	*A
+	0xa65a	n
+end
+
+begin wide
+	range-start	0xa421
+	range-end	0xa460
+
+	0xa421	氏＿
+	0xa422	〜＿
+	0xa423	←→
+	0xa424	(TEL)
+	0xa428	(R)
+
+	0xa43f	(C)
+
+	0xa44a	[海]
+	0xa44b	[新]
+
+	0xa460	√2
+end
+
