@@ -2,7 +2,7 @@
 #
 # Make a source distribution package.
 #
-VERSION="4.0beta3"
+VERSION="4.0"
 
 rm -f .distfiles
 sed -e 's/^    //' > .distfiles <<__END__
@@ -49,6 +49,7 @@ sed -e 's/^    //' > .distfiles <<__END__
     portsrc/dirent.h
     portsrc/eb.def
     portsrc/eb.rc
+    portsrc/eb/sysdefs.h
     portsrc/ebutils.h
     portsrc/localedir.c
     portsrc/netdb.h

@@ -40,13 +40,13 @@ BEGIN
 			VALUE "Comments", "Distributed under GPL version 2. NO WARRANTY. See the GPL for details.\0"
 			VALUE "CompanyName", " \0"
 			VALUE "FileDescription", "EB Library for Win32\0"
-			VALUE "FileVersion", "4.0beta3\0"
+			VALUE "FileVersion", "4.0\0"
 			VALUE "InternalName", "eb\0"
 			VALUE "LegalCopyright", "EB Library Copyright (C) 1997-2003 Motoyuki Kasahara. Win32 support (C) 2000-2002 satomi. zlib Copyright (C) 1995-2002 Jean-loup Gailly and Mark Adler.\0"
 			VALUE "LegalTrademarks", "\0"
 			VALUE "OriginalFilename", "eb.dll\0"
 			VALUE "ProductName", "EB Library\0"
-			VALUE "ProductVersion", "4.0beta3\0"
+			VALUE "ProductVersion", "4.0\0"
 		END
 	END
 	BLOCK "VarFileInfo"

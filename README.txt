@@ -7,8 +7,7 @@
 
 EB Library is a C library for accessing CD-ROM books.  It is
 originally developed for UNIX derived systems.  This package provides
-provides stuff to build EB Library on Microsoft Windows with Visual
-Studio 6.0.
+stuff to build EB Library on Microsoft Windows with Visual Studio 6.0.
 
 EB Library supports to access CD-ROM books of EB, EBG, EBXA, EBXA-C,
 S-EBXA and EPWING formats.  CD-ROM books of those formats are popular

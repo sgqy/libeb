@@ -1,0 +1,59 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Unify%20Duplicated%20Entries">Unify Duplicated Entries</a>,
+次:<a rel="next" accesskey="n" href="Search-Data-Types.html#Search%20Data%20Types">Search Data Types</a>,
+前:<a rel="previous" accesskey="p" href="Get-Remained-Entries.html#Get%20Remained%20Entries">Get Remained Entries</a>,
+上:<a rel="up" accesskey="u" href="Search.html#Search">Search</a>
+<hr><br>
+</div>
+
+<h3 class="section">重複エントリの削除</h3>
+
+   <p><code>eb_hit_list()</code> を用いて一致したエントリを取得すると、中身が実質的に
+変わらないエントリが複数含まれていることがあります。
+EB ライブラリは、こうした重複エントリの削除は行いません。
+必要なら、アプリケーション側で行うことになります。
+
+   <p>重複を完璧に取り除くなら、以下のすべての条件に一致するエントリを
+重複エントリとみなし、二度目以降に出現したエントリを削除します。
+
+     <ul>
+<li>エントリの指す本文の位置が同じ
+<li>エントリの指す見出しの文字列 (位置ではなく文字列そのもの) が同じ
+</ul>
+
+<p>(見出し文字列の取得方法については、
+see <a href="Text-Data.html#Text%20Data">テキストデータ</a>。)
+
+   <p>重複は、直前のエントリに対してのみ起こるとは限りません。
+たとえば、<code>eb_hit_list()</code> で一致エントリが 50 個得られた場合、
+最後の 50 個目は前方の 49 個と重複検査を行う必要があります。
+したがって、全体ではエントリ同士の比較を 1 + 2 + ... + 49 = 1225 回
+行うことになります。
+
+   <p>書籍によっては重複エントリが取りきれない可能性もありますが、もう少し
+簡単な方法もいくつかあります。
+処理を簡単にする第一の方法は、重複エントリの判定条件を次のように変える
+ことです。
+
+     <ul>
+<li>エントリの指す本文の位置が同じ
+<li>エントリの指す見出しの文字列の位置が同じ
+</ul>
+
+   <p>さらに処理を簡単にするには、直前の 1個のエントリに対してだけ重複検査を
+行うという方法もあります。
+これなら、50 個の一致エントリに対して、比較は 49 回で済みます。
+ただしこの方法は、書籍によってはまったく効果がありません。
+
+   </body></html>
+

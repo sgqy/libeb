@@ -3,13 +3,13 @@
 ;
 [Setup]
 AppName=EB Library
-AppVerName=EB Library 4.0beta3
+AppVerName=EB Library 4.0
 AppPublisher=Motoyuki Kasahara
 AppPublisherURL=http://www.sra.co.jp/people/m-kasahr/eb/
 DefaultDirName={pf}\EB Library
 DefaultGroupName=EB Library
 OutputDir=.
-OutputBaseFileName=eb-4.0beta3-win32
+OutputBaseFileName=eb-4.0-win32
 AllowNoIcons=yes
 LicenseFile=COPYING.txt
 
@@ -26,17 +26,18 @@ Source: "Release\eb.lib"; DestDir: "{app}\lib";
 Source: "Release\intl.lib"; DestDir: "{app}\lib";
 Source: "Release\iconv.lib"; DestDir: "{app}\lib";
 Source: "Release\zlib.lib"; DestDir: "{app}\lib";
-Source: "..\eb-4.0beta3\eb\appendix.h"; DestDir: "{app}\include\eb";
-Source: "..\eb-4.0beta3\eb\binary.h"; DestDir: "{app}\include\eb";
-Source: "..\eb-4.0beta3\eb\booklist.h"; DestDir: "{app}\include\eb";
-Source: "..\eb-4.0beta3\eb\defs.h"; DestDir: "{app}\include\eb";
-Source: "..\eb-4.0beta3\eb\error.h"; DestDir: "{app}\include\eb";
-Source: "..\eb-4.0beta3\eb\font.h"; DestDir: "{app}\include\eb";
-Source: "..\eb-4.0beta3\eb\text.h"; DestDir: "{app}\include\eb";
-Source: "..\eb-4.0beta3\eb\zio.h"; DestDir: "{app}\include\eb";
+Source: "..\eb-4.0\eb\appendix.h"; DestDir: "{app}\include\eb";
+Source: "..\eb-4.0\eb\binary.h"; DestDir: "{app}\include\eb";
+Source: "..\eb-4.0\eb\booklist.h"; DestDir: "{app}\include\eb";
+Source: "..\eb-4.0\eb\defs.h"; DestDir: "{app}\include\eb";
+Source: "..\eb-4.0\eb\error.h"; DestDir: "{app}\include\eb";
+Source: "..\eb-4.0\eb\font.h"; DestDir: "{app}\include\eb";
+Source: "portsrc\eb\sysdefs.h"; DestDir: "{app}\include\eb";
+Source: "..\eb-4.0\eb\text.h"; DestDir: "{app}\include\eb";
+Source: "..\eb-4.0\eb\zio.h"; DestDir: "{app}\include\eb";
 Source: "portsrc\config.h"; DestDir: "{app}\include\eb";
-Source: "..\eb-4.0beta3\zlib\zconf.h"; DestDir: "{app}\include";
-Source: "..\eb-4.0beta3\zlib\zlib.h"; DestDir: "{app}\include";
+Source: "..\eb-4.0\zlib\zconf.h"; DestDir: "{app}\include";
+Source: "..\eb-4.0\zlib\zlib.h"; DestDir: "{app}\include";
 Source: "intl\libintl.h"; DestDir: "{app}\include";
 Source: "iconv\iconv.h"; DestDir: "{app}\include";
 Source: "iconv\libcharset.h"; DestDir: "{app}\include";

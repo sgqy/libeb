@@ -37,8 +37,13 @@
      travel           ワールドトラベルガイド
      </pre>
 
-<p>このサーバは 3 つの書籍と 1 つの appendix (付録) を持っています。
-<code>encycl</code> という書籍の情報を見るには、次のようにします。
+<p>「名前」の末尾に <code>.app</code> が付いているものは appendix (付録)、
+それ以外は書籍本体です。
+ただし、そのクライアントに対してアクセスを許可しない書籍や appendix は
+出力されません。
+
+   <p>続けて、この中の <code>encycl</code> という書籍の情報を見るには、次のように
+します。
 
 <pre class="example">     % ebinfo ebnet://dict.example.com/cncyclopedia
      ディスクの形式: EB/EBG/EBXA/EBXA-C/S-EBXA

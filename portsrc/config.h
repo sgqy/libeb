@@ -259,13 +259,16 @@
 #define PACKAGE_NAME "eb"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "eb 4.0beta3"
+#define PACKAGE_STRING "eb 4.0"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "eb"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "4.0beta3"
+#define PACKAGE_VERSION "4.0"
+
+/* Define to 1 if the C compiler supports function prototypes. */
+#define PROTOTYPES 1
 
 /* Define as the return type of signal handlers (`int' or `void'). */
 #define RETSIGTYPE void
@@ -291,7 +294,14 @@
 /* #undef TIME_WITH_SYS_TIME */
 
 /* Version number of package */
-#define VERSION "4.0beta3"
+#define VERSION "4.0"
+
+/* Define to `void' if the C compiler supports (void *). Define to `char'
+   otherwise. */
+/* #undef VOID */
+
+/* Define like PROTOTYPES; this can be used by system headers. */
+#define __PROTOTYPES 1
 
 /* Define to empty if `const' does not conform to ANSI C. */
 /* #undef const */
@@ -332,7 +342,11 @@
 #include <stddef.h>
 #include <winsock2.h>
 #pragma warning( disable : 4018 )
+
+#define MSVC
+#define WINSOCK
 #define DOS_FILE_PATH
+#define HAVE_MBSTRING_H
 #define REPLACE_GETOPT
 
 /*

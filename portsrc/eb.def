@@ -20,6 +20,7 @@ EXPORTS
 	eb_bcd6
 	eb_bind
 	eb_bind_appendix
+	eb_bind_booklist
 	eb_bitmap_to_bmp
 	eb_bitmap_to_gif
 	eb_bitmap_to_xbm
@@ -44,7 +45,8 @@ EXPORTS
 	eb_error_message
 	eb_error_string
 	eb_exact_match_word_jis
-	eb_exact_match_word_jis_kana
+	eb_exact_match_word_kana_group
+	eb_exact_match_word_kana_single
 	eb_exact_match_word_latin
 	eb_exact_pre_match_word_jis
 	eb_exact_pre_match_word_latin
@@ -79,7 +81,6 @@ EXPORTS
 	eb_forward_text
 	eb_forward_wide_alt_character
 	eb_forward_wide_font_character
-	eb_get_booklist
 	eb_have_copyright
 	eb_have_endword_search
 	eb_have_exactword_search
@@ -134,7 +135,8 @@ EXPORTS
 	eb_log
 	eb_log_stderr
 	eb_match_word
-	eb_match_word_jis_kana
+	eb_match_word_kana_group
+	eb_match_word_kana_single
 	eb_memmove
 	eb_menu
 	eb_multi_entry_candidates
@@ -231,6 +233,7 @@ EXPORTS
 	eb_write_text_string
 	ebnet_bind
 	ebnet_bind_appendix
+	ebnet_bind_booklist
 	ebnet_canonicalize_url
 	ebnet_close
 	ebnet_connect_socket
@@ -243,7 +246,6 @@ EXPORTS
 	ebnet_freeaddrinfo
 	ebnet_gai_strerror
 	ebnet_get_book_name
-	ebnet_get_booklist
 	ebnet_get_file_path
 	ebnet_get_file_size
 	ebnet_get_offset

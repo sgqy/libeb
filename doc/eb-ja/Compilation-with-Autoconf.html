@@ -25,10 +25,10 @@ Autoconf はバージョン 2.50 以降が必要です。
    <p>まず、アプリケーションプログラムの <code>configure.ac</code>
 (もしくは <code>configure.in</code>) に、次の行を加えます。
 
-<pre class="example">     eb_LIB_EB3
+<pre class="example">     eb_LIB_EB4
      </pre>
 
-<p>マクロ <code>eb_LIB_EB3</code> は、EB ライブラリの使用に必要な一切のチェック
+<p>マクロ <code>eb_LIB_EB4</code> は、EB ライブラリの使用に必要な一切のチェック
 を行い、さらに <code>configure</code> に次のオプションを追加します。
 
 <pre class="example">       --with-eb-conf=FILE     eb.conf file is FILE [SYSCONFDIR/eb.conf]
@@ -36,17 +36,17 @@ Autoconf はバージョン 2.50 以降が必要です。
 
 <p><code>eb.conf</code> は、EB ライブラリをインストールしたときの情報を記録した
 ファイルで、ライブラリと一緒にインストールされます。
-<code>eb_LIB_EB3</code> はこのファイルを読み込んで、C コンパイラに渡さなければ
+<code>eb_LIB_EB4</code> はこのファイルを読み込んで、C コンパイラに渡さなければ
 いけないオプションなどの情報を得ます。
 <code>--eb-conf-file</code> は、<code>eb.conf</code> のファイル名を明示的に指定する
 オプションです。
 
-   <p>マクロ <code>eb_LIB_EB3</code> は、<code>eb3.m4</code> というファイルで提供されて
+   <p>マクロ <code>eb_LIB_EB4</code> は、<code>eb4.m4</code> というファイルで提供されて
 います。
 EB ライブラリを <code>/usr/local</code> にインストールし、個々のファイルの
 インストール先を変更していなければ、<code>/usr/local/share/aclocal</code> に
 インストールされます。
-この <code>eb3.m4</code> をソースコードの適当なディレクトリの下 (たとえば
+この <code>eb4.m4</code> をソースコードの適当なディレクトリの下 (たとえば
 <code>m4</code>) にコピーして下さい。
 
    <p><code>aclocal</code> コマンドで <code>aclocal.m4</code> を再生成する際は、

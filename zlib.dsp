@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "Release\zlib"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /O2 /D "_LIB" /D "WIN32" /D "_MBCS" /YX /FD /c /D "NDEBUG"
-# ADD CPP /nologo /W3 /Gm /GX /O2 /D "_LIB" /D "WIN32" /D "_MBCS" /YX /FD /c /I ".\zlib" /I ".\portsrc" /I "..\eb-4.0beta3\zlib" /FI "zconfig.h"   /MD /D "NDEBUG"
+# ADD CPP /nologo /W3 /Gm /GX /O2 /D "_LIB" /D "WIN32" /D "_MBCS" /YX /FD /c /I ".\zlib" /I ".\portsrc" /I "..\eb-4.0\zlib" /FI "zconfig.h"   /MD /D "NDEBUG"
 # ADD BASE RSC /l 0x411 /D "NDEBUG"
 # ADD RSC /l 0x411 /D "NDEBUG"
 BSC32=bscmake.exe
@@ -65,7 +65,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "Debug\zlib"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "_LIB" /D "WIN32" /D "_MBCS" /YX /FD /GZ /c /D "_DEBUG"
-# ADD CPP /nologo /W3 /Gm /GX /ZI /Od /D "_LIB" /D "WIN32" /D "_MBCS" /YX /FD /GZ /c /I ".\zlib" /I ".\portsrc" /I "..\eb-4.0beta3\zlib" /FI "zconfig.h"   /MDd /D "_DEBUG"
+# ADD CPP /nologo /W3 /Gm /GX /ZI /Od /D "_LIB" /D "WIN32" /D "_MBCS" /YX /FD /GZ /c /I ".\zlib" /I ".\portsrc" /I "..\eb-4.0\zlib" /FI "zconfig.h"   /MDd /D "_DEBUG"
 # ADD BASE RSC /l 0x411 /D "_DEBUG"
 # ADD RSC /l 0x411 /D "_DEBUG"
 BSC32=bscmake.exe
@@ -86,59 +86,59 @@ LIB32=link.exe -lib
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=..\eb-4.0beta3\zlib\adler32.c
+SOURCE=..\eb-4.0\zlib\adler32.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.0beta3\zlib\compress.c
+SOURCE=..\eb-4.0\zlib\compress.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.0beta3\zlib\crc32.c
+SOURCE=..\eb-4.0\zlib\crc32.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.0beta3\zlib\gzio.c
+SOURCE=..\eb-4.0\zlib\gzio.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.0beta3\zlib\uncompr.c
+SOURCE=..\eb-4.0\zlib\uncompr.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.0beta3\zlib\deflate.c
+SOURCE=..\eb-4.0\zlib\deflate.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.0beta3\zlib\trees.c
+SOURCE=..\eb-4.0\zlib\trees.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.0beta3\zlib\zutil.c
+SOURCE=..\eb-4.0\zlib\zutil.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.0beta3\zlib\inflate.c
+SOURCE=..\eb-4.0\zlib\inflate.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.0beta3\zlib\infblock.c
+SOURCE=..\eb-4.0\zlib\infblock.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.0beta3\zlib\inftrees.c
+SOURCE=..\eb-4.0\zlib\inftrees.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.0beta3\zlib\infcodes.c
+SOURCE=..\eb-4.0\zlib\infcodes.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.0beta3\zlib\infutil.c
+SOURCE=..\eb-4.0\zlib\infutil.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.0beta3\zlib\inffast.c
+SOURCE=..\eb-4.0\zlib\inffast.c
 # End Source File
 # End Group
 # Begin Group "Header Files"
