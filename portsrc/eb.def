@@ -23,6 +23,7 @@ EXPORTS
 	eb_bind_booklist
 	eb_bitmap_to_bmp
 	eb_bitmap_to_gif
+	eb_bitmap_to_png
 	eb_bitmap_to_xbm
 	eb_bitmap_to_xpm
 	eb_booklist_add_book
@@ -137,7 +138,6 @@ EXPORTS
 	eb_match_word
 	eb_match_word_kana_group
 	eb_match_word_kana_single
-	eb_memmove
 	eb_menu
 	eb_multi_entry_candidates
 	eb_multi_entry_count

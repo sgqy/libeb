@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "Release\ebzip"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "_CONSOLE" /D "WIN32" /D "_MBCS" /YX /FD /c /D "NDEBUG"
-# ADD CPP /nologo /W3 /GX /O2 /D "_CONSOLE" /D "WIN32" /D "_MBCS" /YX /FD /c /I ".\portsrc" /I ".\intl" /I ".\iconv" /I "..\eb-4.0"   /I "..\eb-4.0\libebutils" /I "..\eb-4.0\zlib"   /I "..\eb-4.0\eb" /D "HAVE_CONFIG_H" /MD /D "NDEBUG"
+# ADD CPP /nologo /W3 /GX /O2 /D "_CONSOLE" /D "WIN32" /D "_MBCS" /YX /FD /c /I ".\portsrc" /I ".\intl" /I ".\iconv" /I "..\eb-4.1"   /I "..\eb-4.1\libebutils" /I "..\eb-4.1\zlib"   /I "..\eb-4.1\eb" /D "HAVE_CONFIG_H" /MD /D "NDEBUG"
 # ADD BASE RSC /l 0x411 /D "NDEBUG"
 # ADD RSC /l 0x411 /D "NDEBUG"
 BSC32=bscmake.exe
@@ -65,7 +65,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "Debug\ebzip"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /Od /ZI /D "_CONSOLE" /D "WIN32" /D "_MBCS" /YX /FD /c /D "_DEBUG"
-# ADD CPP /nologo /W3 /GX /Od /ZI /D "_CONSOLE" /D "WIN32" /D "_MBCS" /YX /FD /c /I ".\portsrc" /I ".\intl" /I ".\iconv" /I "..\eb-4.0"   /I "..\eb-4.0\libebutils" /I "..\eb-4.0\zlib"   /I "..\eb-4.0\eb" /D "HAVE_CONFIG_H" /MDd /D "_DEBUG"
+# ADD CPP /nologo /W3 /GX /Od /ZI /D "_CONSOLE" /D "WIN32" /D "_MBCS" /YX /FD /c /I ".\portsrc" /I ".\intl" /I ".\iconv" /I "..\eb-4.1"   /I "..\eb-4.1\libebutils" /I "..\eb-4.1\zlib"   /I "..\eb-4.1\eb" /D "HAVE_CONFIG_H" /MDd /D "_DEBUG"
 # ADD BASE RSC /l 0x411 /D "_DEBUG"
 # ADD RSC /l 0x411 /D "_DEBUG"
 BSC32=bscmake.exe
@@ -86,43 +86,47 @@ LIB32=link.exe -lib
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=..\eb-4.0\ebzip\ebzip.c
+SOURCE=..\eb-4.1\ebzip\ebzip.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.0\ebzip\ebzip1.c
+SOURCE=..\eb-4.1\ebzip\ebzip1.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.0\ebzip\copyfile.c
+SOURCE=..\eb-4.1\ebzip\copyfile.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.0\ebzip\unzipbook.c
+SOURCE=..\eb-4.1\ebzip\unzipbook.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.0\ebzip\unzipfile.c
+SOURCE=..\eb-4.1\ebzip\unzipfile.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.0\ebzip\zipbook.c
+SOURCE=..\eb-4.1\ebzip\zipbook.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.0\ebzip\zipfile.c
+SOURCE=..\eb-4.1\ebzip\zipfile.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.0\ebzip\zipinfobook.c
+SOURCE=..\eb-4.1\ebzip\zipinfobook.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.0\ebzip\zipinfofile.c
+SOURCE=..\eb-4.1\ebzip\zipinfofile.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\eb-4.0\ebzip\sebxa.c
+SOURCE=..\eb-4.1\ebzip\sebxa.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\eb-4.1\ebzip\speedup.c
 # End Source File
 # Begin Source File
 

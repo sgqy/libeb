@@ -1,55 +1,51 @@
 /*
- * dirent.h
- * $Id: dirent.h 3.2 2002/03/14 05:18:27 satomii Exp $
+ * Copyright (c) 2003,2004 SRA, Inc.
+ * Copyright (c) 2003,2004 SKC, Inc.
  *
- * implements unix-like (not compatible) functions required to compile
- * eb library on win32 environment without gcc.
- * contact <satomi@ring.gr.jp> for problems or comments.
+ * Permission to use, copy, modify, and distribute this software and
+ * its documentation for any purpose, without fee, and without a
+ * written agreement is hereby granted, provided that the above
+ * copyright notice and this paragraph and the following two
+ * paragraphs appear in all copies.
  *
- * this program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2, or (at your option)
- * any later version.
+ * IN NO EVENT SHALL THE AUTHOR BE LIABLE TO ANY PARTY FOR DIRECT,
+ * INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, INCLUDING
+ * LOST PROFITS, ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS
+ * DOCUMENTATION, EVEN IF THE UNIVERSITY OF CALIFORNIA HAS BEEN ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * this program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details.
+ * THE AUTHOR SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE.  THE SOFTWARE PROVIDED HEREUNDER IS ON AN "AS
+ * IS" BASIS, AND THE AUTHOR HAS NO OBLIGATIONS TO PROVIDE MAINTENANCE,
+ * SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  */
-#ifndef	WIN32
-#error This file is intended to be used with a Win32 compiler.
-#endif	/* !WIN32 */
 
-#ifndef	__DIRENT_H__
-#define __DIRENT_H__
+#ifndef DIRENT_H
+#define DIRENT_H
 
+#include <stddef.h>
+#include <sys/types.h>
+#include <stdlib.h>
 #include <windows.h>
 
-#pragma pack(1)
-
-struct __win32_dirent_emu {
-    unsigned short int d_reclen;	/* length of this record. */
-    //unsigned char d_type;			/* N/A */
-    char d_name[_MAX_PATH];			/* directory name. */
+struct dirent {
+    ino_t d_ino;		/* inode (always 1 on WIN32) */
+    char d_name[MAX_PATH + 1];	/* filename (null terminated) */
 };
 
-typedef struct __win32_dirstream_emu {
-	HANDLE handle;
-	WIN32_FIND_DATA wfd;
-	struct __win32_dirent_emu entry;
-	char pattern[1];
+typedef struct {
+    HANDLE handle;		/* handle for FindFirstFile or FindNextFile */
+    long offset;		/* offset into directory */
+    int finished;		/* 1 if there are not more files */
+    WIN32_FIND_DATA finddata;	/* file data FindFirstFile or FindNextFile
+				 * returns */
+    char *dir;			/* the directory path we are reading */
+    struct dirent ent;		/* the dirent to return */
 } DIR;
 
-#pragma pack()
+extern DIR *opendir(const char *);
+extern struct dirent *readdir(DIR *);
+extern int closedir(DIR *);
 
-#define dirent		__win32_dirent_emu
-
-DIR *__win32_opendir(const char *);
-int __win32_closedir(DIR *);
-struct dirent *__win32_readdir(DIR *);
-
-#define opendir		__win32_opendir
-#define closedir	__win32_closedir
-#define readdir		__win32_readdir
-
-#endif	/* __DIRENT_H__  */
+#endif /* DIRENT_H */

@@ -2,7 +2,7 @@
 #
 # Make a source distribution package.
 #
-VERSION="4.0"
+VERSION="4.1"
 
 rm -f .distfiles
 sed -e 's/^    //' > .distfiles <<__END__
@@ -55,7 +55,9 @@ sed -e 's/^    //' > .distfiles <<__END__
     portsrc/netdb.h
     portsrc/netinet/in.h
     portsrc/sys/socket.h
+    portsrc/sys/time.h
     portsrc/unistd.h
+    portsrc/utime.h
     zlib/zconfig.h
     zlib/zlib.def
     zlib/zlib.rc
