@@ -21,12 +21,12 @@
 #endif
 #include "build-post.h"
 
-#ifdef WIN32
+#if defined(DOS_FILE_PATH) && defined(HAVE_MBSTRING_H)
 /* a path may contain double-byte chars in SJIS. */
 #include <mbstring.h>
 #define strchr	_mbschr
 #define strrchr	_mbsrchr
-#endif /* WIN32 */
+#endif
 
 
 #ifndef DOS_FILE_PATH
@@ -350,7 +350,7 @@ eb_fix_path_name_suffix(path_name, suffix)
  * Rewrite `found_file_name' to a real file name in the `path_name'
  * directory.
  * 
- * If a file matched to `rarget_file_name' exists, then EB_SUCCESS
+ * If a file matched to `target_file_name' exists, then EB_SUCCESS
  * is returned, and `found_file_name' is rewritten to that name.
  * Otherwise EB_ERR_BAD_FILE_NAME is returned.
  *

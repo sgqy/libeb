@@ -114,6 +114,10 @@ eb_search_keyword(book, input_words)
 	 */
 	context = book->search_contexts + word_count;
 	context->code = EB_SEARCH_KEYWORD;
+
+	/*
+	 * Choose comparison functions.
+	 */
 	if (book->character_code == EB_CHARCODE_ISO8859_1) {
 	    context->compare_pre    = eb_pre_match_word;
 	    context->compare_single = eb_match_word;
@@ -121,7 +125,7 @@ eb_search_keyword(book, input_words)
 	} else {
 	    context->compare_pre    = eb_pre_match_word;
 	    context->compare_single = eb_match_word;
-	    context->compare_group  = eb_match_word_jis_kana;
+	    context->compare_group  = eb_match_word_kana_group;
 	}
 	context->page = book->subbook_current->keyword.start_page;
 
