@@ -26,7 +26,7 @@ translation approved by Free Software Foundation, Inc.
 
 File: eb-ja.info,  Node: Top,  Next: Introduction,  Prev: (dir),  Up: (dir)
 
-   この文書は第 3.3.2 版です。
+   この文書は第 4.0beta0 版です。
 
 * Menu:
 
@@ -55,6 +55,7 @@ EB ライブラリの特徴
 * Header Files::                ヘッダファイル
 * Character Code::              文字コード
 * Compressed Book::             圧縮された書籍
+* Remote Access::               遠隔ホスト上の書籍
 * Traditional System::          古いシステムへの対応
 
 プログラムのコンパイル方法
@@ -71,6 +72,7 @@ EB ライブラリの特徴
 CD-ROM 書籍と `EB_Book' オブジェクト
 
 * EB_Book Explanation::         `EB_Book' オブジェクト
+* eb_bind to Remote Host::      遠隔ホストへの `eb_bind()'
 * EB_Book Sample::              サンプルプログラム
 * EB_Book Data Types::          データ型の詳細
 * EB_Book Functions::           関数の詳細
@@ -169,10 +171,10 @@ File: eb-ja.info,  Node: Introduction,  Next: Features,  Prev: Top,  Up: Top
 理解しておくことをお薦めします。 また、C 言語によるプログラミングについ
 ては、十分に理解していることを前提とします。
 
-   この文書は、EB ライブラリバージョン 3.3.2 に対応しています。 本書の
-内容に沿って EB ライブラリを使ったアプリケーションプログラムを作成する
-には、お使用いのシステムに EB ライブラリバージョン 3.3.2 と C コンパイ
-ラをインストールしておいて下さい。
+   この文書は、EB ライブラリバージョン 4.0beta0 に対応しています。 本書
+の内容に沿って EB ライブラリを使ったアプリケーションプログラムを作成す
+るには、お使用いのシステムに EB ライブラリバージョン 4.0beta0 と C コン
+パイラをインストールしておいて下さい。
 
    EB ライブラリはフリーソフトウェアです。 あなたは、 Free Software
 Foundation が公表した GNU General Public License (GNU 一般公有使用許諾)
@@ -291,6 +293,7 @@ EBXA-C, S-EBXA) と EPWING 形式の CD-ROM 書籍に対応しています。
 * Header Files::                ヘッダファイル
 * Character Code::              文字コード
 * Compressed Book::             圧縮された書籍
+* Remote Access::               遠隔ホスト上の書籍
 * Traditional System::          古いシステムへの対応
 
 
@@ -411,7 +414,7 @@ Code.)。
 Character.。
 
 
-File: eb-ja.info,  Node: Compressed Book,  Next: Traditional System,  Prev: Character Code,  Up: Features
+File: eb-ja.info,  Node: Compressed Book,  Next: Remote Access,  Prev: Character Code,  Up: Features
 
 圧縮された書籍について
 ======================
@@ -441,7 +444,24 @@ S-EBXA 形式
 処理を変える必要はありません。
 
 
-File: eb-ja.info,  Node: Traditional System,  Prev: Compressed Book,  Up: Features
+File: eb-ja.info,  Node: Remote Access,  Next: Traditional System,  Prev: Compressed Book,  Up: Features
+
+遠隔ホスト上の書籍について
+==========================
+
+   バージョン 4.0 から、 EB
+ライブラリは他のホストの書籍にアクセスできるようになりました。
+
+   遠隔アクセスの処理はすべて EB ライブラリ側で行われますので、 アプリ
+ケーションプログラムは、書籍が自分のホスト上にあるかどうかで、 EB ライ
+ブラリの呼び出し手順を変える必要はありません。
+
+   ただし、他のホストからアクセスすると、処理速度は非常に遅くなります。
+そのため、効率良く処理できるよう、アプリケーションの処理方法を工夫すべ
+き状況が生じることはあるかも知れません。
+
+
+File: eb-ja.info,  Node: Traditional System,  Prev: Remote Access,  Up: Features
 
 古いシステムへの対応
 ====================
@@ -524,7 +544,7 @@ File: eb-ja.info,  Node: Compilation Simple Way,  Next: Compilation with Autocon
 してしまいます。 そこで、この節では Autoconf を併用する代わりに、次の手
 順で回避します。
 
-  1. EB ライブラリ 3.3.2 のソースードを展開します。
+  1. EB ライブラリ 4.0beta0 のソースードを展開します。
 
   2. ソースコードに付属している `configure' スクリプトを実行します。
      `configure' のコマンド行引数は、インストール時と同じものを指定し
@@ -674,7 +694,8 @@ EB ライブラリのバグが原因ではないか?」という疑問を抱き、EB ライブラリ
      #! /usr/bin/perl
      
      use Getopt::Std;
-     getopts('z') or die "Usage: $0 [-z] [file...]\n";
+     getopts('zn') or die "Usage: $0 [-z|-n] [file...]\n";
+     $opt_z = 1 if (defined($opt_n));   # `-n' implies `-z'.
      
      $indent = 0;
      while (<>) {
@@ -682,6 +703,7 @@ EB ライブラリのバグが原因ではないか?」という疑問を抱き、EB ライブラリ
          if (/^\[EB\] (.*)$/) {
              $message = $1;
              next if (!$opt_z && $message =~ /^\S+: zio_/);
+             next if (!$opt_n && $message =~ /^\S+: ebnet_/);
              $indent-- if ($message =~ /^out: /);
              $_ = '[EB] ' . (' ' x ($indent * 2)) . $message;
              $indent++ if ($message =~ /^in: /);
@@ -700,16 +722,24 @@ EB ライブラリのバグが原因ではないか?」という疑問を抱き、EB ライブラリ
      [EB]   out: eb_load_wide_font()
      [EB] out: eb_set_font() = EB_SUCCESS
 
-   通常 `ebfixlog' スクリプトは、zio と呼ばれる、EB ライブラリでファイ
-ル入出力を受け持つ処理部のログは読み捨てるようになっています。 これによ
-り、ログの量がかなり減ります。
+   通常 `ebfixlog' スクリプトは、zio および ebnet と呼ばれる、 EB ライ
+ブラリでファイル入出力を受け持つ処理部のログは読み捨てるようになってい
+ます。 これにより、ログの量がかなり減ります。
 
-   zio は、EB ライブラリでもっとも低レベルの処理部で、頻繁に呼び出され
-ます。 問題の原因を調べる際も、まずは読み捨てた方がライブラリの内部動作
-を追跡しやすいでしょう。
+   zio は EB
+ライブラリの低レベル入出力の処理部で、頻繁に呼び出されます。 問題の原因
+を調べる際も、まずは読み捨てた方がライブラリの内部動作を追跡しやすいで
+しょう。
 
    `ebfixlog' の `-z' オプションを使うと、zio のメッセージを読み捨てず
 に出力するようになります。
+
+   ebnet は遠隔アクセスの入出力を処理する部分で、zio よりもさらに下位
+レベルに位置します。 遠隔アクセスの挙動を追跡するとき以外は、読み捨てた
+方が良いと思います。
+
+   `ebfixlog' の `-n' オプションを使うと、ebnet, zio 両方のメッセージ
+を読み捨てずに出力するようになります。
 
 
 File: eb-ja.info,  Node: Init and Exit,  Next: EB_Book,  Prev: Compilation,  Up: Top
@@ -841,12 +871,13 @@ CD-ROM 書籍と `EB_Book' オブジェクト
 * Menu:
 
 * EB_Book Explanation::         `EB_Book' オブジェクト
+* eb_bind to Remote Host::      遠隔ホストへの `eb_bind()'
 * EB_Book Sample::              サンプルプログラム
 * EB_Book Data Types::          データ型の詳細
 * EB_Book Functions::           関数の詳細
 
 
-File: eb-ja.info,  Node: EB_Book Explanation,  Next: EB_Book Sample,  Prev: EB_Book,  Up: EB_Book
+File: eb-ja.info,  Node: EB_Book Explanation,  Next: eb_bind to Remote Host,  Prev: EB_Book,  Up: EB_Book
 
 `EB_Book' オブジェクト
 ======================
@@ -909,7 +940,32 @@ File: eb-ja.info,  Node: EB_Book Explanation,  Next: EB_Book Sample,  Prev: EB_B
      free(book_pointer);
 
 
-File: eb-ja.info,  Node: EB_Book Sample,  Next: EB_Book Data Types,  Prev: EB_Book Explanation,  Up: EB_Book
+File: eb-ja.info,  Node: eb_bind to Remote Host,  Next: EB_Book Sample,  Prev: EB_Book Explanation,  Up: EB_Book
+
+遠隔ホストへの `eb_bind()'
+==========================
+
+   前節で説明した `eb_bind()' を用いて、`EB_Book' オブジェクトを遠隔ホ
+ストの書籍に結びつけることができます。 これには、書籍のパスの代わりに、
+遠隔アクセス用の識別子を指定します。
+識別子は、次のような形式をとります。
+
+     ebnet://ホスト:ポート/書籍名
+
+ホストは遠隔ホストの IP アドレスもしくはホスト名です。 ただし、IPv6 ア
+ドレスを指定する場合は、アドレスを `[' と `]' で囲む必要があります。 ポ
+ートは、そのホストが待ち受けているポートの番号です。 ホストが待ち受け
+ているポートが標準の 22010 番であれば、:ポートの部分は省略可能です。
+
+   以下に `eb_bind()' のコード例を記します。
+
+     if (eb_bind(&book, "ebnet://localhost/cdrom") != EB_SUCCESS) {
+         printf("eb_bind() failed\n");
+         return;
+     }
+
+
+File: eb-ja.info,  Node: EB_Book Sample,  Next: EB_Book Data Types,  Prev: eb_bind to Remote Host,  Up: EB_Book
 
 サンプルプログラム
 ==================
@@ -1084,11 +1140,13 @@ File: eb-ja.info,  Node: EB_Book Functions,  Prev: EB_Book Data Types,  Up: EB_B
 
  - Function: EB_Error_Code eb_bind (EB_Book *BOOK, const char *PATH)
      関数 `eb_bind()' は、 BOOK の指す `EB_Book' オブジェクトを、パス
-     PATH にある CD-ROM 書籍に結び付けます。 パスは書籍のトップディレク
-     トリ、つまり `CATALOG' あるいは `CATALOGS' ファイルの存在するディ
-     レクトリでなくてはなりません。 オブジェクトがすでに書籍に結び付い
-     ていた場合、その書籍との結び付きを解いてから、PATH にある書籍に結
-     び付けます。
+     PATH にある CD-ROM 書籍に結び付けます。 パスには、書籍のトップディ
+     レクトリか遠隔アクセス識別子を指定します。 書籍のトップディレクト
+     リとは、`CATALOG' あるいは `CATALOGS' ファイルの存在するディレクト
+     リを指します。
+
+     オブジェクトがすでに書籍に結び付いていた場合、その書籍との結び付き
+     を解いてから、PATH にある書籍に結び付けます。
 
      成功すると、関数は `EB_SUCCESS' を返します。 このとき、副本は未選
      択の状態になります。 失敗すると、オブジェクトを書籍との結び付きを
@@ -1115,8 +1173,8 @@ File: eb-ja.info,  Node: EB_Book Functions,  Prev: EB_Book Data Types,  Up: EB_B
      べます。 結び付いていれば 1 を返し、そうでなければ 0 を返します。
 
  - Function: EB_Error_Code eb_path (EB_Book *BOOK const char *PATH)
-     関数 `eb_path()' は、BOOK に結び付いている書籍のパスを、 PATH の指
-     す領域に書き込みます。
+     関数 `eb_path()' は、BOOK に結び付いている書籍のパスもしくは遠隔
+     アクセス識別子を、PATH の指す領域に書き込みます。
 
      成功すると、関数は `EB_SUCCESS' を返します。 失敗すると、PATH の指
      す領域に空文字列を書き込み、原因を示すエラーコードを返します。
@@ -1520,6 +1578,20 @@ File: eb-ja.info,  Node: Error Code List,  Next: Error Functions,  Prev: Error D
      あらかじめ `eb_seek_text()' でシークを行っていない状態で、 テキス
      トデータの読み込みや頭出しを行おうとした。
 
+ - Constant: EB_ERR_EBNET_UNSUPPORTED
+     この EB ライブラリは、遠隔ホストへのアクセスには対応していない。
+
+ - Constant: EB_ERR_EBNET_FAIL_CONNECT
+     遠隔ホストへのアクセスを試みたが、サーバ (EBNETD) に接続できなかっ
+     た。
+
+ - Constant: EB_ERR_EBNET_SERVER_BUSY
+     遠隔ホストへの接続を行ったが、書籍にアクセスしているクライアントの
+     数がすでに上限に達しているため、その書籍を利用できなかった。
+
+ - Constant: EB_ERR_EBNET_NO_PERMISSION
+     遠隔ホストへの接続を行ったが、その書籍への利用権限がないため、サー
+     バからアクセスを拒否された。
 
 
 File: eb-ja.info,  Node: Error Functions,  Prev: Error Code List,  Up: Error Handling
@@ -3825,7 +3897,7 @@ File: eb-ja.info,  Node: Hook Code List,  Next: Hookset Access Functions,  Prev:
  - EB_HOOK_BEGIN_GRAY_GRAPHIC:
  - EB_HOOK_END_GRAY_GRAPHIC:
      これらのフック名称は、グレースケール図版のために予約されていますが、
-     EB ライブラリ 3.3.2 ではまだ対応していません。
+     EB ライブラリ 4.0beta0 ではまだ対応していません。
 
  - EB_HOOK_BEGIN_COLOR_BMP:
  - EB_HOOK_BEGIN_COLOR_JPEG:
@@ -5762,6 +5834,10 @@ File: eb-ja.info,  Node: Variable Index,  Prev: Function Index,  Up: Index
 * ERR_BAD_FILE_NAME:                     Error Code List.
 * ERR_BAD_WORD:                          Error Code List.
 * ERR_DIFF_CONTENT:                      Error Code List.
+* ERR_EBNET_FAIL_CONNECT:                Error Code List.
+* ERR_EBNET_NO_PERMISSION:               Error Code List.
+* ERR_EBNET_SERVER_BUSY:                 Error Code List.
+* ERR_EBNET_UNSUPPORTED:                 Error Code List.
 * ERR_EMPTY_WORD:                        Error Code List.
 * ERR_END_OF_CONTENT:                    Error Code List.
 * ERR_FAIL_GETCWD:                       Error Code List.
@@ -5941,82 +6017,84 @@ File: eb-ja.info,  Node: Variable Index,  Prev: Function Index,  Up: Index
 
 Tag Table:
 Node: Top1012
-Node: Introduction5120
-Node: Electronic Book and EPWING6961
-Node: Construction of This Book8076
-Node: Features9215
-Node: Header Files10198
-Node: Character Code11137
-Node: Compressed Book15178
-Node: Traditional System16151
-Node: Compilation17171
-Node: Compilation Simple Way18584
-Node: Compilation with Autoconf21968
-Node: Debug EB Library24065
-Node: Init and Exit26364
-Node: Init and Exit Sample27152
-Node: Init and Exit Functions28196
-Node: EB_Book29858
-Node: EB_Book Explanation30530
-Node: EB_Book Sample32785
-Node: EB_Book Data Types35252
-Node: EB_Book Functions37517
-Node: Error Handling41873
-Node: Error Code and Message42710
-Node: Tolerance to Error44463
-Node: Error Data Types45816
-Node: Error Code List46537
-Node: Error Functions54524
-Node: Subbook56181
-Node: Subbook Code57452
-Node: Current Subbook59062
-Node: Subbook Sample61097
-Node: Subbook Data Types63667
-Node: Subbook Functions64406
-Node: Search70195
-Node: Word Search71287
-Node: Keyword Search74167
-Node: Multi Search75623
-Node: EB_Hit79090
-Node: Get Remained Entries80676
-Node: Search Data Types81970
-Node: Search Functions83902
-Node: Text Data95396
-Node: Seek and Read Text Data96853
-Node: Text Data Format100976
-Node: Hook103663
-Node: Hook and Character Code107820
-Node: Copyright Notice109914
-Node: Menu111059
-Node: Multi Candidates114968
-Node: Stop Code Issue118905
-Node: Text Data Sample121329
-Node: Text Data Types125760
-Node: Hook Function Details127613
-Node: Hook Code List129987
-Node: Hookset Access Functions146715
-Node: Builtin Hook Functions149791
-Node: Text Data Functions152967
-Node: Local Character169756
-Node: Narrow & Wide Font171509
-Node: Font Size and Font Code173646
-Node: Current Font Height175207
-Node: Get Font177779
-Node: Convert Font180408
-Node: Local Character in Text181571
-Node: Font Data Types182227
-Node: Font Constants182970
-Node: Font Functions187028
-Node: Font Sample201114
-Node: Binary Data205807
-Node: Monochrome Image207812
-Node: Color Image210627
-Node: WAVE Sound213044
-Node: MPEG Movie214229
-Node: Binary Data Functions215425
-Node: Index216676
-Node: Data Type Index216900
-Node: Function Index217749
-Node: Variable Index224241
+Node: Introduction5233
+Node: Electronic Book and EPWING7080
+Node: Construction of This Book8195
+Node: Features9334
+Node: Header Files10368
+Node: Character Code11307
+Node: Compressed Book15348
+Node: Remote Access16316
+Node: Traditional System16946
+Node: Compilation17964
+Node: Compilation Simple Way19377
+Node: Compilation with Autoconf22764
+Node: Debug EB Library24861
+Node: Init and Exit27572
+Node: Init and Exit Sample28360
+Node: Init and Exit Functions29404
+Node: EB_Book31066
+Node: EB_Book Explanation31797
+Node: eb_bind to Remote Host34060
+Node: EB_Book Sample34945
+Node: EB_Book Data Types37415
+Node: EB_Book Functions39680
+Node: Error Handling44117
+Node: Error Code and Message44954
+Node: Tolerance to Error46707
+Node: Error Data Types48060
+Node: Error Code List48781
+Node: Error Functions57322
+Node: Subbook58979
+Node: Subbook Code60250
+Node: Current Subbook61860
+Node: Subbook Sample63895
+Node: Subbook Data Types66465
+Node: Subbook Functions67204
+Node: Search72993
+Node: Word Search74085
+Node: Keyword Search76965
+Node: Multi Search78421
+Node: EB_Hit81888
+Node: Get Remained Entries83474
+Node: Search Data Types84768
+Node: Search Functions86700
+Node: Text Data98194
+Node: Seek and Read Text Data99651
+Node: Text Data Format103774
+Node: Hook106461
+Node: Hook and Character Code110618
+Node: Copyright Notice112712
+Node: Menu113857
+Node: Multi Candidates117766
+Node: Stop Code Issue121703
+Node: Text Data Sample124127
+Node: Text Data Types128558
+Node: Hook Function Details130411
+Node: Hook Code List132785
+Node: Hookset Access Functions149516
+Node: Builtin Hook Functions152592
+Node: Text Data Functions155768
+Node: Local Character172557
+Node: Narrow & Wide Font174310
+Node: Font Size and Font Code176447
+Node: Current Font Height178008
+Node: Get Font180580
+Node: Convert Font183209
+Node: Local Character in Text184372
+Node: Font Data Types185028
+Node: Font Constants185771
+Node: Font Functions189829
+Node: Font Sample203915
+Node: Binary Data208608
+Node: Monochrome Image210613
+Node: Color Image213428
+Node: WAVE Sound215845
+Node: MPEG Movie217030
+Node: Binary Data Functions218226
+Node: Index219477
+Node: Data Type Index219701
+Node: Function Index220550
+Node: Variable Index227042
 
 End Tag Table

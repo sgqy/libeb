@@ -1,4 +1,4 @@
-# generated automatically by aclocal 1.7.2 -*- Autoconf -*-
+# generated automatically by aclocal 1.7.5 -*- Autoconf -*-
 
 # Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2002
 # Free Software Foundation, Inc.
@@ -16,7 +16,7 @@
 # This macro actually does too much some checks are only needed if
 # your package does certain things.  But this isn't really a big deal.
 
-# Copyright 1996, 1997, 1998, 1999, 2000, 2001, 2002
+# Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003
 # Free Software Foundation, Inc.
 
 # This program is free software; you can redistribute it and/or modify
@@ -34,14 +34,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 
-# serial 8
-
-# There are a few dirty hacks below to avoid letting `AC_PROG_CC' be
-# written in clear, in which case automake, when reading aclocal.m4,
-# will think it sees a *use*, and therefore will trigger all it's
-# C support machinery.  Also note that it means that autoscan, seeing
-# CC etc. in the Makefile, will ask for an AC_PROG_CC use...
-
+# serial 10
 
 AC_PREREQ([2.54])
 
@@ -86,8 +79,8 @@ m4_ifval([$2],
  AC_SUBST([PACKAGE], [$1])dnl
  AC_SUBST([VERSION], [$2])],
 [_AM_SET_OPTIONS([$1])dnl
- AC_SUBST([PACKAGE], [AC_PACKAGE_TARNAME])dnl
- AC_SUBST([VERSION], [AC_PACKAGE_VERSION])])dnl
+ AC_SUBST([PACKAGE], ['AC_PACKAGE_TARNAME'])dnl
+ AC_SUBST([VERSION], ['AC_PACKAGE_VERSION'])])dnl
 
 _AM_IF_OPTION([no-define],,
 [AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE", [Name of package])
@@ -108,6 +101,7 @@ AM_PROG_INSTALL_STRIP
 # some platforms.
 AC_REQUIRE([AC_PROG_AWK])dnl
 AC_REQUIRE([AC_PROG_MAKE_SET])dnl
+AC_REQUIRE([AM_SET_LEADING_DOT])dnl
 
 _AM_IF_OPTION([no-dependencies],,
 [AC_PROVIDE_IFELSE([AC_PROG_CC],
@@ -130,7 +124,16 @@ AC_PROVIDE_IFELSE([AC_PROG_CXX],
 # loop where config.status creates the headers, so we can generate
 # our stamp files there.
 AC_DEFUN([_AC_AM_CONFIG_HEADER_HOOK],
-[_am_stamp_count=`expr ${_am_stamp_count-0} + 1`
+[# Compute $1's index in $config_headers.
+_am_stamp_count=1
+for _am_header in $config_headers :; do
+  case $_am_header in
+    $1 | $1:* )
+      break ;;
+    * )
+      _am_stamp_count=`expr $_am_stamp_count + 1` ;;
+  esac
+done
 echo "timestamp for $1" >`AS_DIRNAME([$1])`/stamp-h[]$_am_stamp_count])
 
 # Copyright 2002  Free Software Foundation, Inc.
@@ -160,7 +163,7 @@ AC_DEFUN([AM_AUTOMAKE_VERSION],[am__api_version="1.7"])
 # Call AM_AUTOMAKE_VERSION so it can be traced.
 # This function is AC_REQUIREd by AC_INIT_AUTOMAKE.
 AC_DEFUN([AM_SET_CURRENT_AUTOMAKE_VERSION],
-	 [AM_AUTOMAKE_VERSION([1.7.2])])
+	 [AM_AUTOMAKE_VERSION([1.7.5])])
 
 # Helper functions for option handling.                    -*- Autoconf -*-
 
@@ -446,9 +449,42 @@ fi
 INSTALL_STRIP_PROGRAM="\${SHELL} \$(install_sh) -c -s"
 AC_SUBST([INSTALL_STRIP_PROGRAM])])
 
-# serial 4						-*- Autoconf -*-
+#                                                          -*- Autoconf -*-
+# Copyright (C) 2003  Free Software Foundation, Inc.
 
-# Copyright 1999, 2000, 2001 Free Software Foundation, Inc.
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+# 02111-1307, USA.
+
+# serial 1
+
+# Check whether the underlying file-system supports filenames
+# with a leading dot.  For instance MS-DOS doesn't.
+AC_DEFUN([AM_SET_LEADING_DOT],
+[rm -rf .tst 2>/dev/null
+mkdir .tst 2>/dev/null
+if test -d .tst; then
+  am__leading_dot=.
+else
+  am__leading_dot=_
+fi
+rmdir .tst 2>/dev/null
+AC_SUBST([am__leading_dot])])
+
+# serial 5						-*- Autoconf -*-
+
+# Copyright (C) 1999, 2000, 2001, 2002, 2003  Free Software Foundation, Inc.
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -540,11 +576,17 @@ AC_CACHE_CHECK([dependency style of $depcc],
     if depmode=$depmode \
        source=conftest.c object=conftest.o \
        depfile=conftest.Po tmpdepfile=conftest.TPo \
-       $SHELL ./depcomp $depcc -c -o conftest.o conftest.c >/dev/null 2>&1 &&
+       $SHELL ./depcomp $depcc -c -o conftest.o conftest.c \
+         >/dev/null 2>conftest.err &&
        grep conftest.h conftest.Po > /dev/null 2>&1 &&
        ${MAKE-make} -s -f confmf > /dev/null 2>&1; then
-      am_cv_$1_dependencies_compiler_type=$depmode
-      break
+      # icc doesn't choke on unknown options, it will just issue warnings
+      # (even with -Werror).  So we grep stderr for any message
+      # that says an option was ignored.
+      if grep 'ignoring option' conftest.err >/dev/null 2>&1; then :; else
+        am_cv_$1_dependencies_compiler_type=$depmode
+        break
+      fi
     fi
   done
 
@@ -566,16 +608,8 @@ AM_CONDITIONAL([am__fastdep$1], [
 # Choose a directory name for dependency files.
 # This macro is AC_REQUIREd in _AM_DEPENDENCIES
 AC_DEFUN([AM_SET_DEPDIR],
-[rm -f .deps 2>/dev/null
-mkdir .deps 2>/dev/null
-if test -d .deps; then
-  DEPDIR=.deps
-else
-  # MS-DOS does not allow filenames that begin with a dot.
-  DEPDIR=_deps
-fi
-rmdir .deps 2>/dev/null
-AC_SUBST([DEPDIR])
+[AC_REQUIRE([AM_SET_LEADING_DOT])dnl
+AC_SUBST([DEPDIR], ["${am__leading_dot}deps"])dnl
 ])
 
 
@@ -679,7 +713,7 @@ AC_DEFUN([AM_OUTPUT_DEPENDENCY_COMMANDS],
 
 # Check to see how 'make' treats includes.	-*- Autoconf -*-
 
-# Copyright (C) 2001, 2002 Free Software Foundation, Inc.
+# Copyright (C) 2001, 2002, 2003 Free Software Foundation, Inc.
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -704,8 +738,9 @@ AC_DEFUN([AM_OUTPUT_DEPENDENCY_COMMANDS],
 AC_DEFUN([AM_MAKE_INCLUDE],
 [am_make=${MAKE-make}
 cat > confinc << 'END'
-doit:
+am__doit:
 	@echo done
+.PHONY: am__doit
 END
 # If we don't find an include directive, just comment out the code.
 AC_MSG_CHECKING([for style of include used by $am_make])
@@ -733,9 +768,9 @@ if test "$am__include" = "#"; then
       _am_result=BSD
    fi
 fi
-AC_SUBST(am__include)
-AC_SUBST(am__quote)
-AC_MSG_RESULT($_am_result)
+AC_SUBST([am__include])
+AC_SUBST([am__quote])
+AC_MSG_RESULT([$_am_result])
 rm -f confinc confmf
 ])
 
@@ -4749,4 +4784,228 @@ if test $ac_cv_have_struct_utimbuf = yes; then
 [Define if \`struct utimbuf' is declared -- usually in <utime.h>.])
 fi
 ])
+
+dnl *
+dnl * Copyright (c) 2001, 2003  Motoyuki Kasahara
+dnl *
+dnl * Redistribution and use in source and binary forms, with or without
+dnl * modification, are permitted provided that the following conditions
+dnl * are met:
+dnl * 1. Redistributions of source code must retain the above copyright
+dnl *    notice, this list of conditions and the following disclaimer.
+dnl * 2. Redistributions in binary form must reproduce the above copyright
+dnl *    notice, this list of conditions and the following disclaimer in the
+dnl *    documentation and/or other materials provided with the distribution.
+dnl * 3. Neither the name of the project nor the names of its contributors
+dnl *    may be used to endorse or promote products derived from this software
+dnl *    without specific prior written permission.
+dnl * 
+dnl * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
+dnl * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+dnl * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+dnl * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE PROJECT OR CONTRIBUTORSBE
+dnl * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+dnl * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+dnl * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+dnl * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+dnl * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+dnl * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+dnl * THE POSSIBILITY OF SUCH DAMAGE.
+dnl *
+
+dnl * 
+dnl * Check for socklen_t.
+dnl * 
+AC_DEFUN([AC_TYPE_SOCKLEN_T],
+[AC_CACHE_CHECK([for socklen_t], ac_cv_type_socklen_t,
+[AC_TRY_COMPILE([
+#include <sys/types.h>
+#include <sys/socket.h>],[
+socklen_t socklen;
+], [ac_cv_type_socklen_t=yes], [ac_cv_type_socklen_t=no])])
+if test "$ac_cv_type_socklen_t" != yes; then
+    AC_DEFINE(socklen_t, int,
+[Define to \`int' if <sys/types.h> or <sys/socket.h> does not define.])
+fi])
+
+dnl * 
+dnl * Check for in_port_t.
+dnl * 
+AC_DEFUN([AC_TYPE_IN_PORT_T],
+[AC_CACHE_CHECK([for in_port_t], ac_cv_type_in_port_t,
+[AC_TRY_COMPILE([
+#include <sys/types.h>
+#include <sys/socket.h>],[
+in_port_t in_port;
+], [ac_cv_type_in_port_t=yes], [ac_cv_type_in_port_t=no])])
+if test "$ac_cv_type_in_port_t" != yes; then
+    AC_DEFINE(in_port_t, int,
+[Define to \`int' if <sys/types.h> or <sys/socket.h> does not define.])
+fi])
+
+dnl * 
+dnl * Check for sa_family_t.
+dnl * 
+AC_DEFUN([AC_TYPE_SA_FAMILY_T],
+[AC_CACHE_CHECK([for sa_family_t], ac_cv_type_sa_family_t,
+[AC_TRY_COMPILE([
+#include <sys/types.h>
+#include <sys/socket.h>],[
+sa_family_t sa_family;
+], [ac_cv_type_sa_family_t=yes], [ac_cv_type_sa_family_t=no])])
+if test "$ac_cv_type_sa_family_t" != yes; then
+    AC_DEFINE(sa_family_t, int,
+[Define to \`int' if <sys/types.h> or <sys/socket.h> does not define.])
+fi])
+
+dnl *
+dnl * Copyright (c) 2001  Motoyuki Kasahara
+dnl *
+dnl * Redistribution and use in source and binary forms, with or without
+dnl * modification, are permitted provided that the following conditions
+dnl * are met:
+dnl * 1. Redistributions of source code must retain the above copyright
+dnl *    notice, this list of conditions and the following disclaimer.
+dnl * 2. Redistributions in binary form must reproduce the above copyright
+dnl *    notice, this list of conditions and the following disclaimer in the
+dnl *    documentation and/or other materials provided with the distribution.
+dnl * 3. Neither the name of the project nor the names of its contributors
+dnl *    may be used to endorse or promote products derived from this software
+dnl *    without specific prior written permission.
+dnl * 
+dnl * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
+dnl * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+dnl * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+dnl * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE PROJECT OR CONTRIBUTORSBE
+dnl * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+dnl * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+dnl * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+dnl * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+dnl * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+dnl * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+dnl * THE POSSIBILITY OF SUCH DAMAGE.
+dnl *
+
+dnl * 
+dnl * Check for struct in6_addr
+dnl * 
+AC_DEFUN(AC_STRUCT_IN6_ADDR,
+[AC_CACHE_CHECK(for struct in6_addr, ac_cv_struct_in6_addr,
+[AC_TRY_COMPILE([
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>],[
+struct in6_addr address;
+], [ac_cv_struct_in6_addr=yes], [ac_cv_struct_in6_addr=no])])
+if test "$ac_cv_struct_in6_addr" = yes; then
+    AC_DEFINE(HAVE_STRUCT_IN6_ADDR, 1,
+[Define if <netinet/in.h> defines \`struct in6_addr'])
+fi])
+
+dnl * 
+dnl * Check for in6addr_any.
+dnl *
+AC_DEFUN(AC_DECL_IN6ADDR_ANY,
+[AC_REQUIRE([AC_STRUCT_IN6_ADDR])
+if test $ac_cv_struct_in6_addr = no ; then
+    ac_cv_decl_in6addr_any=no
+else
+    AC_CACHE_CHECK(for in6addr_any declaration in netinet/in.h,
+    ac_cv_decl_in6addr_any,
+    [AC_TRY_COMPILE([
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>],[
+unsigned char *address;
+address = (char *)&in6addr_any;
+], [ac_cv_decl_in6addr_any=yes], [ac_cv_decl_in6addr_any=no])])
+    if test "$ac_cv_decl_in6addr_any" = yes; then
+        AC_DEFINE(IN6ADDR_ANY_DECLARED, 1,
+[Define if \`in6addr_any' is declared by <netinet/in.h>])
+    fi
+fi])
+
+dnl *
+dnl * Check for in6addr_loopback.
+dnl *
+AC_DEFUN(AC_DECL_IN6ADDR_LOOPBACK,
+[AC_REQUIRE([AC_STRUCT_IN6_ADDR])
+if test $ac_cv_struct_in6_addr = no ; then
+    ac_cv_decl_in6addr_loopback=no
+else
+    AC_CACHE_CHECK(for in6addr_loopback declaration in netinet/in.h,
+    ac_cv_decl_in6addr_loopback,
+    [AC_TRY_COMPILE([
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>],[
+unsigned char *address;
+address = (char *)&in6addr_loopback;
+], [ac_cv_decl_in6addr_loopback=yes], [ac_cv_decl_in6addr_loopback=no])])
+    if test "$ac_cv_decl_in6addr_loopback" = yes; then
+        AC_DEFINE(IN6ADDR_LOOPBACK_DECLARED, 1,
+[Define if \`in6addr_loopback' is declared by <netinet/in.h>])
+    fi
+fi])
+
+dnl *
+dnl * Copyright (c) 2001  Motoyuki Kasahara
+dnl *
+dnl * Redistribution and use in source and binary forms, with or without
+dnl * modification, are permitted provided that the following conditions
+dnl * are met:
+dnl * 1. Redistributions of source code must retain the above copyright
+dnl *    notice, this list of conditions and the following disclaimer.
+dnl * 2. Redistributions in binary form must reproduce the above copyright
+dnl *    notice, this list of conditions and the following disclaimer in the
+dnl *    documentation and/or other materials provided with the distribution.
+dnl * 3. Neither the name of the project nor the names of its contributors
+dnl *    may be used to endorse or promote products derived from this software
+dnl *    without specific prior written permission.
+dnl * 
+dnl * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
+dnl * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+dnl * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+dnl * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE PROJECT OR CONTRIBUTORSBE
+dnl * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+dnl * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+dnl * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+dnl * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+dnl * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+dnl * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+dnl * THE POSSIBILITY OF SUCH DAMAGE.
+dnl *
+
+dnl * 
+dnl * Check for struct sockaddr_in6
+dnl *
+AC_DEFUN(AC_STRUCT_SOCKADDR_IN6,
+[AC_CACHE_CHECK(for struct sockaddr_in6, ac_cv_struct_sockaddr_in6,
+[AC_TRY_COMPILE([
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>],[
+struct sockaddr_in6 address;
+], [ac_cv_struct_sockaddr_in6=yes], [ac_cv_struct_sockaddr_in6=no])])
+if test "$ac_cv_struct_sockaddr_in6" = yes; then
+    AC_DEFINE(HAVE_STRUCT_SOCKADDR_IN6, 1,
+[Define if <netinet/in.h> defines \`struct sockaddr_in6'])
+fi])
+
+dnl * 
+dnl * Check for struct sockaddr_storage
+dnl * 
+AC_DEFUN(AC_STRUCT_SOCKADDR_STORAGE,
+[AC_CACHE_CHECK(for struct sockaddr_storage, ac_cv_struct_sockaddr_storage,
+[AC_TRY_COMPILE([
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>],[
+struct sockaddr_storage address;
+], [ac_cv_struct_sockaddr_storage=yes], [ac_cv_struct_sockaddr_storage=no])])
+if test "$ac_cv_struct_sockaddr_storage" = yes; then
+    AC_DEFINE(HAVE_STRUCT_SOCKADDR_STORAGE, 1,
+[Define if <netinet/in.h> defines \`struct sockaddr_storage'])
+fi])
+
 

@@ -842,7 +842,7 @@ eb_set_subbook(book, subbook_code)
     /*
      * Load font files.
      */
-    eb_load_fonts(book);
+    eb_load_font_headers(book);
 
   succeeded:
     book->subbook_current->initialized = 1;
