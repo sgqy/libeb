@@ -205,13 +205,13 @@
 #define PACKAGE_NAME "eb"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "eb 4.1.2"
+#define PACKAGE_STRING "eb @VERSION@"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "eb"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "4.1.2"
+#define PACKAGE_VERSION "@VERSION@"
 
 /* If using the C implementation of alloca, define if you know the
    direction of stack growth for your system; otherwise it will be
@@ -225,7 +225,7 @@
 #define STDC_HEADERS 1
 
 /* Version number of package */
-#define VERSION "4.1.2"
+#define VERSION "@VERSION@"
 
 /* Define to empty if `const' does not conform to ANSI C. */
 /* #undef const */

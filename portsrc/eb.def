@@ -243,14 +243,10 @@ EXPORTS
 	ebnet_finalize_book
 	ebnet_find_file_name
 	ebnet_fix_directory_name
-	ebnet_freeaddrinfo
-	ebnet_gai_strerror
 	ebnet_get_book_name
 	ebnet_get_file_path
 	ebnet_get_file_size
 	ebnet_get_offset
-	ebnet_getaddrinfo
-	ebnet_getnameinfo
 	ebnet_initialize
 	ebnet_initialize_multiplex
 	ebnet_lseek

@@ -2,7 +2,7 @@
 #
 # Make a source distribution package.
 #
-VERSION="4.1.2"
+VERSION="@VERSION@"
 
 rm -f .distfiles
 sed -e 's/^    //' > .distfiles <<__END__

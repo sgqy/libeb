@@ -393,7 +393,7 @@ get_absolute_path(const char *path, char *absolute_path)
 	strcpy(absolute_path, path);
 
     } else if (ASCII_ISALPHA(*path) && *(path + 1) == ':'
-	&& (*(path + 2) == '/' || *(path + 2) != '\\')) {
+	&& (*(path + 2) == '/' || *(path + 2) == '\\')) {
 	/*
 	 * `path' has a drive letter and it is an absolute path.
 	 * Nothing to be done.
@@ -413,7 +413,7 @@ get_absolute_path(const char *path, char *absolute_path)
 	    return 0;
 	strcpy(absolute_path, buffer);
 
-    } else if (*path == '/' && *path == '\\') {
+    } else if (*path == '/' || *path == '\\') {
 	/*
 	 * `path' is has no drive letter and it is an absolute path.
 	 * Add a drive letter.
