@@ -1,0 +1,136 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Hookset%20Access%20Functions">Hookset Access Functions</a>,
+次:<a rel="next" accesskey="n" href="Builtin-Hook-Functions.html#Builtin%20Hook%20Functions">Builtin Hook Functions</a>,
+前:<a rel="previous" accesskey="p" href="Hook-Code-List.html#Hook%20Code%20List">Hook Code List</a>,
+上:<a rel="up" accesskey="u" href="Text-Data.html#Text%20Data">Text Data</a>
+<hr><br>
+</div>
+
+<h3 class="section">フックセット操作関数の詳細</h3>
+
+   <p>この節で説明している関数を使うには、次のようにヘッダファイルを読み込んで
+下さい。
+
+<pre class="example">     #include &lt;eb/text.h&gt;
+     </pre>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">void <b>eb_initialize_hookset</b><i> </i>(<i>EB_Hookset *</i><var>hookset</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>initialize_hookset()</code> は、<var>hookset</var> の指す <code>EB_Hookset</code>
+オブジェクトを初期化します。
+<code>EB_Hookiset</code> オブジェクトに対して EB ライブラリの他の関数を呼ぶ前に、
+必ずそのオブジェクトを初期化しなくてはなりません。
+初期化していないオブジェクトに対して、EB ライブラリの他の関数を呼んだ
+場合の動作は未定義です。
+また、すでに初期化したオブジェクトに対して、再度
+<code>eb_initialize_hookset()</code> を呼んではいけません。
+呼んだ場合の動作は未定義です。
+
+     <p>この関数は、各フックの初期値を次のようにセットします。
+
+     <p><table><tr align="left"><td valign="top">フック                          </td><td valign="top">フック関数
+<br></td></tr><tr align="left"><td valign="top"><code>EB_HOOK_NARROW_JISX0208</code>  </td><td valign="top"><code>eb_hook_euc_to_ascii()</code>
+<br></td></tr><tr align="left"><td valign="top"><code>EB_HOOK_NARROW_FONT</code>      </td><td valign="top"><code>eb_hook_narrow_character_text()</code>
+<br></td></tr><tr align="left"><td valign="top"><code>EB_HOOK_WIDE_FONT</code>        </td><td valign="top"><code>eb_hook_wide_character_text()</code>
+<br></td></tr><tr align="left"><td valign="top"><code>EB_HOOK_NEWLINE</code>          </td><td valign="top"><code>eb_hook_newline()</code>
+<br></td></tr><tr align="left"><td valign="top">上記以外のフック                </td><td valign="top"><code>NULL</code> (フック関数なし)
+     <br></td></tr></table>
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_finalize_hookset</b><i> </i>(<i>EB_Hookset *</i><var>hookset</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_finalize_hookset()</code> は、<var>hookset</var> が指す
+<code>EB_Hooksest</code> オブジェクトの後始末を行います。
+
+     <p>オブジェクトが割り当てて管理していたメモリは、すべて解放されます。
+すべてのフックには、フック関数として <code>NULL</code> がセットされます。
+
+     <p>後始末をしたオブジェクトに対して <code>eb_set_hook()</code>, <code>eb_set_hooks()</code>
+を呼ぶことで、オブジェクトを再利用することができます。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_set_hook</b><i> </i>(<i>EB_Hookset *</i><var>hookset</var><i>, const EB_Hook *</i><var>hook</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_set_hook()</code> は、<var>hookset</var> が指す <code>EB_Hooksest</code>
+オブジェクトに、フック関数を一つ登録します。
+登録するフックの種類とフック関数は、<var>hook</var> で指定します。
+
+     <p>同じフックコードに複数回フック関数を登録しても、有効になるのは最後に
+登録したものだけですので、注意して下さい。
+フック関数として <code>NULL</code> を指定すると、登録されているフックが解除
+されます。
+
+     <p>成功すると、この関数は <code>EB_SUCCESS</code> を返します。
+失敗すると、原因を示すエラーコードを返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_set_hooks</b><i> </i>(<i>EB_Hookset *</i><var>hookset</var><i>, const EB_Hook *</i><var>hooks</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>この関数は <code>eb_set_hook()</code> に似ていますが、任意の個数の
+フック関数を一度に登録できる点が異なります。
+
+     <p>登録するフックの種類とフック関数は、<var>hooks</var> で指定します。
+<var>hooks</var> は <code>EB_Hook</code> オブジェクトの配列 (の先頭) を指して
+いなければなりません。
+また、この配列の末尾には、フックコード <code>EB_HOOK_NULL</code> をセット
+した <code>EB_Hook</code> オブジェクトを配列要素として置く必要があります。
+
+     <p><code>eb_set_hooks()</code> は、配列の先頭から順番に、指定されたフックコード
+に対してフック関数を登録していきます。
+エラーが発生すると、残りのフックの登録はせずに、原因を示すエラーコード
+をただちに返します。
+すべてのフック関数の登録に成功すると、<code>EB_SUCCESS</code> を返します。
+</td></tr>
+</table>
+
+   </body></html>
+

@@ -1,0 +1,75 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Subbooks">Subbooks</a>,
+前:<a rel="previous" accesskey="p" href="Heights.html#Heights">Heights</a>,
+上:<a rel="up" accesskey="u" href="Invoke-ebfont.html#Invoke%20ebfont">Invoke ebfont</a>
+<hr><br>
+</div>
+
+<h3 class="section">副本</h3>
+
+   <p>なにも設定しないと、<code>ebzip</code> はすべての副本 (subbook) を対象にして
+画像ファイルを生成しますが、<code>--subbook</code> (<code>-S</code>) オプションを
+使うと、指定した副本の画像ファイルだけを生成することができます。
+
+   <p><code>--subbook</code> オプションは引数を一つ取り、そこにカンマ (<code>,</code>)
+で区切って、副本のディレクトリ名を並べて書きます。
+<code>ebinfo</code> コマンドを用いると、あなたの所有している書籍にどのような
+副本が含まれているのかを知ることができます。
+
+<pre class="example">     % ebinfo /mnt/cdrom
+     ディスクの形式: EB/EBG/EBXA/EBXA-C/S-EBXA
+     文字コード: JIS X 0208
+     副本の数: 3
+     副本 1:
+       題名: 新英和辞典（第四版）
+       ディレクトリ: english
+       検索方式: 前方一致 後方一致 条件 メニュー
+       フォントの大きさ: 16 24 30 48
+       半角フォントの文字: 0xa121 -- 0xa24e
+       全角フォントの文字: 0xa321 -- 0xa27e
+     副本 2:
+       題名: CD-ROM 仏和辞典（第三版）
+       ディレクトリ: french
+       検索方式: 前方一致 後方一致 条件 メニュー
+       フォントの大きさ: 16 24 30 48
+       半角フォントの文字:
+       全角フォントの文字: 0xa321 -- 0xa27e
+     副本 3:
+       題名: ポケット独和辞典（第三版）
+       ディレクトリ: german
+       検索方式: メニュー
+       フォントの大きさ: 16 24 30 48
+       半角フォントの文字:
+       全角フォントの文字: 0xa321 -- 0xa27e
+     </pre>
+
+<p>(<code>ebinfo</code> コマンドに関しての詳細は、
+see <a href="../ebinfo-ja/Invoke-ebinfo.html#Invoke%20ebinfo"><code>ebinfo</code> の実行</a>)。
+<br>
+この例では、3 つの副本が書籍には含まれており、そのディレクトリ名は
+<code>english</code>, <code>french</code>, <code>german</code> だということが分かります。
+
+   <p>次のコマンドを実行すると, <code>ebfont</code> は <code>english</code> と
+<code>french</code> の画像ファイルだけを生成します。
+
+<pre class="example">     % ebfont --subbook english,french /mnt/cdrom
+     </pre>
+
+<p>ディレクトリ名の大文字・小文字の違いは、区別されません。
+<code>--subbook</code> の引数は、次のように分けて書くこともできます。
+
+<pre class="example">     % ebfont --subbook english --subbook french /mnt/cdrom
+     </pre>
+
+   </body></html>
+

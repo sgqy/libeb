@@ -1,0 +1,94 @@
+<html lang="en">
+<head>
+<title>ebzip</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name=description content="ebzip">
+<meta name=generator content="makeinfo 4.2">
+<link href="http://www.gnu.org/software/texinfo/" rel=generator-home>
+</head>
+<body>
+<p>
+Node:<a name="Partial%20Compression">Partial Compression</a>,
+Next:<a rel=next accesskey=n href="Overwrite-Old-Files.html#Overwrite%20Old%20Files">Overwrite Old Files</a>,
+Previous:<a rel=previous accesskey=p href="Test.html#Test">Test</a>,
+Up:<a rel=up accesskey=u href="Compression.html#Compression">Compression</a>
+<hr><br>
+
+<h3>Partial Compression</h3>
+
+<p><code>ebzip</code> compresses an entire book by default,
+but the <code>--subbook</code> (<code>-S</code>) and <code>--skip-content</code>
+(<code>-s</code>) options allow you to compress part of a book.
+
+<p>The <code>--subbook</code> option takes an argument which is a list of
+directory names of subbooks to be compressed, separeted by a comma
+(<code>,</code>). 
+The <code>ebinfo</code> command tells you what subbooks your book contains
+and what their directory names are.
+
+<br><pre>% ebinfo /mnt/cdrom
+disc type: EB/EBG/EBXA/EBXA-C/S-EBXA
+character code: JIS X 0208
+the number of subbooks: 3
+subbook 1:
+  title: New English Japanese Dictionary (4th edition)
+  directory: english
+  search methods: word endword keyword menu
+  font sizes: 16 24 30 48
+  narrow font characters: 0xa121 -- 0xa24e
+  wide font characters: 0xa321 -- 0xa27e
+subbook 2:
+  title: CD-ROM French Japanese Dictionary (3rd edition)
+  directory: french
+  search methods: word endword keyword menu
+  font sizes: 16 24 30 48
+  narrow font characters:
+  wide font characters: 0xa321 -- 0xa27e
+subbook 3:
+  title: Pocket German Japanese Dictionary (3rd edition)
+  directory: german
+  search methods: menu
+  font sizes: 16 24 30 48
+  narrow font characters:
+  wide font characters: 0xa321 -- 0xa27e
+</pre>
+
+<p>(See <a href="../ebinfo/Invoke-ebinfo.html#Invoke%20ebinfo">Invoke <code>ebinfo</code></a>,
+for more details about the <code>ebinfo</code> command). 
+<br>
+In this example, there are three subbooks in the book, and their
+directory names are <code>english</code>, <code>french</code> and <code>german</code>. 
+By the following, you can compress <code>english</code> and <code>french</code>:
+
+<br><pre>% ebzip --subbook english,french /dict
+</pre>
+
+<p>Case of the directory names are not sensitve. 
+An argument to <code>--subbook</code> can be splitted like as follows:
+
+<br><pre>% ebzip --subbook english --subbook french /dict
+</pre>
+
+<p>Files in the rest subbooks (<code>german</code> in this example) are not
+compressed nor copied, so that the compression procedure for the book
+is incompleted at this point. 
+In order to use the book, you must compress the rest subbooks in a
+further operation, or deletes the rest subbooks from a subbook list in
+the <code>catalog(s)</code> file by using the <code>ebrefile</code> command
+(See <a href="../ebrefile/Combination-with-ebzip.html#Combination%20with%20ebzip">Combination with <code>ebzip</code></a>, for more details). 
+You can compress subbooks with different compression levels
+(e.g. compress <code>english</code> and <code>french</code> with level 0, and
+compress <code>german</code> with level 2).
+
+<p>The <code>--skip-content</code> (<code>-s</code>) is similar to <code>--subbook</code>,
+but <code>--skip-content</code> specifies data types of files to be ignored.
+
+<br><pre>% ebzip --skip-content sound,movie --subbook french /dict
+</pre>
+
+<p>In this example, <code>ebzip</code> skips sound and movie files. 
+The data type names currently recognized by <code>ebzip</code> are:
+<code>font</code>, <code>graphic</code>, <code>sound</code> and <code>movie</code>.
+
+</body></html>
+

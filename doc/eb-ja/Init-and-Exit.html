@@ -1,0 +1,47 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Init%20and%20Exit">Init and Exit</a>,
+次:<a rel="next" accesskey="n" href="EB_Book.html#EB_Book">EB_Book</a>,
+前:<a rel="previous" accesskey="p" href="Compilation.html#Compilation">Compilation</a>,
+上:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter">ライブラリの初期化と後始末</h2>
+
+   <p>この章からは、EB ライブラリのプログラミングについての解説になります。
+
+   <p>まず、アプリケーションプログラムから EB ライブラリを利用するには、
+最初にライブラリを初期化する必要があります。
+
+   <p>ライブラリの初期化を行うには、<code>eb_initialize_library()</code> という
+関数を呼び出します。
+
+<pre class="example">     if (eb_initialize_library() != EB_SUCCESS) {
+         printf("eb_initialize_library() failed\n");
+         exit(1);
+     }
+     </pre>
+
+   <p>同様に、ライブラリを使い終わったら、<code>eb_finalize_library()</code> という
+関数を呼び出して後始末をします。
+
+<pre class="example">     eb_finalize_library();
+     </pre>
+
+<ul class="menu">
+<li><a accesskey="1" href="Init-and-Exit-Sample.html#Init%20and%20Exit%20Sample">Init and Exit Sample</a>:         サンプルプログラム
+<li><a accesskey="2" href="Init-and-Exit-Functions.html#Init%20and%20Exit%20Functions">Init and Exit Functions</a>:      関数の詳細
+</ul>
+
+   </body></html>
+

@@ -1,0 +1,74 @@
+<html lang="en">
+<head>
+<title>ebfont</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name=description content="ebfont">
+<meta name=generator content="makeinfo 4.2">
+<link href="http://www.gnu.org/software/texinfo/" rel=generator-home>
+</head>
+<body>
+<p>
+Node:<a name="Subbooks">Subbooks</a>,
+Previous:<a rel=previous accesskey=p href="Heights.html#Heights">Heights</a>,
+Up:<a rel=up accesskey=u href="Invoke-ebfont.html#Invoke%20ebfont">Invoke ebfont</a>
+<hr><br>
+
+<h3>Subbooks</h3>
+
+<p><code>ebfont</code> generates image files for all subbooks by default,
+but the <code>--subbook</code> (<code>-S</code>) option allows you to generates
+image files for specified subbooks only.
+
+<p>The <code>--subbook</code> option takes an argument which is a list of
+directory names of subbooks to be compressed, separeted by a comma
+(<code>,</code>). 
+The <code>ebinfo</code> command tells you what subbooks your book contains
+and what their directory names are.
+
+<br><pre>% ebinfo /mnt/cdrom
+disc type: EB/EBG/EBXA/EXBA-C/S-EBXA
+character code: JIS X 0208
+the number of subbooks: 3
+subbook 1:
+  title: New English Japanese Dictionary (4th edition)
+  directory: english
+  search methods: word endword keyword menu
+  font sizes: 16 24 30 48
+  narrow font characters: 0xa121 -- 0xa24e
+  wide font characters: 0xa321 -- 0xa27e
+subbook 2:
+  title: CD-ROM French Japanese Dictionary (3rd edition)
+  directory: french
+  search methods: word endword keyword menu
+  font sizes: 16 24 30 48
+  narrow font characters:
+  wide font characters: 0xa321 -- 0xa27e
+subbook 3:
+  title: Pocket German Japanese Dictionary (3rd edition)
+  directory: german
+  search methods: menu
+  font sizes: 16 24 30 48
+  narrow font characters:
+  wide font characters: 0xa321 -- 0xa27e
+</pre>
+
+<p>(See <a href="../ebinfo/Invoke-ebinfo.html#Invoke%20ebinfo">Invoke <code>ebinfo</code></a>,
+for more details about the <code>ebinfo</code> command). 
+<br>
+In this example, there are three subbooks in the book, and their
+directory names are <code>english</code>, <code>french</code> and <code>german</code>.
+
+<p>Inkoing the following command, <code>ebfont</code> generates image files for
+<code>english</code> and <code>french</code> only.
+
+<br><pre>% ebfont --subbook english,french /mnt/cdrom
+</pre>
+
+<p>Case of the directory names are not sensitve. 
+An argument to <code>--subbook</code> can be splitted like as follows:
+
+<br><pre>% ebfont --subbook english --subbook french /mnt/cdrom
+</pre>
+
+</body></html>
+

@@ -1,0 +1,54 @@
+<html lang="en">
+<head>
+<title>ebappendix</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="ebappendix">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Write%20Appendix%20Source">Write Appendix Source</a>,
+次:<a rel="next" accesskey="n" href="Generate-Appendix.html#Generate%20Appendix">Generate Appendix</a>,
+前:<a rel="previous" accesskey="p" href="Introduction.html#Introduction">Introduction</a>,
+上:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter">appendix のソースデータの書き方</h2>
+
+   <p>この章では、appendix のソースデータの書き方を説明します。
+ここで、「ソースデータ」と言っているのは、<code>ebappendix</code> が読み込む
+テキスト形式で書かれたデータのことです。
+
+   <p>appendix を生成するためには、次に挙げるソースデータファイルが必要です。
+これらのファイルをすべて、同じディレクトリ上に用意するようにします。
+
+     <dl>
+<dt><code>catalog.app</code> または <code>catalogs.app</code>
+     <dd>appendix には必ず、<code>catalog</code> または <code>catalogs</code> という名前の
+ファイルが必要です。
+<code>catalog.app</code>, <code>catalogs.app</code> はその生成元となるファイルです。
+appendix に収録されている <dfn>副本 (subbook)</dfn>
+(詳しくは see <a href="Write-catalog.app.html#Write%20catalog.app"><code>catalog(s).app</code> の書き方</a>)
+の一覧を記します。
+
+     <br><dt><code>&lt;副本&gt;.app</code>
+     <dd>appendix が収録している副本それぞれに対して、一つずつ用意する必要が
+あります (<code>&lt;副本&gt;</code> の部分は、実際は個々の副本の名前になります)。
+appendix のメインデータである、本文の区切りコードや外字の代替文字列は、
+このファイルに記します。
+</dl>
+
+<ul class="menu">
+<li><a accesskey="1" href="What-is-catalog.app.html#What%20is%20catalog.app">What is catalog.app</a>:          <code>catalog(s).app</code> とは
+<li><a accesskey="2" href="Write-catalog.app.html#Write%20catalog.app">Write catalog.app</a>:            <code>catalog(s).app</code> の書き方
+<li><a accesskey="3" href="What-is-subbook.app.html#What%20is%20subbook.app">What is subbook.app</a>:          <code>&lt;副本&gt;.app</code> とは
+<li><a accesskey="4" href="subbook.app-Syntax.html#subbook.app%20Syntax">subbook.app Syntax</a>:           <code>&lt;副本&gt;.app</code> の文法
+<li><a accesskey="5" href="Single-Directives.html#Single%20Directives">Single Directives</a>:            <code>&lt;副本&gt;.app</code> の単独指示子
+<li><a accesskey="6" href="Group-Directives.html#Group%20Directives">Group Directives</a>:             <code>&lt;副本&gt;.app</code> の複合指示子
+</ul>
+
+   </body></html>
+

@@ -1,0 +1,67 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Subbook%20Code">Subbook Code</a>,
+次:<a rel="next" accesskey="n" href="Current-Subbook.html#Current%20Subbook">Current Subbook</a>,
+前:<a rel="previous" accesskey="p" href="Subbook.html#Subbook">Subbook</a>,
+上:<a rel="up" accesskey="u" href="Subbook.html#Subbook">Subbook</a>
+<hr><br>
+</div>
+
+<h3 class="section">副本コード</h3>
+
+<p>EB ライブラリでは、それぞれの副本に対して <dfn>副本コード (subbook code)</dfn>
+を割り当てます。
+このコードは EB ライブラリが副本を識別するために用いますので、個々の
+副本コードは、書籍内で同じものがないようになっています。
+
+   <p>以下のソースコードは、<code>eb_subbook_list()</code> という関数の使用例です。
+この関数は、書籍内のすべての副本の副本コードを取得することができます。
+
+<pre class="example">     /* <code>book</code> が <code>EB_Book</code> のオブジェクトで、すでに書籍に結び付け
+      * られていると仮定しています。*/
+     EB_Subbook_Code sub_codes[EB_MAX_SUBBOOKS];
+     int sub_count;
+     
+     if (eb_subbook_list(&amp;book, sub_codes, &amp;sub_count)
+         != EB_SUCCESS) {
+         printf("eb_subbook_list() failed\n");
+         return;
+     }
+     </pre>
+
+<p><code>eb_subbook_list()</code> が成功すると、書籍内のすべての副本コードが
+配列 <code>sub_codes[]</code> に格納されます。
+配列の先頭の副本コードは <code>sub_codes[0]</code> と表され、次の
+コードは <code>sub_codes[1]</code>、という具合になります。
+副本の個数は、<code>sub_count</code> に格納されます。
+
+   <p>個々の副本には、必ず題名が付けられています。
+先頭の副本 (<code>sub_codes[0]</code>) の題名は、次のようにして得ることが
+できます。
+
+<pre class="example">     char title[EB_MAX_TITLE_LENGTH + 1];
+     
+     if (eb_subbook_title2(&amp;book, sub_codes[0], title)
+         != EB_SUCCESS) {
+         printf("eb_subbook_title2() failed\n");
+         return;
+     }
+     </pre>
+
+<p><code>eb_subbook_title2()</code> の呼び出しが成功すると、<code>title</code> に
+題名を表す文字列が格納されます。
+
+   <p>蛇足ですが、(副本ではなく) CD-ROM の題名を取得する関数はありません。
+なぜなら、題名を示すデータが CD-ROM の中には何処にもないからです。
+
+   </body></html>
+

@@ -1,0 +1,83 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Compilation%20with%20Autoconf">Compilation with Autoconf</a>,
+次:<a rel="next" accesskey="n" href="Debug-EB-Library.html#Debug%20EB%20Library">Debug EB Library</a>,
+前:<a rel="previous" accesskey="p" href="Compilation-Simple-Way.html#Compilation%20Simple%20Way">Compilation Simple Way</a>,
+上:<a rel="up" accesskey="u" href="Compilation.html#Compilation">Compilation</a>
+<hr><br>
+</div>
+
+<h3 class="section">Autoconf を併用したコンパイル方法</h3>
+
+   <p>作業の前に、Autoconf, Automake, Libtool は、あらかじめインストールして
+おいて下さい。
+Autoconf はバージョン 2.50 以降が必要です。
+
+   <p>まず、アプリケーションプログラムの <code>configure.ac</code>
+(もしくは <code>configure.in</code>) に、次の行を加えます。
+
+<pre class="example">     eb_LIB_EB3
+     </pre>
+
+<p>マクロ <code>eb_LIB_EB3</code> は、EB ライブラリの使用に必要な一切のチェック
+を行い、さらに <code>configure</code> に次のオプションを追加します。
+
+<pre class="example">       --with-eb-conf=FILE     eb.conf file is FILE [SYSCONFDIR/eb.conf]
+     </pre>
+
+<p><code>eb.conf</code> は、EB ライブラリをインストールしたときの情報を記録した
+ファイルで、ライブラリと一緒にインストールされます。
+<code>eb_LIB_EB3</code> はこのファイルを読み込んで、C コンパイラに渡さなければ
+いけないオプションなどの情報を得ます。
+<code>--eb-conf-file</code> は、<code>eb.conf</code> のファイル名を明示的に指定する
+オプションです。
+
+   <p>マクロ <code>eb_LIB_EB3</code> は、<code>eb3.m4</code> というファイルで提供されて
+います。
+EB ライブラリを <code>/usr/local</code> にインストールし、個々のファイルの
+インストール先を変更していなければ、<code>/usr/local/share/aclocal</code> に
+インストールされます。
+この <code>eb3.m4</code> をソースコードの適当なディレクトリの下 (たとえば
+<code>m4</code>) にコピーして下さい。
+
+   <p><code>aclocal</code> コマンドで <code>aclocal.m4</code> を再生成する際は、
+<code>-I</code> オプションでマクロファイルのディレクトリを指定します。
+
+<pre class="example">     aclocal -I m4
+     </pre>
+
+<p>加えて、トップディレクトリの <code>Makefile.am</code> の中にも
+<code>aclocal</code> へ渡すオプションを書いておきます。
+
+<pre class="example">     ACLOCAL_AMFLAGS = -I m4
+     </pre>
+
+   <p>また、ソースコードのディレクトリに Libtool パッケージがまだ用意されて
+いなければ、用意します。
+<code>libtoolize</code> コマンドを実行して下さい。
+Libtool パッケージが、ソースコードのディレクトリにコピーされます。
+
+<pre class="example">     libtoolize
+     </pre>
+
+   <p>最後に、コンパイルを行うディレクトリの <code>Makefile.am</code> ファイルの
+<code>_LDFLAGS</code> と <code>INCLUDES</code> に、次のような値を追加します。
+
+<pre class="example">     program_LDFLAGS = $(EBCONF_EBLIBS) $(EBCONF_ZLIBLIBS) $(EBCONF_INTLLIBS)
+     INCLUDES = $(EBCONF_EBINCS)
+     </pre>
+
+<p>(<code>program_LDFLAGS</code> の <code>program</code> のところは、
+アプリケーションプログラムの実際のコマンド名にします。)
+
+   </body></html>
+

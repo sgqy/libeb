@@ -1,0 +1,56 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Get%20Remained%20Entries">Get Remained Entries</a>,
+次:<a rel="next" accesskey="n" href="Search-Data-Types.html#Search%20Data%20Types">Search Data Types</a>,
+前:<a rel="previous" accesskey="p" href="EB_Hit.html#EB_Hit">EB_Hit</a>,
+上:<a rel="up" accesskey="u" href="Search.html#Search">Search</a>
+<hr><br>
+</div>
+
+<h3 class="section">残っているエントリの取得</h3>
+
+   <p>前に述べたように、<code>eb_hit_list()</code> を呼び出すときは、一致する
+エントリを最大で何個まで探すのかを引数で指定します。
+また、<code>eb_hit_list()</code> は処理が成功すると、実際に見つかったエントリ
+の数をアプリケーションプログラムに教えます。
+
+<pre class="example">     error_code = eb_hit_list(&amp;book, MAX_HITS, hits, &amp;hit_count);
+     if (error_code == EB_SUCCESS)
+         printf("%d entries found\n", hit_count);
+     </pre>
+
+<p>指定した最大個数よりも多くの一致エントリが副本に存在している場合は、
+<code>eb_hit_list()</code> を繰り返し呼び出すことで、残りのエントリを取得
+することができます。
+
+<pre class="example">     for (;;) {
+         if (eb_hit_list(&amp;book, MAX_HITS, hits, &amp;hit_count)
+             != EB_SUCCESS) {
+             fprintf(stderr, "an error occurs.\n");
+             return;
+         }
+         if (hit_count == 0)
+             break;
+         /* 取得した一致エントリの処理 */
+     }
+     </pre>
+
+<p>一致エントリがもう残っていなければ、<code>eb_hit_list()</code> は
+<code>&amp;hit_count</code> の指す領域に 0 を書き込んで、<code>EB_SUCCESS</code> を
+返します。
+
+   <p>ただし、途中で <code>eb_hit_list()</code> が失敗すると (<code>EB_SUCCESS</code>
+以外の値を返すと)、検索リクエストに関する状態記録はリセットされるため、
+一致エントリの取得をそれ以上続けることはできません。
+
+   </body></html>
+

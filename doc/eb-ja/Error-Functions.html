@@ -1,0 +1,82 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Error%20Functions">Error Functions</a>,
+前:<a rel="previous" accesskey="p" href="Error-Code-List.html#Error%20Code%20List">Error Code List</a>,
+上:<a rel="up" accesskey="u" href="Error-Handling.html#Error%20Handling">Error Handling</a>
+<hr><br>
+</div>
+
+<h3 class="section">関数の詳細</h3>
+
+   <p>この節で説明している関数を使うには、次のようにヘッダファイルを読み込んで
+下さい。
+
+<pre class="example">     #include &lt;eb/error.h&gt;
+     </pre>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">const char * <b>eb_error_string</b><i> </i>(<i>EB_Error_Code </i><var>error_code</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_error_string()</code> は、エラーコード <var>error_code</var> を文字列
+に変換したものを返します。
+文字列の文字コードは、ASCII になります。
+たとえば、エラーコード値 <code>EB_SUCCESS</code> を渡すと文字列
+<code>"EB_SUCCESS"</code> を返します。
+未知のエラーコードを渡したときは、<code>"EB_ERR_UNKNOWN"</code> を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">const char * <b>eb_error_message</b><i> </i>(<i>EB_Error_Code </i><var>error_code</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_error_message()</code> は、エラーコード <var>error_code</var> に対応
+したメッセージを文字列にして返します。
+関数の返すメッセージは、英語か日本語になります。
+
+     <p>国際化機能を有効にして EB ライブラリをコンパイルしていない場合は、常に
+英語のメッセージを返します。
+このときのメッセージの文字コードは、ASCII になります。
+
+     <p>メッセージの国際化機能 (NLS) を有効にして EB ライブラリをコンパイル
+した場合は、ロケールの設定に応じてどちらの言語のメッセージを返すのか
+が決まります。
+また、GNU gettext バージョン 0.36 以降では iconv() と連携することにより、
+メッセージの文字コードもロケールに応じて変化します。
+gettext が iconv() との連携を行わなければ、英語のメッセージは ASCII、
+日本語のメッセージは日本語 EUC になります。
+この関数の呼び出しによって、gettext のテキストドメインの設定は変化
+しません。
+
+     <p>未知のエラーコードを渡したときに返すメッセージは、
+英語では <code>"unknown error"</code>、日本語では <code>"未知のエラーです"</code>
+になります。
+</td></tr>
+</table>
+
+   </body></html>
+

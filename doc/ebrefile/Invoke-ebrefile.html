@@ -1,0 +1,48 @@
+<html lang="en">
+<head>
+<title>ebrefile</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name=description content="ebrefile">
+<meta name=generator content="makeinfo 4.2">
+<link href="http://www.gnu.org/software/texinfo/" rel=generator-home>
+</head>
+<body>
+<p>
+Node:<a name="Invoke%20ebrefile">Invoke ebrefile</a>,
+Next:<a rel=next accesskey=n href="Summary-of-Options.html#Summary%20of%20Options">Summary of Options</a>,
+Previous:<a rel=previous accesskey=p href="Introduction.html#Introduction">Introduction</a>,
+Up:<a rel=up accesskey=u href="index.html#Top">Top</a>
+<hr><br>
+
+<h2>Invoke <code>ebrefile</code></h2>
+
+<p>Its usual way to invoke <code>ebrefile</code> is as follows:
+
+<br><pre>% ebrefile <var>book-path</var>
+</pre>
+
+<p><var>book-path</var> points to the top directory of a CD-ROM book where
+the file <code>catalog</code> or <code>catalogs</code> resides. 
+Though you cannot specify two or more book-paths,
+you can omit book-path like as follows:
+
+<br><pre>% ebrefile
+</pre>
+
+<p>In this case, <code>ebrefile</code> assumes that the current working directory
+(<code>.</code>) is specified.
+
+<p>Since <code>ebrefile</code> doesn't support remote access, it rejects remote
+access identifer.
+
+<br><pre>% ebrefile ebnet://localhost/cdrom
+ebrefile: ebnet is not supported
+</pre>
+
+<ul>
+<li><a accesskey=1 href="Select-Subbooks.html#Select%20Subbooks">Select Subbooks</a>:              Select Subbooks. 
+<li><a accesskey=2 href="Combination-with-ebzip.html#Combination%20with%20ebzip">Combination with ebzip</a>:       Combination with <code>ebzip</code>. 
+</ul>
+
+</body></html>
+

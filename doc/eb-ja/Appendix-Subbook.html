@@ -1,0 +1,68 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Appendix%20Subbook">Appendix Subbook</a>,
+次:<a rel="next" accesskey="n" href="Appendix-Stop-Code.html#Appendix%20Stop%20Code">Appendix Stop Code</a>,
+前:<a rel="previous" accesskey="p" href="EB_Appendix.html#EB_Appendix">EB_Appendix</a>,
+上:<a rel="up" accesskey="u" href="Appendix-Data.html#Appendix%20Data">Appendix Data</a>
+<hr><br>
+</div>
+
+<h3 class="section">副本</h3>
+
+   <p>CD-ROM と同様に、appendix にも副本が存在します。
+appendix の副本も、副本コードを使って識別します。
+個々の副本コードは、appendix 内で同じものがないようになっています。
+
+   <p>CD-ROM 書籍内のすべての副本の副本コードを取得する関数として
+<code>eb_subbook_list()</code> がありましたが、appendix にも
+<code>eb_appendix_subbook_list()</code> という同様の関数があります。
+
+<pre class="example">     /* <code>app</code> が <code>EB_Appendix</code> のオブジェクトで、すでに書籍に
+      * 結び付けられていると仮定しています。*/
+     EB_Subbook_Code sub_codes[EB_MAX_SUBBOOKS];
+     int sub_count;
+     
+     if (eb_appendix_subbook_list(&amp;app, sub_codes, &amp;sub_count)
+         != EB_SUCCESS) {
+         printf("eb_appendix_subbook_list() failed\n");
+         return;
+     }
+     </pre>
+
+<p><code>eb_appendix_subbook_list()</code> が成功すると、書籍内のすべての
+副本コードが 配列 <code>sub_codes[]</code> に格納されます。
+配列の先頭の副本コードは <code>sub_codes[0]</code> と表され、次の
+コードは <code>sub_codes[1]</code>、という具合になります。
+副本の個数は、<code>sub_count</code> に格納されます。
+
+   <p><code>EB_Book</code> と同様に <code>EB_Appendix</code> オブジェクトでも、
+結びつけられた CD-ROM 書籍の中の任意の副本から一つ選んで、
+<dfn>選択中の副本 (current subbook)</dfn> として指定することができます。
+複数の副本を、同時に選択することはできません。
+区切りコードや外字の代替文字列といった appendix 内のデータへのアクセス
+は、選択中の副本に対してだけ行えます。
+
+   <p>以下は、先頭の副本 (<code>sub_codes[0]</code>) を選択する場合の例です。
+
+<pre class="example">     /* <code>app</code> が <code>EB_Appendix</code> のオブジェクトで、すでに書籍に
+      * 結び付けられていると仮定しています。*/
+     if (eb_set_appendix_subbook(&amp;app, sub_codes[0]) != EB_SUCCESS) {
+         printf("eb_subbook_list() failed\n");
+         return;
+     }
+     </pre>
+
+   <p><code>eb_bind_appendix()</code> で <code>EB_Appendix</code> オブジェクトを appendix
+に結び付けた直後は、いずれの副本も選択されていない状態になっています。
+
+   </body></html>
+

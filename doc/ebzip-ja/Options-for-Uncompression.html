@@ -1,0 +1,47 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Options%20for%20Uncompression">Options for Uncompression</a>,
+次:<a rel="next" accesskey="n" href="Uncompress-Compressed-Book.html#Uncompress%20Compressed%20Book">Uncompress Compressed Book</a>,
+前:<a rel="previous" accesskey="p" href="Uncompression-Example.html#Uncompression%20Example">Uncompression Example</a>,
+上:<a rel="up" accesskey="u" href="Uncompression.html#Uncompression">Uncompression</a>
+<hr><br>
+</div>
+
+<h3 class="section">伸長のオプション</h3>
+
+   <p>多くのオプションは、圧縮時と伸長時とで同じ意味を持っています。
+
+   <p><code>--keep</code> オプションを指定すると、<code>ebunzip</code> は、伸長した後に
+圧縮ファイルを削除しなくなります。
+
+   <p><code>--test</code> オプションを指定すると、<code>ebunzip</code> は伸長したデータ
+を実際のファイルには書き込みません。
+このオプションは、ファイルが正しく圧縮されているのかを確認するときに便
+利です
+(<code>--test</code> オプションについての詳細は、see <a href="Test.html#Test">テスト</a>)。
+
+   <p><code>--subbook</code> や <code>--skip-content</code> オプションを指定すると、条件
+に合致したファイルだけしか伸長しません
+(これらのオプションについての詳細は、
+see <a href="Partial-Compression.html#Partial%20Compression">一部だけの圧縮</a>)。
+
+   <p><code>--force-overwrite</code> や <code>--no-overwrite</code> オプションを指定する
+と、<code>ebunzip</code> は上書きしても良いかどうかの確認なしに、ファイルを
+上書きしたり飛ばして次に進んだりします
+(<code>--force-overwrite</code> と <code>--no-overwrite</code> オプションについての
+詳細は、see <a href="Overwrite-Old-Files.html#Overwrite%20Old%20Files">古いファイルの上書き</a>)。
+
+   <p><code>ebunzip</code> は、<code>--level</code> オプションを無視します。
+伸長時に <code>--level</code> オプションを指定する必要はありません。
+
+   </body></html>
+

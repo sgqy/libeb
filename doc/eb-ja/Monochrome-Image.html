@@ -1,0 +1,91 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Monochrome%20Image">Monochrome Image</a>,
+次:<a rel="next" accesskey="n" href="Color-Image.html#Color%20Image">Color Image</a>,
+前:<a rel="previous" accesskey="p" href="Binary-Data.html#Binary%20Data">Binary Data</a>,
+上:<a rel="up" accesskey="u" href="Binary-Data.html#Binary%20Data">Binary Data</a>
+<hr><br>
+</div>
+
+<h3 class="section">モノクロ図版</h3>
+
+   <p>2 階調のモノクロ図版は、電子ブック、EPWING 双方に存在し、EB ライブラリ
+ではどちらも扱うことができます。
+(電子ブックに存在する 16 階調のモノクロ図版は、今のところ EB ライブラリ
+では対応していません。)
+
+   <p>モノクロ図版データの内部形式は外字と同じですが、EB ライブラリでは、
+1 ピクセルに 1bit を割り当てた BMP 形式に変換してアプリケーションに
+渡すようにしています。
+したがって、アプリケーションからは、あたかも BMP の図版データが収録
+されているようにみえます。
+
+   <p>モノクロ図版の取り出し方ですが、これにはまずモノクロ図版の参照開始と終了
+を表すエスケープシーケンスへのフック <code>EB_HOOK_BEGIN_MONO_GRAPHIC</code>
+と <code>EB_HOOK_END_MONO_GRAPHIC</code> を使います。
+
+   <p>フック <code>EB_HOOK_BEGIN_MONO_GRAPHIC</code> がフック関数に渡す引数
+(<code>argv</code>) は 4 つあり、このうちの <code>argv[2]</code> と <code>argv[3]</code>
+が図版の幅と高さ (ピクセル数) を意味します。
+
+   <p>また、フック <code>EB_HOOK_END_MONO_GRAPHIC</code> がフック関数に渡す引数
+は 3 つで、<code>argv[1]</code> と <code>argv[2]</code> が、図版データのページ番号
+とオフセットになります。
+
+   <p>モノクロ図版を取得するには、上記のフックから得た図版のページ番号と
+オフセット、および幅と高さを記憶しておきます。
+
+   <p>次に、<code>eb_set_binary_mono_graphic()</code> を呼び出して、これから
+モノクロ図版のデータを取得することを EB ライブラリに伝えます。
+<code>eb_set_binary_mono_graphic()</code> への引数には、
+<code>EB_Book</code> オブジェクトと、先ほど得た図版へのページ番号、オフセット、
+幅、高さを渡します。
+<code>EB_Book</code> オブジェクトは、これから取り出そうとしている図版を収録
+している副本をあらかじめ選択しておく必要があります。
+
+<pre class="example">     /* <code>eb_set_binary_mono_graphic()</code> の関数プロトタイプ */
+     EB_Error_Code
+     eb_set_binary_mono_graphic(EB_Book *book, EB_Position *position,
+         int width, int height);
+     </pre>
+
+   <p>電子ブックでは、フック関数に渡される幅と高さの値は 0 になっていますが、
+そのまま <code>eb_set_binary_mono_graphic()</code> に渡します。
+(EPWING では 0 を渡してはいけません。)
+
+   <p>以上で図版データの取得準備ができたので、データを読み込みます。
+これには、<code>eb_read_binary()</code> を使います。
+
+<pre class="example">     #define MAX_LENGTH 1000
+     char bitmap[MAX_LENGTH];
+     ssize_t bitmap_length;
+     
+     if (eb_read_binary(&amp;book, MAX_LENGTH, bitmap, &amp;bitmap_length)
+         != EB_SUCCESS) {
+         fprintf(stderr, "an error occurs.\n");
+         return;
+     }
+     </pre>
+
+<p>成功すると、読み込んだ図版データが <code>bitmap</code> に書き込まれ、何バイト
+書き込んだのかが <code>bitmap_length</code> に書き込まれます。
+書き込まれるバイト数は、最大で <code>MAX_LENGTH</code> バイトです。
+
+   <p>必ずしも一回の <code>eb_read_binary()</code> の呼び出しで図版データを終端まで
+読み込む必要はなく、関数を繰り返し呼び出せば、前回の続きを読み込むこと
+ができます。
+<code>eb_read_binary()</code> は、図版データの終端まで来るとそれ以上データ
+は読み込みませんので、<code>eb_read_binary()</code> が 0 を返した時点で
+図版データが終端したことを認識できます。
+
+   </body></html>
+

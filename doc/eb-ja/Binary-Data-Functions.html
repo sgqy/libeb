@@ -1,0 +1,302 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Binary%20Data%20Functions">Binary Data Functions</a>,
+前:<a rel="previous" accesskey="p" href="MPEG-Movie.html#MPEG%20Movie">MPEG Movie</a>,
+上:<a rel="up" accesskey="u" href="Binary-Data.html#Binary%20Data">Binary Data</a>
+<hr><br>
+</div>
+
+<h3 class="section">関数の詳細</h3>
+
+   <p>この節で説明している関数を使うには、次のようにヘッダファイルを読み込んで
+下さい。
+
+<pre class="example">     #include &lt;eb/binary.h&gt;
+     </pre>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_set_binary_mono_graphic</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, const EB_Position *</i><var>position</var><i>, int </i><var>width</var><i>, </i><var>height</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_set_binary_mono_graphic()</code> は、モノクロ図版のデータを
+これから取得しようとしていることを EB ライブラリに伝えます。
+引数 <var>position</var> は図版の位置、<var>width</var>, <var>height</var> には図版の
+幅と高さを渡します。
+これらの情報は、図版の参照元であるテキストデータに記載されており、通常は
+フック関数を通じて得るようにします。
+ただし、電子ブックでは幅と高さの値の情報がテキストデータに記されていない
+ため、0 を渡すことになります。
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+失敗すると、原因に応じたエラーコードを返します。
+
+     <p>あらかじめ、図版を取り出そうとしている副本を選択しておかなければ
+なりません。
+<var>book</var> が副本を選択していなければ、<code>EB_ERR_NO_CUR_SUB</code> を
+返します。
+図版の位置、幅、高さの値が明らかにおかしいと EB ライブラリが判断した
+ときは、<code>EB_ERR_NO_SUCH_BINARY</code> を返します。
+
+     <p>この関数は、実際に図版データを読み込むことはしません。
+読み込みには、<code>eb_read_binary()</code> を用います。
+モノクロ図版のデータは、1 ピクセルに 1bit を割り当てた BMP 形式になって
+います。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_set_binary_color_graphic</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, const EB_Position *</i><var>position</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_set_binary_color_graphic()</code> は、EPWING のカラー図版のデータを
+これから取得しようとしていることを EB ライブラリに伝えます。
+引数 <var>position</var> は図版の位置を渡します。
+位置の情報は、図版の参照元であるテキストデータに記載されており、通常は
+フック関数を通じて得るようにします。
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+
+     <p>あらかじめ、図版を取り出そうとしている副本を選択しておかなければ
+なりません。
+<var>book</var> が副本を選択していなければ、<code>EB_ERR_NO_CUR_SUB</code> を
+返します。
+図版の位置が明らかにおかしいと EB ライブラリが判断したときは、
+<code>EB_ERR_NO_SUCH_BINARY</code> を返します。
+
+     <p>この関数は、実際に図版データを読み込むことはしません。
+読み込みには、<code>eb_read_binary()</code> を用います。
+カラー図版データは、JPEG か BMP (DIB) のいずかの形式になっています。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_set_binary_wave</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, const EB_Position *</i><var>start_position</var><i>, EB_Position *</i><var>end_position</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_set_binary_wave()</code> は、WAVE (PCM) 形式の音声のデータを
+これから取得しようとしていることを EB ライブラリに伝えます。
+引数 <var>start_position</var> と <var>end_position</var> には音声データの開始位置
+を渡します。
+位置の情報は、音声データの参照元であるテキストデータに記載されており、
+通常はフック関数を通じて得るようにします。
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+失敗すると、原因に応じたエラーコードを返します。
+
+     <p>あらかじめ、音声データを取り出そうとしている副本を選択しておかなければ
+なりません。
+<var>book</var> が副本を選択していなければ、<code>EB_ERR_NO_CUR_SUB</code> を
+返します。
+音声データの位置が明らかにおかしいと EB ライブラリが判断したときは、
+<code>EB_ERR_NO_SUCH_BINARY</code> を返します。
+
+     <p>この関数は、実際に音声データを読み込むことはしません。
+読み込みには、<code>eb_read_binary()</code> を用います。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_set_binary_mpeg</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, const unsigned int *</i><var>argv</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_set_binary_mpeg()</code> は、MPEG1 形式の動画のデータをこれから
+取得しようとしていることを EB ライブラリに伝えます。
+引数 <var>argv</var> には動画データのファイル名を渡します。
+ただし、このファイル名は文字列ではなく、フック関数
+<code>EB_HOOK_BEGIN_MPEG</code> に渡された引数 <code>argv[2]</code> 〜 <code>argv[5]</code>
+の部分を渡します。
+つまり、フック関数の引数 <code>argv + 2</code> を、<code>eb_set_binary_mpeg()</code>
+への引数 <var>argv</var> として渡します。
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+失敗すると、原因に応じたエラーコードを返します。
+
+     <p>あらかじめ、動画データを取り出そうとしている副本を選択しておかなければ
+なりません。
+<var>book</var> が副本を選択していなければ、<code>EB_ERR_NO_CUR_SUB</code> を
+返します。
+存在しない動画ファイル名を EB ライブラリが判断したときは、
+<code>EB_ERR_NO_SUCH_BINARY</code> を返します。
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+
+     <p>この関数は、実際に動画データを読み込むことはしません。
+読み込みには、<code>eb_read_binary()</code> を用います。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_read_binary</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, size_t </i><var>binary_max_length</var><i>, char *</i><var>binary</var><i>, ssize_t *</i><var>binary_length</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_read_binary()</code> は、バイナリデータを読み込みます。
+読み込もうとしているバイナリデータは、事前に
+
+          <ul>
+<li><code>eb_set_binary_mono_graphic()</code>
+<li><code>eb_set_binary_color_graphic()</code>
+<li><code>eb_set_binary_wave()</code>
+<li><code>eb_set_binary_mpeg()</code>
+</ul>
+
+     <p>のいずれかの関数で、EB ライブラリに通知しておく必要があります。
+
+     <p>読み込んだデータは引数 <var>binary</var> の指す先の領域に書き込まれます。
+また、このとき書き込まれたバイト数は、<var>binary_length</var> の指す先の
+領域にセットされます。
+ただし、書き込まれるバイト数は、最長でも引数 <var>binary_max_length</var> に
+指定した値までとなります。
+
+     <p>この関数は、特に読み込んだデータの終端にナル文字を付加するような事は
+しません。
+読み込まれるデータもバイナリ形式なので、途中にナル文字が出現する事も
+あります。
+
+     <p>この関数を一回呼び出しだだけで、バイナリデータ全体を一気に取得する
+必要はありません。
+繰り返し呼び出せば、前回の続きからデータが読み込まれます。
+
+     <p>ただし、以下に挙げた関数を呼び出すと、バイナリデータの読み込みに関する
+状態記録がリセットされますので、それ以上の読み込みはできなくなります。
+
+          <ul>
+<li><code>eb_set_subbook()</code>
+<li><code>eb_unset_subbook()</code>
+<li><code>eb_load_all_subbooks()</code>
+<li><code>eb_bind()</code>
+<li><code>eb_finalize_book()</code>
+<li><code>eb_set_binary_mono_graphic()</code>
+<li><code>eb_set_binary_color_graphic()</code>
+<li><code>eb_set_binary_wave()</code>
+<li><code>eb_set_binary_mpeg()</code>
+</ul>
+
+     <p><code>eb_read_binary()</code> を繰り返し呼んだ場合、バイナリデータはその都度
+<var>binary</var> の先頭から書き込まれ、*<var>binary_length</var> の値も、その回
+の <code>eb_read_binary()</code> の呼び出しで書き込まれたバイト数になります。
+
+     <p>データの終端に来ると、それ以上この関数を呼んでも関数は <var>binary</var> には
+何も書き込まず、*<var>binary_length</var> に 0 を書き込み、<code>EB_SUCCESS</code>
+を返します。
+
+     <p>成功すると、この関数は <code>EB_SUCCESS</code> を返します。
+失敗すると、<var>binary_length</var> が指す領域に -1 を書き込み、原因を示す
+エラーコードを返します。
+この場合、バイナリデータの読み込み状態の記録がリセットされますので、
+データの続きを読み込むことはできなくなります。
+
+     <p>あらかじめ、<var>book</var> はいずれかの副本を選択していなくてはなりません。
+選択していない場合は、<code>EB_ERR_NO_CUR_SUB</code> を返します。
+また、冒頭に挙げた関数の呼び出しが成功していない状態でこの関数を呼ぶと、
+<code>EB_ERR_NO_CUR_BINARY</code> を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_compose_movie_file_name</b><i> </i>(<i>const unsigned int *</i><var>argv</var><i>, char *</i><var>composed_file_name</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_compose_movie_file_name()</code> は、動画データのファイル名を
+通常の文字列に変換します。
+
+     <p>EB ライブラリでは、動画データのファイル名はフック関数
+<code>EB_HOOK_BEGIN_MPEG</code> に渡された 4 つの int 型引数
+(<code>argv[2]</code> 〜 <code>argv[5]</code>) によって表現されます。
+
+     <p>動画データを読み込む際は、これをそのまま <code>eb_set_binary_mpeg()</code> に
+渡せば良いのですが、ファイル名を通常の文字列で得たい場合は、この関数を
+用います。
+たとえば、個々の動画に一意の ID のようなものを振りたい場合は、ファイル
+名を ID として使うと良いかも知れません。
+
+     <p>フック関数の引数 <code>argv + 2</code> をこの関数への引数 <var>argv</var> として
+渡すと、<var>composed_file_name</var> が指す先の領域に、文字列形式に変換された
+ファイル名が格納されます。
+ファイル名は最長で <code>EB_MAX_DIRECTORY_NAME_LENGTH</code> (= 8) バイトに
+なります。
+この長さには終端のナル文字の分を含んでいませんので、格納領域にははもう
+1 バイト余裕が要ります。
+
+     <p>なお、格納されたファイル名は、実際に存在するファイル名とは若干異なっている
+可能性があります。
+たとえば、英字の大文字と小文字、接尾子の有無などの違いがこれに当たります。
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_decompose_movie_file_name</b><i> </i>(<i>unsigned int *</i><var>argv</var><i>, const char *</i><var>composed_file_name</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_compose_movie_file_name()</code> は、
+<code>eb_compose_movie_file_name()</code> とちょうど逆の働きをします。
+つまり、通常の文字列に変換された動画データのファイル名
+<var>composed_file_name</var> を、4 つの int 型引数 <var>argv</var> に戻します。
+したがって、<var>argv</var> の指す領域は、少なくとも int 型の値を 4 つ格納
+できる大きさが必要です。
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+</td></tr>
+</table>
+
+   </body></html>
+

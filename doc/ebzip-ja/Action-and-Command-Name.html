@@ -1,0 +1,78 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Action%20and%20Command%20Name">Action and Command Name</a>,
+次:<a rel="next" accesskey="n" href="Invoking-ebzip.html#Invoking%20ebzip">Invoking ebzip</a>,
+前:<a rel="previous" accesskey="p" href="Introduction.html#Introduction">Introduction</a>,
+上:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter">動作とコマンド名</h2>
+
+   <p><code>ebzip</code> は三つの <dfn>動作</dfn> (<dfn>action</dfn>) モードを備えています。
+圧縮 (compression)、伸長 (uncompression) と情報出力 (information) です。
+
+     <ul>
+<li>圧縮 (compression)
+<br>
+一冊の CD-ROM 書籍を圧縮します。
+
+     <li>伸長 (uncompression)
+<br>
+<code>ebzip</code> で圧縮された、一冊の CD-ROM 書籍を伸長します。
+
+     <li>情報出力 (information)
+<br>
+<code>ebzip</code> で圧縮された、一冊の CD-ROM 書籍の圧縮状態に関する情報を
+出力します。
+
+   </ul>
+
+<p><code>ebzip</code> は起動時に、起動時に使用されたコマンド名とコマンドライン
+オプションから動作モードを決定します。
+<code>ebzip</code> の一回の実行の間で、動作モードが変わることはありません。
+
+   <p><code>ebzip</code> は <code>ebzip</code>、<code>ebunzip</code>, <code>ebzipinfo</code> という
+異なる 3 つのコマンド名でインストールされます。
+(DOS および Windows システム環境では、<code>ebzipinfo</code> は
+<code>ebzipinf</code> に改名されています)。
+一般に、これらは次のようにハードリンクされています。
+
+<pre class="example">     % ls -li ebzip ebunzip ebzipinfo
+     38787 -rwxr-xr-x  3 bin   bin     73728 Jun 27 22:48 ebunzip
+     38787 -rwxr-xr-x  3 bin   bin     73728 Jun 27 22:48 ebzip
+     38787 -rwxr-xr-x  3 bin   bin     73728 Jun 27 22:48 ebzipinfo
+     </pre>
+
+<p><code>ebunzip</code> という名前で起動された場合は、伸長を行います。
+<code>ebzipinfo</code> という名前で起動された場合、情報出力を行います。
+それ以外の場合は、圧縮を行います。
+
+   <p>コマンドラインオプションでも、動作モードを決定することができます。
+<code>--compress</code> (<code>-z</code>) で圧縮、<code>--uncompress</code> (<code>-u</code>)
+で伸長、<code>--information</code> (<code>-i</code>) で情報出力を行います。
+オプションは、起動時のコマンド名より優先します。
+次の例では、いずれも動作モードが「伸長」になります。
+
+<pre class="example">     ebunzip
+     ebzip --uncompress
+     ebzipinfo --uncompress
+     </pre>
+
+   <p>遠隔アクセスには対応していませんので、遠隔アクセス識別子は使用できません。
+
+<pre class="example">     % ebzip ebnet://localhost/cdrom
+     ebzip: ebnet には対応していません。
+     </pre>
+
+   </body></html>
+

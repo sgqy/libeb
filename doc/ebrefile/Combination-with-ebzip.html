@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+<title>ebrefile</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name=description content="ebrefile">
+<meta name=generator content="makeinfo 4.2">
+<link href="http://www.gnu.org/software/texinfo/" rel=generator-home>
+</head>
+<body>
+<p>
+Node:<a name="Combination%20with%20ebzip">Combination with ebzip</a>,
+Previous:<a rel=previous accesskey=p href="Select-Subbooks.html#Select%20Subbooks">Select Subbooks</a>,
+Up:<a rel=up accesskey=u href="Invoke-ebrefile.html#Invoke%20ebrefile">Invoke ebrefile</a>
+<hr><br>
+
+<h3>Combination with <code>ebzip</code></h3>
+
+<p><code>ebrefile</code> can be used together with the <code>ebzip</code> command,
+which compresses files in a CD-ROM book
+(See <a href="../ebzip/Introduction.html#Introduction">Introduction</a>, for more details
+about the <code>ebzip</code> command). 
+Usually, the same command line arguments are given to <code>ebzip</code>
+and <code>ebrefile</code>.
+
+<p>Suppose that a CD-ROM book is mounted on <code>/cdrom</code>, and this
+book has three subbooks; <code>english</code>, <code>french</code> and <code>german</code>. 
+By the following operation, the subbook <code>english</code> and <code>french</code>
+are compressed and put under the current working directory, and the
+subbook <code>german</code> are deleted from a subbook list.
+
+<br><pre>% ebzip --subbook english,french /cdrom
+% ebrefile --subbook english,french /cdrom
+</pre>
+
+<p>If you'd like to put the compressed files onto <code>/dict</code> instead
+of the current working directory, type the following:
+
+<br><pre>% ebzip --output-directory /dict --subbook english,french /cdrom
+% ebrefile --output-directory /dict --subbook english,french /cdrom
+</pre>
+
+</body></html>
+

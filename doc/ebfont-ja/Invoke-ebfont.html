@@ -1,0 +1,72 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Invoke%20ebfont">Invoke ebfont</a>,
+次:<a rel="next" accesskey="n" href="Summary-of-Options.html#Summary%20of%20Options">Summary of Options</a>,
+前:<a rel="previous" accesskey="p" href="What-is-Local-Character.html#What%20is%20Local%20Character">What is Local Character</a>,
+上:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter"><code>ebfont</code> の実行</h2>
+
+   <p><code>ebfont</code> の一般的な起動方法は次の通りです。
+
+<pre class="example">     % ebfont <var>書籍へのパス</var>
+     </pre>
+
+<p><var>書籍へのパス</var> には、CD-ROM 書籍のトップディレクトリ、つまり
+<code>catalog</code> または <code>catalogs</code> ファイルが存在するディレクトリを
+指定します。
+パスは、ローカルなパス (例: <code>/mnt/dict</code>) でも遠隔アクセス識別子
+(例: <code>ebnet://localhost/dict</code>) でも構いません。
+複数のパスを書くことはできませんが、以下のように、パスの指定を省くことは
+できます。
+
+<pre class="example">     % ebfont
+     </pre>
+
+<p>この場合、<code>ebfont</code> はカレントディレクトリの下に画像ファイルを生
+成します。
+このとき、ファイル名の一般形式は次の通りです。
+
+<pre class="example">     <var>副本</var>/<var>高さ</var>/narrow/<var>文字番号</var>.<var>拡張子</var>
+     <var>副本</var>/<var>高さ</var>/wide/<var>文字番号</var>.<var>拡張子</var>
+     </pre>
+
+<p><var>拡張子</var> は <code>xbm</code>、<code>xpm</code>、<code>gif</code>、<code>bmp</code> の
+いずれかで、<var>文字番号</var> は 16 進数 4 桁 (<code>0</code> から <code>9</code>
+と <code>a</code> から <code>f</code>) で、次のようになります。
+
+<pre class="example">     ejdict/16/narrow/a121.xbm
+     ejdict/16/wide/a321.xbm
+     </pre>
+
+<p><code>ejdict/16/xbm/narrow</code> などの中間のディレクトリは、もし無けれ
+ば <code>ebfont</code> が生成します。
+
+   <p><code>--output-directory</code> オプションを指定することで、<code>ebfont</code>
+はカレントディレクトリ以外のディレクトリに画像ファイルを出力すること
+ができます。
+そのトップディレクトリは、<code>ebfont</code> を実行する前に作成されてい
+なければなりません。
+
+<pre class="example">     % ebfont --output-directory <var>ディレクトリ</var> <var>書籍へのパス</var>
+     </pre>
+
+<ul class="menu">
+<li><a accesskey="1" href="Image-Formats.html#Image%20Formats">Image Formats</a>:                画像形式
+<li><a accesskey="2" href="Heights.html#Heights">Heights</a>:                      高さ
+<li><a accesskey="3" href="Subbooks.html#Subbooks">Subbooks</a>:                     副本
+</ul>
+
+   </body></html>
+

@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Overwrite%20Old%20Files">Overwrite Old Files</a>,
+次:<a rel="next" accesskey="n" href="Compress-Compressed-Book.html#Compress%20Compressed%20Book">Compress Compressed Book</a>,
+前:<a rel="previous" accesskey="p" href="Partial-Compression.html#Partial%20Compression">Partial Compression</a>,
+上:<a rel="up" accesskey="u" href="Compression.html#Compression">Compression</a>
+<hr><br>
+</div>
+
+<h3 class="section">古いファイルの上書き</h3>
+
+   <p>書き込もうとしたファイルがすでに存在するとき、<code>ebzip</code> は上書きし
+て良いかどうかの確認を求めてきます。
+
+<pre class="example">     ==&gt; /dict/science/data/honmon を圧縮 &lt;==
+     /dict/science/data/honmon.ebz に出力
+     
+     ファイルがすでに存在します: /dict/science/data/honmon.ebz
+     上書きしますか (はい:y, いいえ:n)?
+     </pre>
+
+<p><code>y</code> か <code>n</code> で答えて下さい。
+<code>n</code> と答えると、<code>ebzip</code> はそのファイルを飛ばして、次に進みます。
+
+   <p><code>--force-overwrite</code> オプションを指定すると、<code>ebzip</code> はすで
+に存在しているファイルを、確認なしに上書きします。
+同様に、<code>--no-overwrite</code> オプションを指定すると、<code>ebzip</code> は
+確認なしにそのファイルを飛ばして次に進みます。
+
+   </body></html>
+

@@ -1,0 +1,51 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Error%20Data%20Types">Error Data Types</a>,
+次:<a rel="next" accesskey="n" href="Error-Code-List.html#Error%20Code%20List">Error Code List</a>,
+前:<a rel="previous" accesskey="p" href="Tolerance-to-Error.html#Tolerance%20to%20Error">Tolerance to Error</a>,
+上:<a rel="up" accesskey="u" href="Error-Handling.html#Error%20Handling">Error Handling</a>
+<hr><br>
+</div>
+
+<h3 class="section">データ型の詳細</h3>
+
+   <p>この節で説明しているデータ型を使うには、次のようにヘッダファイルを
+読み込んで下さい。
+
+<pre class="example">     #include &lt;eb/error.h&gt;
+     </pre>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b>EB_Error_Code</b><i>
+     </i></td>
+<td align="right">Data type</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>データ型 <code>EB_Error_Code</code> は、EB ライブラリのエラーコードを表します。
+この型は符合付き整数型の別名として定義されていますので、2 つのコードを
+2 項演算子 <code>==</code> と <code>!=</code> で一致比較することができます。
+
+     <p>EB ライブラリでは、全部で <code>EB_NUMBER_OF_ERRORS</code> 個のフックコードを
+定義しています。
+エラーコードの一覧については、
+次の節 (see <a href="Error-Code-List.html#Error%20Code%20List">エラーコードの一覧</a>)
+を参照して下さい。
+</td></tr>
+</table>
+
+   </body></html>
+

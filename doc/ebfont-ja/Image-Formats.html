@@ -1,0 +1,46 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Image%20Formats">Image Formats</a>,
+次:<a rel="next" accesskey="n" href="Heights.html#Heights">Heights</a>,
+前:<a rel="previous" accesskey="p" href="Invoke-ebfont.html#Invoke%20ebfont">Invoke ebfont</a>,
+上:<a rel="up" accesskey="u" href="Invoke-ebfont.html#Invoke%20ebfont">Invoke ebfont</a>
+<hr><br>
+</div>
+
+<h3 class="section">画像形式</h3>
+
+   <p><code>ebfont</code> は XBM, XPM, GIF89a, BMP 形式の画像ファイルを生成すること
+ができます。
+画像形式は <code>--image-format</code> (<code>-i</code>) オプションで指定します。
+<code>--image-format</code> オプションは引数を一つ取り、そこにカンマ (<code>,</code>)
+で区切って、画像形式の名前を並べて書きます。
+たとえば、以下のコマンドを実行すると、<code>ebfont</code> は XPM 形式と GIF
+形式の画像ファイルを生成します。
+
+<pre class="example">     % ebfont --image-format xpm,gif <var>書籍へのパス</var>
+     </pre>
+
+<p><code>--image-format</code> の引数は、次のように分けて書くこともできます。
+
+<pre class="example">     % ebfont --image-format xpm --image-format gif <var>書籍へのパス</var>
+     </pre>
+
+<p>XPM と GIF 形式では、前景色は黒 (RGB の <code>#000000</code>) に、背景色は
+透明になります。
+BMP 形式では、前景色は黒に、背景色は白 (RGB の <code>#ffffff</code>) に
+なります。
+
+   <p><code>ebzip</code> は GIF の画像を生成する際に LZW 圧縮アルゴリズムを使わ
+ないため、ファイルのサイズは相当大きくなります。
+
+   </body></html>
+

@@ -1,0 +1,105 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Word%20Search">Word Search</a>,
+次:<a rel="next" accesskey="n" href="Keyword-Search.html#Keyword%20Search">Keyword Search</a>,
+前:<a rel="previous" accesskey="p" href="Search.html#Search">Search</a>,
+上:<a rel="up" accesskey="u" href="Search.html#Search">Search</a>
+<hr><br>
+</div>
+
+<h3 class="section">前方一致、後方一致、完全一致検索</h3>
+
+   <p>前方一致、後方一致、完全一致検索は、いずれも一個の入力語に一致する
+エントリを探し出す検索メソッドです。
+
+   <p>前方一致検索は、入力語と先頭部分が一致するエントリを検索します。
+たとえば、「江戸」という語は、「江戸」「江戸時代」「江戸っ子」といった
+エントリに一致します。
+
+   <p>後方一致検索は、入力語と末尾が一致するエントリを検索します。
+たとえば、`bye' という語は、`bye'、`good bye'、`bye bye' といった
+エントリに一致します。
+
+   <p>完全一致検索は、一個の検索語と完全に一致するエントリだけを検索します。
+
+   <p>以下は、前方一致検索のプログラムの例です。
+選択中の副本の中から、先頭が <code>librar</code> で始まるエントリを探して
+います。
+
+<pre class="example">     /* <code>book</code> が <code>EB_Book</code> のオブジェクトで、すでに書籍に結び付け
+      * られ、副本を選択中だと仮定しています。*/
+     #define MAX_HITS 50
+     EB_Hit hits[MAX_HITS];
+     int hit_count;
+     
+     if (eb_search_word(&amp;book, "librar") != EB_SUCCESS) {
+         printf("eb_search_word() failed\n");
+         return;
+     }
+     if (eb_hit_list(&amp;book, MAX_HITS, hits, &amp;hit_count)
+         != EB_SUCCESS) {
+         printf("eb_hit_list() failed\n");
+         return;
+     }
+     </pre>
+
+<p><code>eb_search_word()</code> は前方一致検索をリクエストする関数です。
+この例では、<code>librar</code> という検索文字列を与えています。
+ただし、この関数は一致したエントリを返すことはしません。
+
+   <p>一致したエントリの取得は、続く <code>eb_hit_list()</code> 関数を呼び出した
+際に行われます。
+<code>eb_hit_list()</code> は一致したエントリの一覧を配列 <code>hits[]</code>
+の指す領域に書き込み、見つかった一致エントリの個数を <code>&amp;hit_count</code>
+の指す領域に書き込みます。
+この例では、<code>eb_hit_list()</code> は最大で <code>MAX_HITS</code> (= 50) 個
+のエントリを探します。
+(つまり、50 個見つかったら検索を止めます。)
+
+   <p>もし、選択中の副本が英々辞典だとすると、少なくとも <code>library</code> と
+<code>librarian</code> という 2 つのエントリに関する情報が得られるでしょう。
+このとき、配列 <code>hits[]</code> は次のようになっています。
+(ただし、<code>library</code> と <code>librarian</code> エントリの順序は、
+下の絵とは異なっているかも知れません。)
+
+<pre class="example">     ┌───────────┬───────────┬─
+     │　ｌｉｂｒａｒｉａｎ　│　　ｌｉｂｒａｒｙ　　│
+     └───────────┴───────────┴─
+     　　　ｈｉｔｓ［０］　　　　　ｈｉｔｓ［１］
+     </pre>
+
+<p><code>hits[]</code> の中身については、本章の後ろの節でもう少し詳しく説明
+します。
+
+   <p>ここまでは前方一致検索を例にとりましたが、後方一致の場合は
+<code>eb_search_word()</code> の代わりに <code>eb_search_endword()</code>
+を呼ぶようにします。
+他はすべて同じです。
+
+<pre class="example">     if (eb_search_endword(&amp;book, "nalization") != EB_SUCCESS) {
+         printf("eb_search_endword() failed\n");
+         return;
+     }
+     </pre>
+
+   <p>完全一致の場合も同様です。
+<code>eb_search_exactword()</code> を呼ぶようにする以外は、すべて同じ
+です。
+
+<pre class="example">     if (eb_search_exactword(&amp;book, "library") != EB_SUCCESS) {
+         printf("eb_search_exactword() failed\n");
+         return;
+     }
+     </pre>
+
+   </body></html>
+

@@ -1,0 +1,41 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Heights">Heights</a>,
+次:<a rel="next" accesskey="n" href="Subbooks.html#Subbooks">Subbooks</a>,
+前:<a rel="previous" accesskey="p" href="Image-Formats.html#Image%20Formats">Image Formats</a>,
+上:<a rel="up" accesskey="u" href="Invoke-ebfont.html#Invoke%20ebfont">Invoke ebfont</a>
+<hr><br>
+</div>
+
+<h3 class="section">高さ</h3>
+
+   <p>特に指定がなければ、<code>ebfont</code> は、半角と全角それぞれについて、高さ
+16 ピクセルのフォントの画像ファイルを生成します。
+<code>--font-height</code> (<code>-f</code>) オプションを使用することで、他の高さ
+のフォントの画像ファイルを生成することができます。
+<code>--font-height</code> オプションは引数を一つ取り、そこにカンマ (<code>,</code>)
+で区切って、フォントの高さを並べて書きます。
+フォントの高さは、<code>16</code>、<code>24</code>、<code>30</code>、<code>48</code> のいずれ
+かでなくてはいけません。
+たとえば、以下のコマンドを実行すると、<code>ebfont</code> は高さ 16 ピクセル
+と 24 ピクセルのフォントの画像ファイルを生成します。
+
+<pre class="example">     % ebfont --font-height 16,24 <var>書籍へのパス</var>
+     </pre>
+
+<p><code>--font-height</code> の引数は、次のように分けて書くこともできます。
+
+<pre class="example">     % ebfont --font-height 16 --font-height 24 <var>書籍へのパス</var>
+     </pre>
+
+   </body></html>
+

@@ -1,0 +1,53 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Compilation">Compilation</a>,
+次:<a rel="next" accesskey="n" href="Init-and-Exit.html#Init%20and%20Exit">Init and Exit</a>,
+前:<a rel="previous" accesskey="p" href="Features.html#Features">Features</a>,
+上:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter">プログラムのコンパイル方法</h2>
+
+   <p>本章では、EB ライブラリを利用したプログラムのコンパイル方法を説明します。
+
+   <p>EB ライブラリを <code>/usr/local</code> にインストールし、個々のファイルの
+インストール先を変更していなければ、ヘッダファイルは
+<code>/usr/local/include/eb</code> にインストールされ、ライブラリファイルは
+<code>/usr/local/lib</code> にインストールされます。
+EB ライブラリを利用したアプリケーションプログラムを作成する際は、
+これらのファイルを使用することになります。
+
+   <p>EB ライブラリのヘッダファイルの一部には、GNU Autoconf の使用を前提
+とした記述が含まれており、Autoconf を併用しないとプログラムが正しく
+コンパイルできません。
+
+   <p>しかし、EB ライブラリの概要を理解するためのプログラムに、わざわざ
+Autoconf を使用するのは大変です。
+そこでまず、Autoconf を使わずにてっとり早くコンパイルする方法を紹介
+します。
+
+   <p>その後で、Autoconf を併用する方法についても説明します。
+フリーソフトウェアとしてアプリケーションを公開するなら、こちらの方法
+をとることをお薦めします。
+Autoconf を単体で使用してもヘッダファイルの問題は解決できますが、
+本書では GNU Automake, および GNU Libtool も一緒に併用した方法につい
+て説明しています。
+
+<ul class="menu">
+<li><a accesskey="1" href="Compilation-Simple-Way.html#Compilation%20Simple%20Way">Compilation Simple Way</a>:       てっとり早いコンパイル方法
+<li><a accesskey="2" href="Compilation-with-Autoconf.html#Compilation%20with%20Autoconf">Compilation with Autoconf</a>:    Autoconf を併用したコンパイル方法
+<li><a accesskey="3" href="Debug-EB-Library.html#Debug%20EB%20Library">Debug EB Library</a>:             EB ライブラリ本体のデバッグ
+</ul>
+
+   </body></html>
+

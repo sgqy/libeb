@@ -1,0 +1,73 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Introduction">Introduction</a>,
+次:<a rel="next" accesskey="n" href="Invoke-ebrefile.html#Invoke%20ebrefile">Invoke ebrefile</a>,
+前:<a rel="previous" accesskey="p" href="index.html#Top">Top</a>,
+上:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter">はじめに</h2>
+
+   <p>一冊の CD-ROM 書籍は、大抵複数の <dfn>副本</dfn> (<dfn>subbook</dfn>) を持ってい
+ます。
+たとえばある CD-ROM 書籍は国語辞典、英和辞典、和英辞典の 3 つの副本を
+収めています。
+個々の副本は、それ自体が独立した「書籍」になっています。
+
+<pre class="example">          (CD-ROM 書籍)
+     +-----------------------+
+     |   [国語辞典] (副本)   |
+     |   [英和辞典] (副本)   |
+     |   [和英辞典] (副本)   |
+     +-----------------------+
+     </pre>
+
+   <p>EB/EBG/EBXA/EBXA-C/S-EBXA 形式の CD-ROM 書籍は <code>catalog</code> という
+ファイルを、EPWING 形式の CD-ROM 書籍は <code>catalogs</code> というファイル
+を持っています。
+これらのファイルは、その CD-ROM 書籍にはどんな副本が収められているのか
+を定義しています。
+これらのファイルは、CD-ROM 書籍のトップディレクトリに置かれています。
+
+   <p><code>ebrefile</code> は元のカタログファイルを読み、ユーザから指定された副本
+だけを取り込んだ新しいカタログファイルを生成します。
+言い換えれば、<code>ebrefile</code> は特定の副本の定義を、カタログファイルか
+ら削除します。
+CD-ROM 書籍が 3 つの副本を持っている場合、<code>ebrefile</code> はそのうちの
+任意の 1 つまたは 2 つの副本を、新しいカタログファイルに取り込むことが
+できます。
+ハードディスクに CD-ROM 書籍の一部だけをコピーしたいときに、
+<code>ebrefile</code> は便利です。
+<code>ebrefile</code> は EB ライブラリと一緒に配布されています。
+
+   <p><code>ebrefile</code> はフリーソフトウェアです。あなたは、Free Software Foundation
+が公表した GNU General Public License (GNU 一般公有使用許諾) バージョン
+2 あるいはそれ以降の各バージョンの中からいずれかを選択し、そのバージョ
+ンが定める条項に従って本プログラムを再頒布または変更することができます。
+
+   <p><code>ebrefile</code> は有用とは思いますが、頒布にあたっては、市場性及び特定目的
+適合性についての暗黙の保証を含めて、いかなる保証も行ないません。
+詳細については GNU General Public License をお読み下さい。
+
+   <p>加えて、あなたは自分の所有する CD-ROM 書籍の使用許諾も守らなくてはいけ
+ません。
+<code>ebrefile</code> はフリーソフトウェアですが、あなたの書籍が自由に使えるも
+のであるとは限りません。
+<code>ebrefile</code> は、CD-ROM 書籍のあるファイルの内容に変更を加えます。
+ご注意下さい。
+
+   <p>この文書は第 4.0beta3 版です。
+EB ライブラリバージョン 4.0beta3 に対応しています。
+
+   </body></html>
+

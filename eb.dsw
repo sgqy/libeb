@@ -1,0 +1,230 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "zlib"="zlib.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "intl"="intl.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "iconv"="iconv.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "eb"="eb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name zlib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name intl
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ebutils"="ebutils.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name zlib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name eb
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name intl
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name iconv
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ebfont"="ebfont.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name zlib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name eb
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ebutils
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name intl
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name iconv
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ebinfo"="ebinfo.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name zlib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name eb
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ebutils
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name intl
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name iconv
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ebrefile"="ebrefile.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name zlib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name eb
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ebutils
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name intl
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name iconv
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ebstopcode"="ebstopcode.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name zlib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name eb
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ebutils
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name intl
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name iconv
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ebzip"="ebzip.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name zlib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name eb
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ebutils
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name intl
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name iconv
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

@@ -1,0 +1,137 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Hook">Hook</a>,
+次:<a rel="next" accesskey="n" href="Hook-and-Character-Code.html#Hook%20and%20Character%20Code">Hook and Character Code</a>,
+前:<a rel="previous" accesskey="p" href="Text-Data-Format.html#Text%20Data%20Format">Text Data Format</a>,
+上:<a rel="up" accesskey="u" href="Text-Data.html#Text%20Data">Text Data</a>
+<hr><br>
+</div>
+
+<h3 class="section">フック</h3>
+
+   <p>特に何も指定しなければ、<code>eb_read_text()</code>, <code>eb_read_heading()</code>
+が返すテキストデータの加工は、あらかじめ決められた通りの方法で行われます。
+たとえば、「改行」のエスケープシーケンスに対しては、<code>\n</code> を
+書き込むようになっています。
+
+   <p><dfn>フック (hook)</dfn> を使うと、こうした加工方法を変えることができます。
+フックは、あらかじめ決められたフック設定位置に対して、フック関数を登録
+することで有効になります。
+フック関数が登録されていると、<code>eb_read_text()</code> や
+<code>eb_read_heading()</code> は、あらかじめ決まったやり方でデータを書き込む
+代わりに、フック関数を呼び出します。
+呼び出されたフック関数がデータの書き込み処理を行うことで、
+<code>eb_read_text()</code> や <code>eb_read_heading()</code> から返るテキストデータ
+が変化するというわけです。
+
+   <p>EB ライブラリには、多数のフック設定位置が用意されています。
+各エスケープシーケンスには、それぞれ専用にフックが用意されており、
+それ以外にも文字のためのフックが存在します。
+(どのようなフック設定位置があるか、詳しくは
+see <a href="Hook-Code-List.html#Hook%20Code%20List">フックコードの一覧</a>。)
+
+   <p>それぞれのフック設定位置は、<dfn>フックコード (hook code)</dfn> と呼ばれる
+コード値で識別されます。
+たとえば、前述の「改行」のエスケープシーケンスに対応するフックコード
+は <code>EB_HOOK_NEWLINE</code> になります。
+
+   <p>アプリケーションプログラムがフックを扱うには、フックの集合である
+<dfn>フックセット (hook set)</dfn> を用意します。
+これは、EB ライブラリで利用可能なすべてのフック設定位置に対して、どの
+フック関数を使うのかを記録するためのオブジェクトです。
+
+   <p>では、実際にどうやってフックセットを扱うのか、説明していきましょう。
+フックセットは <code>EB_Hookset</code> 型のオブジェクトで表しますので、まず
+<code>EB_Hookset</code> オブジェクトを用意します。
+
+<pre class="example">     EB_Hookset hookset;
+     </pre>
+
+   <p><code>EB_Hookset</code> オブジェクトは、<code>EB_Book</code> オブジェクトと同様に、
+使用前に必ず初期化する必要があります。
+
+<pre class="example">     eb_initialize_hookset(&amp;hookset);
+     </pre>
+
+   <p>実際のフック関数は、次のようなものになります。
+この例では、フック関数の中で <code>eb_write_text_string()</code> という関数を
+呼び出して、<code>&lt;br&gt;</code> という文字列をテキストデータとして書き込んで
+います。
+
+<pre class="example">     EB_Error_Code
+     hook_newline(EB_Book *book, EB_Appendix *appendix, void *container,
+         EB_Hook_Code code, int argc, const unsigned int *argv) {
+         eb_write_text_string(book, "&lt;br&gt;");
+         return 0;
+     }
+     </pre>
+
+   <p>関数 <code>eb_set_hook()</code> を用いることで、このフック関数をフックセット
+に登録することができます。
+ただし、まず <code>EB_Hook</code> という型のオブジェクトにいったんフックコード
+とフック関数を設定し、それを <code>eb_set_hook()</code> を渡してやる必要が
+あります。
+ここでは、「改行」を表すエスケープシーケンスに対して、上記のフック関数
+を登録してみます。
+
+<pre class="example">     EB_Hook hook;
+     
+     hook.code = EB_HOOK_NEWLINE;   # フックコードをセット
+     hook.function = hook_newline;  # フック関数をセット
+     eb_set_hook(&amp;hookset, &amp;hook);
+     </pre>
+
+<p>なお、同じフック設定位置 (フックコード) に複数回フック関数を登録しても、
+有効になるのは最後に登録したものだけですので、注意して下さい。
+フック関数として <code>NULL</code> を指定すると、登録されているフックが解除
+されます。
+
+   <p>関数 <code>eb_set_hooks()</code> (最後に <code>s</code> が付く) を使えば、複数の
+フック関数を一度に登録できます。
+
+<pre class="example">     static const EB_Hook hooks[] = {
+         {EB_HOOK_NEWLINE,        hook_newline},
+         {EB_HOOK_SET_INDENT,     hook_set_indent},
+         {EB_HOOK_WIDE_JISX0208,  hook_set_jisx0208},
+         {EB_HOOK_NULL,           NULL}
+     };
+     
+     eb_set_hooks(&amp;hookset, &amp;hooks);
+     </pre>
+
+<p>配列の末尾を明示するために、<code>EB_HOOK_NULL</code> という特殊なフックコード
+を置きます。
+この点も注意して下さい。
+
+   <p>こうしてフック関数を登録したフックセットを、<code>eb_raed_text()</code>,
+<code>eb_raed_heading()</code> への引数として渡します。
+前節までの例では、<code>NULL</code> を渡していましたが、代わりに
+<code>&amp;hookset</code> を渡してみます。
+
+<pre class="example">     if (eb_read_text(&amp;book, NULL, &amp;hookset, NULL, MAX_LENGTH,
+         text, &amp;text_length) != EB_SUCCESS) {
+         fprintf(stderr, "an error occurs.\n");
+         return;
+     }
+     </pre>
+
+<p>これによって、テキストデータ中に改行を表すエスケープシーケンスがあると、
+<code>\n</code> の代わりに <code>&lt;br&gt;</code> という文字列が書き込まれるようになります。
+
+   <p><code>EB_Hookset</code> オブジェクトを使い終わったら、<code>eb_finalize_hookset()</code>
+を呼んで後始末をします。
+
+<pre class="example">     eb_finalize_hookset(&amp;hookset);
+     </pre>
+
+   </body></html>
+

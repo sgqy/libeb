@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Error%20Handling">Error Handling</a>,
+次:<a rel="next" accesskey="n" href="Subbook.html#Subbook">Subbook</a>,
+前:<a rel="previous" accesskey="p" href="EB_Book.html#EB_Book">EB_Book</a>,
+上:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter">エラー処理</h2>
+
+   <p>EB ライブラリの関数の呼び出しは、常に成功するとは限りません。
+たとえば、<code>EB_Book</code> オブジェクトを書籍に結びつける関数
+<code>eb_bind()</code> には、引数として書籍のトップディレクトリを渡しますが、
+存在しないディレクトリを指定した場合、処理は失敗に終わります。
+
+   <p>一般にこうした事象は、ユーザが誤ったパスを指定したときに起こりますが、
+メモリ不足のように、ユーザのミスが原因ではない失敗も起こりえます。
+
+   <p>本章では、関数の呼び出しが失敗した場合の処理について説明します。
+
+<ul class="menu">
+<li><a accesskey="1" href="Error-Code-and-Message.html#Error%20Code%20and%20Message">Error Code and Message</a>:       エラーコードとエラーメッセージ
+<li><a accesskey="2" href="Tolerance-to-Error.html#Tolerance%20to%20Error">Tolerance to Error</a>:           エラーに対する寛容さ
+<li><a accesskey="3" href="Error-Data-Types.html#Error%20Data%20Types">Error Data Types</a>:             データ型の詳細
+<li><a accesskey="4" href="Error-Code-List.html#Error%20Code%20List">Error Code List</a>:              エラーコードの一覧
+<li><a accesskey="5" href="Error-Functions.html#Error%20Functions">Error Functions</a>:              関数の詳細
+</ul>
+
+   </body></html>
+

@@ -1,0 +1,126 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Select%20Subbooks">Select Subbooks</a>,
+次:<a rel="next" accesskey="n" href="Combination-with-ebzip.html#Combination%20with%20ebzip">Combination with ebzip</a>,
+前:<a rel="previous" accesskey="p" href="Invoke-ebrefile.html#Invoke%20ebrefile">Invoke ebrefile</a>,
+上:<a rel="up" accesskey="u" href="Invoke-ebrefile.html#Invoke%20ebrefile">Invoke ebrefile</a>
+<hr><br>
+</div>
+
+<h3 class="section">副本の選択</h3>
+
+   <p>特に指定がないと、<code>ebrefile</code> は、元のカタログファイルで定義されてい
+るすべての副本を新しい副本に取り込みます。
+つまり、新しいカタログファイルは、単に元のファイルのコピーになります。
+この振る舞いは、役に立ちません。
+<code>ebrefile</code> は、通常 <code>--subbook</code> (<code>-S</code>) オプションを指定
+して起動します。
+
+   <p><code>--subbook</code> (<code>-S</code>) オプションは引数を一つ取り、そこにカンマ
+(<code>,</code>) で区切って、新しいカタログファイルに取り込みたい副本のディ
+レクトリ名を並べて書きます。
+<code>ebinfo</code> コマンドを用いると、あなたの所有している書籍にどのような
+副本が含まれているのかを知ることができます。
+
+<pre class="example">     % ebinfo /mnt/cdrom
+     ディスクの形式: EB/EBG/EBXA/EBXA-C/S-EBXA
+     文字コード: JIS X 0208
+     副本の数: 3
+     副本 1:
+       題名: 新英和辞典（第四版）
+       ディレクトリ: english
+       検索方式: 前方一致 後方一致 条件 メニュー
+       フォントの大きさ: 16 24 30 48
+       半角フォントの文字: 0xa121 -- 0xa24e
+       全角フォントの文字: 0xa321 -- 0xa27e
+     副本 2:
+       題名: CD-ROM 仏和辞典（第三版）
+       ディレクトリ: french
+       検索方式: 前方一致 後方一致 条件 メニュー
+       フォントの大きさ: 16 24 30 48
+       半角フォントの文字:
+       全角フォントの文字: 0xa321 -- 0xa27e
+     副本 3:
+       題名: ポケット独和辞典（第三版）
+       ディレクトリ: german
+       検索方式: メニュー
+       フォントの大きさ: 16 24 30 48
+       半角フォントの文字:
+       全角フォントの文字: 0xa321 -- 0xa27e
+     </pre>
+
+<p>(<code>ebinfo</code> コマンドに関しての詳細は、
+see <a href="../ebinfo-ja/Invoke-ebinfo.html#Invoke%20ebinfo"><code>ebinfo</code> の実行</a>)。
+<br>
+この例では、3 つの副本が書籍には含まれており、その名前は <code>english</code>
+<code>french</code>, <code>german</code> だということが分かります。
+
+   <p>次のコマンドを実行すると、<code>ebrefile</code> は副本として <code>english</code>
+と <code>french</code> だけを定義した新しいカタログを生成します。
+
+<pre class="example">     % ebrefile --subbook english,french
+     </pre>
+
+<p>ディレクトリ名の大文字・小文字の違いは、区別されません。
+<code>--subbook</code> の引数は、次のように分けて書くこともできます。
+
+<pre class="example">     % ebrefile --subbook english --subbook french
+     </pre>
+
+<p><code>ebrefile</code> は副本の定義順序を変えることはできませんので、
+<code>--subbook</code> に与える引数の順序は、任意です。
+
+   <p><code>ebrefile</code> は新たなカタログを <code>catalogs(s).new</code> として生成
+します。
+元のカタログファイルを新しいものに置き換えるには、次のコマンドを実行
+します。
+
+<pre class="example">     % mv catalogs catalogs.bak
+     % mv catalogs.new catalogs
+     </pre>
+
+<p>元のカタログファイルを取っておく必要がないのであれば、二番目のコマン
+ドだけを実行して下さい。
+
+<p>これで再構成が完了しました。
+もういちど <code>ebinfo</code> を起動してみましょう。
+副本 <code>german</code> が消えています。
+
+<pre class="example">     % ebinfo /mnt/cdrom
+     ディスクの形式: EB/EBG/EBXA/EBXA-C/S-EBXA
+     文字コード: JIS X 0208
+     副本の数: 2
+     副本 1:
+       題名: 新英和辞典（第四版）
+       ディレクトリ: english
+       検索方式: 前方一致 後方一致 条件 メニュー
+       フォントの大きさ: 16 24 30 48
+       半角フォントの文字: 0xa121 -- 0xa24e
+       全角フォントの文字: 0xa321 -- 0xa27e
+     副本 2:
+       題名: CD-ROM 仏和辞典（第三版）
+       ディレクトリ: french
+       検索方式: 前方一致 後方一致 条件 メニュー
+       フォントの大きさ: 16 24 30 48
+       半角フォントの文字:
+       全角フォントの文字: 0xa321 -- 0xa27e
+     </pre>
+
+   <p>もし、CD-ROM 書籍全体をすでにハードディスクにコピーしているなら、
+副本 <code>german</code> のファイルは削除しても構いません。
+ディレクトリ名が小文字で構成されているなら、次のようにします。
+
+<pre class="example">     % rm -r german
+     </pre>
+
+   </body></html>
+

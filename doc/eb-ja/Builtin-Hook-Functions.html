@@ -1,0 +1,136 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Builtin%20Hook%20Functions">Builtin Hook Functions</a>,
+次:<a rel="next" accesskey="n" href="Text-Data-Functions.html#Text%20Data%20Functions">Text Data Functions</a>,
+前:<a rel="previous" accesskey="p" href="Hookset-Access-Functions.html#Hookset%20Access%20Functions">Hookset Access Functions</a>,
+上:<a rel="up" accesskey="u" href="Text-Data.html#Text%20Data">Text Data</a>
+<hr><br>
+</div>
+
+<h3 class="section">組み込みフック関数の詳細</h3>
+
+   <p>EB ライブラリは、基本的なフック関数をいくつか用意しています。
+本節では、これらのフック関数についての仕様を解説します。
+
+   <p>この節で説明している関数を使うには、次のようにヘッダファイルを読み込んで
+下さい。
+
+<pre class="example">     #include &lt;eb/text.h&gt;
+     </pre>
+
+   <p>いずれのフック関数も、引数 <var>appendix</var> と <var>container</var> に
+<code>NULL</code> を渡されても、動作に支障はないようになっています。
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_hook_euc_to_ascii</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, EB_Appendix *</i><var>appendix</var><i>, void *</i><var>container</var><i>, EB_Hook_Code </i><var>code</var><i>, int </i><var>argc</var><i>, const unsigned int *</i><var>argv</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>eb_hook_euc_to_ascii()</code> は、フックコード
+<code>EB_HOOK_NARROW_JISX0208</code> (半角 JIS X 0208 文字) のためのフック関数
+です。
+
+     <p><code>EB_Hookset</code> オブジェクトを関数 <code>eb_initialiez_hookset()</code> で
+初期化すると、この関数が自動的に登録されます。
+
+     <p>このフック関数は、<code>argv[0]</code> として渡された JIS X 0208 の文字
+(エンコーディングは日本語 EUC) を調べ、対応する ASCII 文字が存在すれば
+その ASCII 文字をテキストデータとして書き込み、なければ JIS X 0208 の
+文字をそのまま書き込みます。
+
+     <p>常に <code>EB_SUCCESS</code> を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_hook_narrow_character_text</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, EB_Appendix *</i><var>appendix</var><i>, void *</i><var>container</var><i>, EB_Hook_Code </i><var>code</var><i>, int </i><var>argc</var><i>, const unsigned int *</i><var>argv</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_hook_wide_character_text</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, EB_Appendix *</i><var>appendix</var><i>, void *</i><var>container</var><i>, EB_Hook_Code </i><var>code</var><i>, int </i><var>argc</var><i>, const unsigned int *</i><var>argv</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>eb_hook_narrow_character_text()</code> は、フックコード
+<code>EB_HOOK_NARROW_FONT</code> (半角外字) のためのフック関数です。
+同様に <code>eb_hook_wide_character_text()</code> は、フックコード
+<code>EB_HOOK_WIDE_FONT</code> (全角外字) のためのフック関数です。
+
+     <p><code>EB_Hookset</code> オブジェクトを関数 <code>eb_initialiez_hookset()</code> で
+初期化すると、これらの関数が自動的に登録されます。
+
+     <p>この関数は、<var>appendix</var> の選択中している副本が、<code>argv[0]</code> として
+渡された外字の代替文字列を持っているかどうか調べます。
+持っていればその文字列をテキストデータとして書き込み、持っていなければ
+<code>&lt;?&gt;</code> という文字列を書き込みます。
+
+     <p><var>appendix</var> が <code>NULL</code> の場合や、付録が副本を選択中でない場合も、
+代替文字列を持っていないものとして扱います。
+
+     <p>この関数は、常に <code>EB_SUCCESS</code> を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_hook_newline</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, EB_Appendix *</i><var>appendix</var><i>, void *</i><var>container</var><i>, EB_Hook_Code </i><var>code</var><i>, int </i><var>argc</var><i>, const unsigned int *</i><var>argv</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>eb_hook_narrow_newline()</code> は、フックコード
+<code>EB_HOOK_NEWLINE</code> (改行) のためのフック関数です。
+
+     <p><code>EB_Hookset</code> オブジェクトを関数 <code>eb_initialiez_hookset()</code> で
+初期化すると、これらの関数が自動的に登録されます。
+
+     <p>この関数は、テキストデータに <code>\n</code> を書き込みます。
+常に <code>EB_SUCCESS</code> を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_hook_empty</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, EB_Appendix *</i><var>appendix</var><i>, void *</i><var>container</var><i>, EB_Hook_Code </i><var>code</var><i>, int </i><var>argc</var><i>, const unsigned int *</i><var>argv</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>eb_hook_empty()</code> は、何もしないフック関数です。
+常に <code>EB_SUCCESS</code> を返します。
+</td></tr>
+</table>
+
+   </body></html>
+

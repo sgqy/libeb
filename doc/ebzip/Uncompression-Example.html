@@ -1,0 +1,77 @@
+<html lang="en">
+<head>
+<title>ebzip</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name=description content="ebzip">
+<meta name=generator content="makeinfo 4.2">
+<link href="http://www.gnu.org/software/texinfo/" rel=generator-home>
+</head>
+<body>
+<p>
+Node:<a name="Uncompression%20Example">Uncompression Example</a>,
+Next:<a rel=next accesskey=n href="Options-for-Uncompression.html#Options%20for%20Uncompression">Options for Uncompression</a>,
+Previous:<a rel=previous accesskey=p href="Uncompression.html#Uncompression">Uncompression</a>,
+Up:<a rel=up accesskey=u href="Uncompression.html#Uncompression">Uncompression</a>
+<hr><br>
+
+<h3>Example of Uncompression</h3>
+
+<p>Uncompression procedure is closely similar to compression. 
+Suppose that a compressed subbook resides under <code>/dict</code>. 
+The book has the following files under <code>/dict</code>.
+
+<br><pre>/dict/catalog
+/dict/language.ebz
+/dict/kanji/start.ebz
+/dict/english/start.ebz
+</pre>
+
+<p>Execute the following command to uncompress the book:
+
+<br><pre>% cd /dict
+% ebunzip
+</pre>
+
+<p>This is equivalent to:
+
+<br><pre>% ebunzip --output-directory /dict /dict
+</pre>
+
+<p>Uncompression may take a while. 
+<code>ebunzip</code> outputs status messages during the uncompression like
+as follows:
+
+<br><pre>==&gt; uncompress /dict/kanji/start.ebz &lt;==
+output to ./kanji/start.ebz
+ 5.1% done (4194304 / 82460672 bytes)
+10.2% done (8388608 / 82460672 bytes)
+15.3% done (12582912 / 82460672 bytes)
+        : (snip)
+completed (82460672 / 82460672 bytes)
+25681439 -&gt; 82460672 bytes
+</pre>
+
+<p>During the uncompression, <code>ebunzip</code> asks you whether an existed file
+may be overwritten or not:
+
+<br><pre>==&gt; uncompress /dict/kanji/start.ebz &lt;==
+output to /dict/kanji/start
+
+the file already exists: /dict/kanji/start
+do you wish to overwrite (y or n)?
+</pre>
+
+<p>When the uncompression has done, the directory structure under
+<code>dict</code> is slightly changed.
+
+<br><pre>/dict/catalog
+/dict/language
+/dict/kanji/start
+/dict/english/start
+</pre>
+
+<p>Uncompressed files change their file names;
+the suffix <code>.ebz</code> is removed from them.
+
+</body></html>
+

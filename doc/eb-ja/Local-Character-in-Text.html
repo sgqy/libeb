@@ -1,0 +1,34 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Local%20Character%20in%20Text">Local Character in Text</a>,
+次:<a rel="next" accesskey="n" href="Font-Data-Types.html#Font%20Data%20Types">Font Data Types</a>,
+前:<a rel="previous" accesskey="p" href="Convert-Font.html#Convert%20Font">Convert Font</a>,
+上:<a rel="up" accesskey="u" href="Local-Character.html#Local%20Character">Local Character</a>
+<hr><br>
+</div>
+
+<h3 class="section">テキスト中の外字</h3>
+
+   <p>外字はテキストデータ (本文、メニューなど) の中で使われています。
+
+   <p>アプリケーションプログラムが、テキストデータ中に出現する外字を識別して
+処理を行うには、外字に対するフックを設定して、フック関数の中で処理する
+ことになります。
+
+   <p>外字に対するフックは、全角外字に対する <code>EB_HOOK_WIDE_FONT</code> と
+半角外字に対する <code>EB_HOOK_NARROW_FONT</code> の二種類があります。
+いずれも、外字が一字出現する度に、設定したフック関数を呼び出します。
+
+   <p>フックの扱い方については、see <a href="Hook-Code-List.html#Hook%20Code%20List">フックコードの一覧</a>。
+
+   </body></html>
+

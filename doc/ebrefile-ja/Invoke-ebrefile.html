@@ -1,0 +1,50 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Invoke%20ebrefile">Invoke ebrefile</a>,
+次:<a rel="next" accesskey="n" href="Summary-of-Options.html#Summary%20of%20Options">Summary of Options</a>,
+前:<a rel="previous" accesskey="p" href="Introduction.html#Introduction">Introduction</a>,
+上:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter"><code>ebrefile</code> の実行</h2>
+
+   <p><code>ebrefile</code> の一般的な起動方法は次の通りです。
+
+<pre class="example">     % ebrefile <var>書籍へのパス</var>
+     </pre>
+
+<p><var>書籍へのパス</var> には、CD-ROM 書籍のトップディレクトリ、つまり
+<code>catalog</code> または <code>catalogs</code> ファイルが存在するディレクトリを
+指定します。
+複数のパスを書くことはできませんが、以下のように、パスの指定を省くことは
+できます。
+
+<pre class="example">     % ebinfo
+     </pre>
+
+<p>この場合、<code>ebrefile</code> はカレントディレクトリ (<code>.</code>) が指定され
+たものと判断します。
+
+   <p>遠隔アクセスには対応していませんので、遠隔アクセス識別子は使用できません。
+
+<pre class="example">     % ebrefile ebnet://localhost/cdrom
+     ebrefile: ebnet には対応していません。
+     </pre>
+
+<ul class="menu">
+<li><a accesskey="1" href="Select-Subbooks.html#Select%20Subbooks">Select Subbooks</a>:              副本の選択
+<li><a accesskey="2" href="Combination-with-ebzip.html#Combination%20with%20ebzip">Combination with ebzip</a>:       <code>ebzip</code> との連携
+</ul>
+
+   </body></html>
+

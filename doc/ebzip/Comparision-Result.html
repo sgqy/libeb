@@ -1,0 +1,76 @@
+<html lang="en">
+<head>
+<title>ebzip</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name=description content="ebzip">
+<meta name=generator content="makeinfo 4.2">
+<link href="http://www.gnu.org/software/texinfo/" rel=generator-home>
+</head>
+<body>
+<p>
+Node:<a name="Comparision%20Result">Comparision Result</a>,
+Next:<a rel=next accesskey=n href="Compressed-File-Format.html#Compressed%20File%20Format">Compressed File Format</a>,
+Previous:<a rel=previous accesskey=p href="Summary-of-Options.html#Summary%20of%20Options">Summary of Options</a>,
+Up:<a rel=up accesskey=u href="index.html#Top">Top</a>
+<hr><br>
+
+<h2>Comparision of Compression Results</h2>
+
+<p>Compression result of <code>START</code> file in a certain English-Japanese
+and Japanese-English dictionary (EBXA):
+
+<p><table><tr align="left"><td valign="top">compression level           </td><td valign="top">file size        </td><td valign="top">ratio
+<br></td></tr><tr align="left"><td valign="top">(original)            </td><td valign="top">154476544 bytes  </td><td valign="top">100.0%
+<br></td></tr><tr align="left"><td valign="top">level 0               </td><td valign="top">54922039 bytes   </td><td valign="top">35.6%
+<br></td></tr><tr align="left"><td valign="top">level 1               </td><td valign="top">49615791 bytes   </td><td valign="top">32.1%
+<br></td></tr><tr align="left"><td valign="top">level 2               </td><td valign="top">45983464 bytes   </td><td valign="top">29.8%
+<br></td></tr><tr align="left"><td valign="top">level 3               </td><td valign="top">43431397 bytes   </td><td valign="top">28.1%
+<br></td></tr><tr align="left"><td valign="top">(reference: gzip -6)  </td><td valign="top">38712247 bytes   </td><td valign="top">25.0%
+<br></td></tr></table>
+
+<p>Compression result of <code>START</code> file in a certain English dictionary
+(EBG):
+
+<p><table><tr align="left"><td valign="top">compression level     </td><td valign="top">file size       </td><td valign="top">ratio
+<br></td></tr><tr align="left"><td valign="top">(original)            </td><td valign="top">55511040 bytes  </td><td valign="top">100.0%
+<br></td></tr><tr align="left"><td valign="top">level 0               </td><td valign="top">25866491 bytes  </td><td valign="top">46.6%
+<br></td></tr><tr align="left"><td valign="top">level 1               </td><td valign="top">24419066 bytes  </td><td valign="top">44.0%
+<br></td></tr><tr align="left"><td valign="top">level 2               </td><td valign="top">23453212 bytes  </td><td valign="top">42.2%
+<br></td></tr><tr align="left"><td valign="top">level 3               </td><td valign="top">22748840 bytes  </td><td valign="top">41.0%
+<br></td></tr><tr align="left"><td valign="top">(reference: gzip -6)  </td><td valign="top">20930009 bytes  </td><td valign="top">37.7%
+<br></td></tr></table>
+
+<p>Compression result of <code>HONMON</code> file in a certain Japanese
+dictionary (EPWING V1):
+
+<p><table><tr align="left"><td valign="top">compression level     </td><td valign="top">file size       </td><td valign="top">ratio
+<br></td></tr><tr align="left"><td valign="top">(original)            </td><td valign="top">23642112 bytes  </td><td valign="top">100.0%
+<br></td></tr><tr align="left"><td valign="top">level 0               </td><td valign="top">9927048 bytes  </td><td valign="top">42.0%
+<br></td></tr><tr align="left"><td valign="top">level 1               </td><td valign="top">9213184 bytes  </td><td valign="top">39.0%
+<br></td></tr><tr align="left"><td valign="top">level 2               </td><td valign="top">8767603 bytes  </td><td valign="top">37.1%
+<br></td></tr><tr align="left"><td valign="top">level 3               </td><td valign="top">8495563 bytes  </td><td valign="top">35.9%
+<br></td></tr><tr align="left"><td valign="top">(reference: gzip -6)  </td><td valign="top">8114658 bytes  </td><td valign="top">34.3%
+<br></td></tr></table>
+
+<p>Compression result of <code>HONMON2</code> file in a certain Japanese
+dictionary (EPWING V5):
+
+<p><table><tr align="left"><td valign="top">compression level     </td><td valign="top">file size        </td><td valign="top">ratio
+<br></td></tr><tr align="left"><td valign="top">(uncompressed)        </td><td valign="top">220069888 bytes  </td><td valign="top">100.0%
+<br></td></tr><tr align="left"><td valign="top">(original)            </td><td valign="top">149139690 bytes  </td><td valign="top">67.8%
+<br></td></tr><tr align="left"><td valign="top">level 0               </td><td valign="top">82973263 bytes  </td><td valign="top">37.7%
+<br></td></tr><tr align="left"><td valign="top">level 1               </td><td valign="top">78163751 bytes  </td><td valign="top">35.5%
+<br></td></tr></table>
+
+<p>Compression result of the <code>START</code> file in a certain
+encyclopedia (S-EBXA):
+
+<p><table><tr align="left"><td valign="top">compression level     </td><td valign="top">file size        </td><td valign="top">ratio
+<br></td></tr><tr align="left"><td valign="top">(uncompressed)        </td><td valign="top">225140735 bytes  </td><td valign="top">100.0%
+<br></td></tr><tr align="left"><td valign="top">(original)            </td><td valign="top">176467968 bytes  </td><td valign="top">78.4%
+<br></td></tr><tr align="left"><td valign="top">level 0               </td><td valign="top">146045331 bytes  </td><td valign="top">64.9%
+<br></td></tr><tr align="left"><td valign="top">level 1               </td><td valign="top">138137218 bytes  </td><td valign="top">61.4%
+<br></td></tr></table>
+
+</body></html>
+

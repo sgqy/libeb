@@ -1,0 +1,76 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Debug%20EB%20Library">Debug EB Library</a>,
+前:<a rel="previous" accesskey="p" href="Compilation-with-Autoconf.html#Compilation%20with%20Autoconf">Compilation with Autoconf</a>,
+上:<a rel="up" accesskey="u" href="Compilation.html#Compilation">Compilation</a>
+<hr><br>
+</div>
+
+<h3 class="section">EB ライブラリ本体のデバッグ</h3>
+
+   <p>「自分が作ったアプリケーションが正しく動かないのは、ひょっとすると
+EB ライブラリのバグが原因ではないか?」という疑問を抱き、EB ライブラリ
+の挙動を確認したいと思うことがあるかも知れません。
+
+   <p>そのような場合は、環境変数 <code>EB_DEBUG</code> をセットした状態で
+アプリケーションを実行してみて下さい。
+EB ライブラリは標準エラー出力に、次のようなログを (かなり大量ですが)
+出力するようになります。
+
+<pre class="example">     [EB] in: eb_set_font(book=0, font_code=0)
+     [EB] in: eb_load_narrow_font(book=0)
+     [EB] out: eb_load_narrow_font()
+     [EB] in: eb_load_wide_font(book=0)
+     [EB] out: eb_load_wide_font()
+     [EB] out: eb_set_font() = EB_SUCCESS
+     </pre>
+
+   <p>これらのログは、関数の呼び出し時の引数列、および関数からの戻り値を
+示しています。
+<code>ebfixlog</code> という Perl5 スクリプトを使うと、ログを整形することが
+できます。
+このスクリプトは、EB ライブラリのソースコードの <code>misc</code> ディレクトリ
+に収められています。
+
+   <p><code>ebfixlog</code> は、コマンド行の引数として与えられたファイル (引数が
+指定されなければ標準入力) からメッセージデータを読み込み、次のように
+字下げして出力します。
+
+<pre class="example">     [EB] in: eb_set_font(book=0, font_code=0)
+     [EB]   in: eb_load_narrow_font(book=0)
+     [EB]   out: eb_load_narrow_font()
+     [EB]   in: eb_load_wide_font(book=0)
+     [EB]   out: eb_load_wide_font()
+     [EB] out: eb_set_font() = EB_SUCCESS
+     </pre>
+
+   <p>通常 <code>ebfixlog</code> スクリプトは、zio および ebnet と呼ばれる、
+EB ライブラリでファイル入出力を受け持つ処理部のログは読み捨てるように
+なっています。
+これにより、ログの量がかなり減ります。
+
+   <p>zio は EB ライブラリの低レベル入出力の処理部で、頻繁に呼び出されます。
+問題の原因を調べる際も、まずは読み捨てた方がライブラリの内部動作を追跡
+しやすいでしょう。
+
+   <p><code>ebfixlog</code> の <code>-z</code> オプションを使うと、zio のメッセージを
+読み捨てずに出力するようになります。
+
+   <p>ebnet は遠隔アクセスの入出力を処理する部分で、zio よりもさらに
+下位レベルに位置します。
+遠隔アクセスの挙動を追跡するとき以外は、読み捨てた方が良いと思います。
+
+   <p><code>ebfixlog</code> の <code>-n</code> オプションを使うと、ebnet, zio 両方の
+メッセージを読み捨てずに出力するようになります。
+
+   </body></html>
+

@@ -1,0 +1,91 @@
+<html lang="en">
+<head>
+<title>ebinfo</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="ebinfo">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Details%20about%20Information">Details about Information</a>,
+次:<a rel="next" accesskey="n" href="Book-list-on-EBNET-server.html#Book%20list%20on%20EBNET%20server">Book list on EBNET server</a>,
+前:<a rel="previous" accesskey="p" href="Invoke-ebinfo.html#Invoke%20ebinfo">Invoke ebinfo</a>,
+上:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter">出力される情報の詳細ついて</h2>
+
+   <p>この節では、<code>ebinfo</code> が出力する情報の詳細について説明します。
+
+     <dl>
+<dt>disc type:
+     <dd>その書籍の形式。EB/EBG/EBXA/EBXA-C/S-EBXA または EPWING です。
+
+     <br><dt>character code:
+     <dd>その書籍で使用されている文字コー。ISO 8859-1 または JIS X 0208 で
+す。
+
+     <br><dt>the number of subbooks:
+     <dd>その書籍に収録されている副本 (subbbok) の数。
+</dl>
+
+   <p>加えて、その書籍のそれぞれの副本について、以下の情報が出力されます。
+
+     <dl>
+<dt>title:
+     <dd>副本の題名。
+書籍が JIS X 0208 に書かれているときは、題名は EUC (Extended UNIX Code)
+で表示されます。
+
+     <br><dt>directory:
+     <dd>その副本に関連するファイルが置かれるディレクトリの名前。
+英小文字は大文字に変換されます。
+
+     <br><dt>search methods:
+     <dd>副本が対応している検索方法の一覧。
+この一覧は、以下に記した検索方法の一部、もしくは全部から構成されます。
+
+          <dl>
+<dt>copyright
+          <dd>著作権表示 (copyright notice)。
+厳密に言えば、これは検索方法ではないのですが、CD-ROM 書籍の内部形式の
+関係から、表示するようにしています。
+
+          <br><dt>word
+          <dd>前方一致検索 (Word search)。
+
+          <br><dt>endword
+          <dd>後方一致検索 (Endword search)。
+
+          <br><dt>keyword
+          <dd>条件検索 (Keyword search)。
+
+          <br><dt>multi
+          <dd>複合検索 (Multi search)。
+
+          <br><dt>menu
+          <dd>メニュー検索 (Menu search).
+
+          <br><dt>graphic
+          <dd>グラフィック検索 (Graphic search).
+
+     </dl>
+
+     <br><dt>font sizes:
+     <dd>副本が持つ、フォントのサイズの一覧。
+この一覧には、16, 24, 30, 48 という 4 つのサイズの一部、もしくは全部か
+ら構成されます。
+
+     <br><dt>narrow font characters:
+     <dd>副本が定義している半角文字の文字番号の範囲。
+
+     <br><dt>wide font characters:
+     <dd>副本が定義している全角文字の文字番号の範囲。
+
+   </dl>
+
+   </body></html>
+

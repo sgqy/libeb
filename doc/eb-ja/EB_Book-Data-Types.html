@@ -1,0 +1,122 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="EB_Book%20Data%20Types">EB_Book Data Types</a>,
+次:<a rel="next" accesskey="n" href="EB_Book-Functions.html#EB_Book%20Functions">EB_Book Functions</a>,
+前:<a rel="previous" accesskey="p" href="EB_Book-Sample.html#EB_Book%20Sample">EB_Book Sample</a>,
+上:<a rel="up" accesskey="u" href="EB_Book.html#EB_Book">EB_Book</a>
+<hr><br>
+</div>
+
+<h3 class="section">データ型の詳細</h3>
+
+   <p>この節で説明しているデータ型を使うには、次のようにヘッダファイルを
+読み込んで下さい。
+
+<pre class="example">     #include &lt;eb/eb.h&gt;
+     </pre>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b>EB_Book</b><i>
+     </i></td>
+<td align="right">Data type</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_Book</code> 型は、一冊の CD-ROM 書籍を表します。
+CD-ROM 書籍へのアクセスは、すべてこの型のオブジェクトを介して行います。
+同時に複数の CD-ROM 書籍にアクセスする際は、書籍一冊毎にオブジェクトを
+作る必要があります。
+
+     <p><code>EB_Book</code> オブジェクトの操作は、すべて EB ライブラリが用意している
+関数で行います。
+アプリケーションプログラムは、直接 <code>EB_Book</code> オブジェクトのメンバ
+を参照したり、セットしたりすべきではありません。
+
+     <p><code>EB_Book</code> オブジェクトを使用する際は、まずそのオブジェクトに対して
+<code>eb_initialize_book()</code> を呼んで初期化しなくてはなりません。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b>EB_Disc_Code</b><i>
+     </i></td>
+<td align="right">Data type</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>データ型 <code>EB_Disc_Code</code> は、CD-ROM 書籍の形式コードを表します。
+現在のところ、次の値が定義されています。
+
+          <dl>
+<dt><code>EB_DISC_EB</code>
+          <dd>電子ブック (EB, EBG, EBXA, EBXA-C, S-EBXA) であることを表します。
+
+          <br><dt><code>EB_DISC_EPWING</code>
+          <dd>EPWING であることを表します。
+
+          <br><dt><code>EB_DISC_INVALID</code>
+          <dd>不正な形式コード値を表します。
+</dl>
+
+     <p>この型は符合付き整数型の別名として定義されていますので、2 つのコードを
+2 項演算子 <code>==</code> と <code>!=</code> で一致比較することができます。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b>EB_Character_Code</b><i>
+     </i></td>
+<td align="right">Data type</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>データ型 <code>EB_Character_Code</code> は、CD-ROM 書籍で使用される文字コード
+を表します。
+現在のところ、次の値が定義されています。
+
+          <dl>
+<dt><code>EB_CHARCODE_ISO8859_1</code>
+          <dd>ISO 8859-1 (ラテン文字 1) を使用していることを表します。
+電子ブックの EBG はこれです。
+
+          <br><dt><code>EB_CHARCODE_JISX0208</code>
+          <dd>JIS X 0208 (日本語のかな漢字) を使用していることを表します。
+EBG, EBXA-C 以外の電子ブック、および EPWING はすべてこれです。
+
+          <br><dt><code>EB_CHARCODE_JISX0208_GB2312</code>
+          <dd>JIS X 0208 (日本語のかな漢字) と GB 2312 (中国語の簡体字) を併用している
+ことを表します。
+電子ブックの EBXA-C はこれです。
+
+          <br><dt><code>EB_CHARCODE_INVALID</code>
+          <dd>不正な文字コード値を表します。
+</dl>
+
+     <p>この型は符合付き整数型の別名として定義されていますので、2 つのコードを
+2 項演算子 <code>==</code> と <code>!=</code> で一致比較することができます。
+</td></tr>
+</table>
+
+   </body></html>
+

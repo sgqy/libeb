@@ -1,0 +1,81 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Color%20Image">Color Image</a>,
+次:<a rel="next" accesskey="n" href="WAVE-Sound.html#WAVE%20Sound">WAVE Sound</a>,
+前:<a rel="previous" accesskey="p" href="Monochrome-Image.html#Monochrome%20Image">Monochrome Image</a>,
+上:<a rel="up" accesskey="u" href="Binary-Data.html#Binary%20Data">Binary Data</a>
+<hr><br>
+</div>
+
+<h3 class="section">カラー図版</h3>
+
+   <p>カラー図版は、電子ブックでは JPEG 形式、EPWING では JPEG と BMP (DIB)
+形式のものが使用されています。
+EB ライブラリはこれらをすべて扱うことができますが、電子ブックへの対応
+は限定的なものになっています。(詳しくは後述します。)
+
+   <p>カラー図版のデータを取り出すには、まず <code>eb_set_binary_color_graphic()</code>
+を呼び出して、これからアプリケーションがカラー図版のデータを取得しよう
+としていることを EB ライブラリに伝えます。
+<code>eb_set_binary_color_graphic()</code> への引数には、
+<code>EB_Book</code> オブジェクトに加えて、カラー図版のページ番号とオフセット
+を渡します。
+
+<pre class="example">     /* <code>eb_set_binary_color_graphic()</code> の関数プロトタイプ */
+     EB_Error_Code
+     eb_set_binary_color_graphic(EB_Book *book, EB_Position *position);
+     </pre>
+
+   <p><code>EB_Book</code> オブジェクトは、これから取り出そうとしている図版を収録
+している副本をあらかじめ選択しておきます。
+カラー図版のページ番号とオフセットの情報は、カラー図版の参照開始と終了
+を表すエスケープシーケンスへのフックから得ます。
+フックは、インライン表示用と非インライン用の 2 種類があり、さらに
+それぞれ開始フックが JPEG 用と BMP 用に分かれています。
+
+     <dl>
+<dt><code>EB_HOOK_BEGIN_COLOR_BMP</code>
+     <dd><dt><code>EB_HOOK_BEGIN_COLOR_JPEG</code>
+     <dd>非インライン用 BMP, JPEG の開始フック
+
+     <br><dt><code>EB_HOOK_END_COLOR_GRAPHIC</code>
+     <dd>非インライン用カラー図版 (BMP, JPEG 共通) の終了フック
+
+     <br><dt><code>EB_HOOK_BEGIN_IN_COLOR_BMP</code>
+     <dd><dt><code>EB_HOOK_BEGIN_IN_COLOR_JPEG</code>
+     <dd>インライン用 BMP, JPEG の開始フック
+
+     <br><dt><code>EB_HOOK_END_IN_COLOR_GRAPHIC</code>
+     <dd>非インライン用カラー図版 (BMP, JPEG 共通) の終了フック
+</dl>
+
+   <p>非インライン用の終了フック <code>EB_HOOK_END_GRAPHIC</code> では、フック関数
+に渡す引数の <code>argv[1]</code> と <code>argv[2]</code> が、図版データのページ
+番号とオフセットになりますので、これを <code>eb_set_binary_color_graphic()</code>
+に渡してやります。
+同様に、インライン用の終了フック <code>EB_HOOK_END_IN_GRAPHIC</code> では、
+<code>argv[2]</code> と <code>argv[3]</code> がページ番号とオフセットですので、
+これを渡します。
+
+   <p>後は、実際にカラー図版のデータを取り出します。
+これには、モノクロ図版と同様に <code>eb_read_binary()</code> を用います。
+使い方はまったく一緒ですので、詳しくは
+see <a href="Monochrome-Image.html#Monochrome%20Image">モノクロ図版</a> を参照してください。
+
+   <p>ただし、電子ブックのカラー図版については、データの終了位置が来ても
+EB ライブラリは読み込みを止めないという制限事項があります。
+これは、データの大きさに関する情報が記されていないためで、データの
+終端位置は、アプリケーションが JPEG のデータをデコードして割り出すしか
+ありません。
+
+   </body></html>
+

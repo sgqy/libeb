@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Summary%20of%20Options">Summary of Options</a>,
+前:<a rel="previous" accesskey="p" href="Invoke-ebrefile.html#Invoke%20ebrefile">Invoke ebrefile</a>,
+上:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter"><code>ebrefile</code> のオプション一覧</h2>
+
+   <p><code>ebrefile</code> コマンドは、伝統的な一文字オプション名と覚えやすい長い
+オプション名の両方を扱うことができます。
+長いオプション名を表すには、<code>-</code> ではなく <code>--</code> を用います。
+オプション名が一意に決まる範囲内で、名前の後方部分を省略することができま
+す。
+
+     <dl>
+<dt><code>-h</code>
+     <dd><dt><code>--help</code>
+     <dd>ヘルプメッセージを標準出力に出力して、終了します。
+
+     <br><dt><code>-o </code><var>directory</var><code></code>
+     <dd><dt><code>--output-directory </code><var>directory</var><code></code>
+     <dd>新しいカタログファイルを置くディレクトリを指定します。
+指定しなかったときは、カレントディレクトリ (<code>.</code>) になります。
+(詳しくは see <a href="Invoke-ebrefile.html#Invoke%20ebrefile"><code>ebrefile</code> の実行</a>)。
+
+     <br><dt><code>-S </code><var>subbooks</var><code></code>
+     <dd><dt><code>--subbook </code><var>subbooks</var><code></code>
+     <dd><code>ebrefile</code> が新しいカタログファイルに取り込むべき副本を指定します。
+<var>副本</var> は、副本のディレクトリ名をカンマ (<code>,</code>) で区切って
+並べたものでなくてはいけません。
+指定しなかったときは、すべての副本が対象になります
+(詳しくは see <a href="Select-Subbooks.html#Select%20Subbooks">副本の選択</a>)。
+
+     <br><dt><code>-v</code>
+     <dd><dt><code>--version</code>
+     <dd>バージョン番号を標準出力に出力して、終了します。
+</dl>
+
+
+<div class="contents">
+<h2>目次</h2>
+<ul>
+<li><a name="toc_Introduction" href="Introduction.html#Introduction">はじめに</a>
+<li><a name="toc_Invoke%20ebrefile" href="Invoke-ebrefile.html#Invoke%20ebrefile"><code>ebrefile</code> の実行</a>
+<ul>
+<li><a href="Select-Subbooks.html#Select%20Subbooks">副本の選択</a>
+<li><a href="Combination-with-ebzip.html#Combination%20with%20ebzip"><code>ebzip</code> との連携</a>
+</li></ul>
+<li><a name="toc_Summary%20of%20Options" href="Summary-of-Options.html#Summary%20of%20Options"><code>ebrefile</code> のオプション一覧</a>
+</li></ul>
+</div>
+
+   </body></html>
+

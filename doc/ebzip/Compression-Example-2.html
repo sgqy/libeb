@@ -1,0 +1,69 @@
+<html lang="en">
+<head>
+<title>ebzip</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name=description content="ebzip">
+<meta name=generator content="makeinfo 4.2">
+<link href="http://www.gnu.org/software/texinfo/" rel=generator-home>
+</head>
+<body>
+<p>
+Node:<a name="Compression%20Example%202">Compression Example 2</a>,
+Next:<a rel=next accesskey=n href="Compression-Level.html#Compression%20Level">Compression Level</a>,
+Previous:<a rel=previous accesskey=p href="Compression-Example-1.html#Compression%20Example%201">Compression Example 1</a>,
+Up:<a rel=up accesskey=u href="Compression.html#Compression">Compression</a>
+<hr><br>
+
+<h3>Example of Compression (2)</h3>
+
+<p>This section shows another example. 
+This section explains how to compress files in a CD-ROM disc and
+put them onto a hard disk. 
+Suppose that and original CD-ROM book is mounted on <code>/cdrom</code>
+and that the book has the following files under <code>/cdrom</code>.
+
+<br><pre>/cdrom/catalog
+/cdrom/language
+/cdrom/german/start
+/cdrom/french/start
+/cdrom/italian/start
+</pre>
+
+<p>Execute the following commands to compress the book an put it on
+<code>/dict</code>:
+
+<br><pre>% cd /dict
+% ebzip --keep /cdrom
+</pre>
+
+<p>This is equivalent to:
+
+<br><pre>% ebzip --keep --output-directory /dict /cdrom
+</pre>
+
+<p>Please note that the output directory <code>/dict</code> may be empty, but
+it must have been created before compression. 
+In this example, the <code>--keep</code> option is used. 
+By default, <code>ebzip</code> deletes original files after compression, but
+the <code>--keep</code> option disables this behavior.
+
+<p>The directory strcture under <code>/dict</code> and <code>/cdrom</code> are almost
+the same, but the suffix <code>.ebz</code> is added to the compressed files
+under <code>/dict</code>.
+
+<br><pre>/dict/catalog
+/dict/language.ebz
+/dict/german/start.ebz
+/dict/french/start.ebz
+/dict/italian/start.ebz
+</pre>
+
+<p>The intermediate directories, <code>/dict/german</code>, <code>/dict/french</code>
+and <code>/dict/italian</code>, are created by <code>ebzip</code> if missing. 
+<code>catalog</code> and <code>catalogs</code> are simply copied to the output
+directory. 
+<code>ebzip</code> ignores files and directories not supported by EB Library
+(i.e. not compressed or copied to the output directory).
+
+</body></html>
+

@@ -1,0 +1,47 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Compressed%20Book">Compressed Book</a>,
+次:<a rel="next" accesskey="n" href="Remote-Access.html#Remote%20Access">Remote Access</a>,
+前:<a rel="previous" accesskey="p" href="Character-Code.html#Character%20Code">Character Code</a>,
+上:<a rel="up" accesskey="u" href="Features.html#Features">Features</a>
+<hr><br>
+</div>
+
+<h3 class="section">圧縮された書籍について</h3>
+
+   <p>EB ライブラは、データを圧縮して収録した書籍を扱うことができます。
+今のところ、次の 4 種類の圧縮方法に対応しています。
+
+     <dl>
+<dt><code>ebzip</code> 圧縮形式
+     <dd>EB ライブラリ独自の圧縮形式です。
+付属の <code>ebzip</code> コマンドを使うと、この形式で圧縮した書籍を作れます。
+
+     <br><dt>EPWING V4, V5 形式
+     <dd>市販の EPWING V4, V5 の書籍の一部に、この形式で圧縮したものがあります。
+
+     <br><dt>EPWING V6 形式
+     <dd>市販の EPWING V6 の書籍の一部に、この形式で圧縮したものがあります。
+EPWING V4, V5 形式の改良型です。
+
+     <br><dt>S-EBXA 形式
+     <dd>市販の S-EBXA の書籍の一部に、この形式で圧縮したものがあります。
+</dl>
+
+   <p>データの伸長は EB ライブラリ側で自動的に行われるため、
+アプリケーションプログラムからは、アクセスしている書籍が圧縮されているか
+どうか分かりません。
+アプリケーションプログラムは、書籍が圧縮されているかどうかで処理を変える
+必要はありません。
+
+   </body></html>
+

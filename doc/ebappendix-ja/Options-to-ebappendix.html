@@ -1,0 +1,100 @@
+<html lang="en">
+<head>
+<title>ebappendix</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="ebappendix">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Options%20to%20ebappendix">Options to ebappendix</a>,
+前:<a rel="previous" accesskey="p" href="Merge-Appendix.html#Merge%20Appendix">Merge Appendix</a>,
+上:<a rel="up" accesskey="u" href="Generate-Appendix.html#Generate%20Appendix">Generate Appendix</a>
+<hr><br>
+</div>
+
+<h3 class="section"><code>ebappendix</code> のオプション</h3>
+
+   <p><code>ebappendix</code> コマンドは、伝統的な一文字オプション名と覚えやすい長い
+オプション名の両方を扱うことができます。
+長いオプション名を表すには、<code>-</code> ではなく <code>--</code> を用います。
+オプション名が一意に決まる範囲内で、名前の後方部分を省略することができま
+す。
+
+     <dl>
+<dt><code>-b </code><var>書籍の形式</var><code></code>
+     <dd><dt><code>--book-type</code>
+     <dd>appendix を電子ブック、EPWING のどちらの形式のレイアウトに似せて作る
+のかを指定します。
+電子ブック形式なら <code>eb</code>、EPWING 形式なら <code>epwing</code> と指定します。
+
+     <p>このオプションを指定しなかった場合、次の要領でどちらの形式で生成する
+のかがが決定されます。
+まず、入力ディレクトリに <code>catalog.app</code> ファイルが存在すればそれが
+読み込まれ、電子ブック形式の appendix が生成されます。
+<code>catalog.app</code> がなく、代わりに <code>catalogs.app</code> が存在すれば
+それが読み込まれ、EPWING 形式の appendix が生成されます。
+(<code>catalogs.app</code> も <code>catalog.app</code> なければ、エラーになります。)
+
+     <br><dt><code>-d</code>
+     <dd><dt><code>--debug</code>
+     <dd>デバッグ用のメッセージを、標準エラー出力に出力します。
+
+     <br><dt><code>-h</code>
+     <dd><dt><code>--help</code>
+     <dd>ヘルプメッセージを標準出力に出力して、終了します。
+
+     <br><dt><code>-n</code>
+     <dd><dt><code>--no-catalog</code>
+     <dd>カタログファイル (<code>catalog</code> および <code>catalogs</code>) を生成しません。
+このオプションは、書籍と appendix を同じディレクトリに重ね合わせる際に
+有効です
+(詳しくは see <a href="Merge-Appendix.html#Merge%20Appendix">appendix と CD-ROM 書籍の重ね合わせ</a>)。
+
+     <br><dt><code>-o </code><var>ディレクトリ</var><code></code>
+     <dd><dt><code>--output-directory </code><var>ディレクトリ</var><code></code>
+     <dd>出力先のディレクトリを指定します。
+このオプションを省略すると、カレントディレクトリ (<code>.</code>) に出力します。
+ディレクトリが存在しなければ、自動的に生成されます。
+
+     <br><dt><code>-t</code>
+     <dd><dt><code>--test</code>
+     <dd>ファイルを出力しません。
+入力ファイルを読み込んで、内容のチェックだけを行います。
+
+     <br><dt><code>-v</code>
+     <dd><dt><code>--version</code>
+     <dd>バージョン番号を標準出力に出力して、終了します。
+</dl>
+
+
+<div class="contents">
+<h2>目次</h2>
+<ul>
+<li><a name="toc_Introduction" href="Introduction.html#Introduction">はじめに</a>
+<ul>
+<li><a href="What-is-Appendix.html#What%20is%20Appendix">appendix (付録) とは</a>
+<li><a href="What-is-ebappendix.html#What%20is%20ebappendix"><code>ebappendix</code> コマンドとは</a>
+</li></ul>
+<li><a name="toc_Write%20Appendix%20Source" href="Write-Appendix-Source.html#Write%20Appendix%20Source">appendix のソースデータの書き方</a>
+<ul>
+<li><a href="What-is-catalog.app.html#What%20is%20catalog.app"><code>catalog(s).app</code> とは</a>
+<li><a href="Write-catalog.app.html#Write%20catalog.app"><code>catalog(s).app</code> の書き方</a>
+<li><a href="What-is-subbook.app.html#What%20is%20subbook.app"><code>&lt;副本&gt;.app</code> とは</a>
+<li><a href="subbook.app-Syntax.html#subbook.app%20Syntax"><code>&lt;副本&gt;.app</code> の文法</a>
+<li><a href="Single-Directives.html#Single%20Directives"><code>&lt;副本&gt;.app</code> の単独指示子</a>
+<li><a href="Group-Directives.html#Group%20Directives"><code>&lt;副本&gt;.app</code> の複合指示子</a>
+</li></ul>
+<li><a name="toc_Generate%20Appendix" href="Generate-Appendix.html#Generate%20Appendix">appendix の生成</a>
+<ul>
+<li><a href="Invoke-ebappendix.html#Invoke%20ebappendix"><code>ebappendix</code> の実行</a>
+<li><a href="Merge-Appendix.html#Merge%20Appendix">appendix と CD-ROM 書籍の重ね合わせ</a>
+<li><a href="Options-to-ebappendix.html#Options%20to%20ebappendix"><code>ebappendix</code> のオプション</a>
+</li></ul>
+</li></ul>
+</div>
+
+   </body></html>
+

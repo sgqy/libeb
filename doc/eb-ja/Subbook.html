@@ -1,0 +1,54 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Subbook">Subbook</a>,
+次:<a rel="next" accesskey="n" href="Search.html#Search">Search</a>,
+前:<a rel="previous" accesskey="p" href="Error-Handling.html#Error%20Handling">Error Handling</a>,
+上:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter">副本</h2>
+
+   <p>紙に印刷された本では別々の書籍になっているものでも、電子ブックや EPWING
+では 1 枚の CD-ROM にまとめることができます。
+
+   <p>たとえば、ある CD-ROM 書籍は、国語辞書、英々辞典、百科事典という 3 つ
+の (印刷された本で言うところの) 「書籍」を持っていることもあり得ます。
+紛らわしさを避けるために、EB ライブラリではここで言う「書籍」のことを
+<dfn>副本 (subbook)</dfn> と呼んでいます。
+
+<pre class="example">     　　　ＣＤ−ＲＯＭ書籍
+     ┌─────────────┐
+     │　副本０：　［国語辞典］　│
+     │　副本１：　［英々辞典］　│
+     │　副本２：　［百科事典］　│
+     └─────────────┘
+     </pre>
+
+<p>CD-ROM 書籍では、それぞれの副本はそれ自体が独立した書籍になっています。
+また、副本のデータも、副本毎に別々のファイルに収められています。
+したがって、EB ライブラリでも、アプリケーションプログラムの主要な処理
+である単語の検索や本文データの取得などは、すべて副本単位で行うように
+なっています。
+
+   <p>本章では、EB ライブラリでの副本の扱い方について説明します。
+
+<ul class="menu">
+<li><a accesskey="1" href="Subbook-Code.html#Subbook%20Code">Subbook Code</a>:                 副本コード
+<li><a accesskey="2" href="Current-Subbook.html#Current%20Subbook">Current Subbook</a>:              選択中の副本
+<li><a accesskey="3" href="Subbook-Sample.html#Subbook%20Sample">Subbook Sample</a>:               サンプルプログラム
+<li><a accesskey="4" href="Subbook-Data-Types.html#Subbook%20Data%20Types">Subbook Data Types</a>:           データ型の詳細
+<li><a accesskey="5" href="Subbook-Functions.html#Subbook%20Functions">Subbook Functions</a>:            関数の詳細
+</ul>
+
+   </body></html>
+

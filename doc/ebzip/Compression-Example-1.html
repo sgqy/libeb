@@ -1,0 +1,75 @@
+<html lang="en">
+<head>
+<title>ebzip</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name=description content="ebzip">
+<meta name=generator content="makeinfo 4.2">
+<link href="http://www.gnu.org/software/texinfo/" rel=generator-home>
+</head>
+<body>
+<p>
+Node:<a name="Compression%20Example%201">Compression Example 1</a>,
+Next:<a rel=next accesskey=n href="Compression-Example-2.html#Compression%20Example%202">Compression Example 2</a>,
+Previous:<a rel=previous accesskey=p href="Compression.html#Compression">Compression</a>,
+Up:<a rel=up accesskey=u href="Compression.html#Compression">Compression</a>
+<hr><br>
+
+<h3>Example of Compression (1)</h3>
+
+<p>This section explains how to compress your CD-ROM book which has
+already copied on a hard disk. 
+Supporse that you have already copied a CD-ROM book to <code>/dict</code>
+on a hard disk, but it is not compressed. 
+The book has the following files under <code>/dict</code>.
+
+<br><pre>/dict/catalog
+/dict/language
+/dict/kanji/start
+/dict/english/start
+</pre>
+
+<p>You can compress the book by the following way:
+
+<br><pre>% cd /dict
+% ebzip
+</pre>
+
+<p>This is equivalent to:
+
+<br><pre>% ebzip --output-directory /dict /dict
+</pre>
+
+<p>Compression may take a while. 
+<code>ebzip</code> outputs status messages during the compression like as
+follows:
+
+<br><pre>==&gt; compress /dict/kanji/start &lt;==
+output to ./dict/kanji/start.ebz
+ 1.0% done (2097152 / 220069888 bytes)
+ 1.9% done (4194304 / 220069888 bytes)
+ 2.9% done (6291456 / 220069888 bytes)
+        : (snip)
+completed (220069888 / 220069888 bytes)
+220069888 -&gt; 78163751 bytes (35.5%)
+</pre>
+
+<p>When the compression has done, the directory structure under
+<code>/dict</code> is slightly changed.
+
+<br><pre>/dict/catalog
+/dict/language.ebz
+/dict/kanji/start.ebz
+/dict/english/start.ebz
+</pre>
+
+<p>The suffix <code>.ebz</code> is added to the some files (<code>/dict/language.ebz</code>,
+<code>/dict/kanji/start.ebz</code> and <code>/dict/english/start.ebz</code>). 
+They are compressed files. 
+Other files are unchanged.
+
+<p><code>ebzip</code> compresses the following files; <code>START</code>, <code>HONMON</code>,
+<code>HONMON2</code>, <code>HONMONS</code>, <code>LANGUAGE</code>, and font files under
+the <code>GAIJI</code> directories.
+
+</body></html>
+

@@ -1,0 +1,131 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Multi%20Candidates">Multi Candidates</a>,
+次:<a rel="next" accesskey="n" href="Stop-Code-Issue.html#Stop%20Code%20Issue">Stop Code Issue</a>,
+前:<a rel="previous" accesskey="p" href="Menu.html#Menu">Menu</a>,
+上:<a rel="up" accesskey="u" href="Text-Data.html#Text%20Data">Text Data</a>
+<hr><br>
+</div>
+
+<h3 class="section">複合検索の候補一覧</h3>
+
+   <p>「複合検索」(see <a href="Multi-Search.html#Multi%20Search">複合検索</a>) のところで述べたように、
+複合検索では、入力語に <dfn>候補一覧 (candidates)</dfn> が用意されていること
+があります。
+これは、入力語として有効な語をあらかじめ列挙しておき、
+アプリケーションプログラムのユーザに選択させる仕組みです。
+
+   <p>たとえば、人名を検索するのために、次のような複合検索があったとします。
+
+<pre class="example">     入力語 0: 国・地域
+     入力語 1: 時代
+     入力語 2: 性別
+     入力語 3: キーワード
+     入力語 4: キーワード
+     </pre>
+
+   <p>このうち、入力語 3 の「性別」には、入力語として有効な語は「男」と「女」
+の 2 つしかないでしょう。
+このように、入力語として有効な語が限られている場合に、候補一覧が用意
+されていることがあります。
+
+   <p>候補一覧は検索のためのデータではありますが、内部構造はテキストデータ
+そのものです。
+ユーザに対して候補を列記した示したテキストを示し、その中の一つを選択
+してもらうようになっています。
+
+   <p>しかも、候補一覧のデータ構造はメニューと非常に似ており、メニューの
+ような階層構造を持っています
+(see <a href="Menu.html#Menu">メニュー</a>)。
+たとえば、上の複合検索の入力語 2 「国・地域」にも候補の一覧を設けると
+したら、最初の階層は次のようになるかも知れません。
+
+<pre class="example">     * 日本 (→選択)
+     * 日本以外のアジア (→詳細)
+     * ヨーロッパ (→詳細)
+     * 北アメリカ (→詳細)
+     * その他 (→詳細)
+     </pre>
+
+<p>「日本」を選ぶと、そこで入力語が決定されたことになります。しかし、
+それ以外の項目についてはさらに細かく分類された選択肢が用意されて
+います。
+ここでは、「北アメリカ」を選んでみましょう。
+すると、さらに次のような候補一覧のデータが提示されます。
+
+<pre class="example">     * アメリカ (→選択)
+     * カナダ (→選択)
+     </pre>
+
+<p>ここで、「アメリカ」「カナダ」を選ぶと、入力語が決定されます。
+
+   <p>次に実際に、EB ライブラリを使ってこうした候補一覧を扱う方法について
+説明します。
+まず、アプリケーションプログラムは、複合検索の入力語が候補一覧を持って
+いるかどうかを、確認する必要があるでしょう。
+<code>eb_multi_entry_candidates()</code> を使うと、候補一覧データの開始位置
+を取得することができます。
+この関数は、候補一覧を持っていなければ <code>EB_ERR_NO_CANDIDATES</code> を
+返しますので、候補一覧の有無も分かります。
+(開始位置は取得せずに、有無だけを調べたいときは、
+<code>eb_multi_entry_have_candidates()</code> という関数が使えます。)
+
+<pre class="example">     EB_Position position;
+     EB_Error_Code err;
+     
+     /* <code>mulit_id</code>, <code>entry_id</code> で、どの複合検索の何番目の
+      * 入力語について確認するのかを指定します。*/
+     err = eb_multi_entry_candidates(&amp;book, multi_id, entry_id, &amp;position);
+     if (err == EB_ERR_NO_CANDIDATES) {
+         /* この入力語には、候補一覧が用意されていない */
+        return;
+     } else if (err != EB_SUCCESS) {
+         /* それ以外のエラー */
+        return;
+     }
+     </pre>
+
+   <p>後は、得られた位置 (<code>position</code>) にシークして、<code>eb_read_text()</code>
+でテキストデータを読み込みます。
+読み込んだテキストでは、候補となる語のそれぞれが候補開始と終了を表す
+エスケープシーケンスに挟まれた形になっています。
+
+<pre class="example">     * &lt;候補開始シーケンス&gt; "日本" &lt;候補終了シーケンス&gt;
+     * &lt;候補開始シーケンス&gt; "日本以外のアジア" &lt;候補終了シーケンス&gt;
+     * &lt;候補開始シーケンス&gt; "ヨーロッパ" &lt;候補終了シーケンス&gt;
+     * &lt;候補開始シーケンス&gt; "北アメリカ" &lt;候補終了シーケンス&gt;
+     * &lt;候補開始シーケンス&gt; "その他" &lt;候補終了シーケンス&gt;
+     </pre>
+
+   <p>候補開始シーケンスに対しては、フックとして <code>EB_HOOK_BEGIN_CANDIDATE</code>
+が用意されています。
+終了シーケンスに対するフックは 2 種類あって、さらに次の階層へ続く場合
+に呼ばれる <code>EB_HOOK_END_CANDIDATE_GROUP</code> と、その語がそのまま
+入力語の候補となる場合に呼ばれる <code>EB_HOOK_END_GROUP_LEAF</code> に
+分かれています。
+
+   <p>次の階層のデータの開始位置は、終了シーケンスのフック関数に、引数として
+渡ってきます。
+(この点もメニューと同様なので、メニューの解説を参考にして下さい。)
+
+   <p>終了シーケンスに対するフック関数の中では、<code>eb_current_candidate()</code>
+という関数が使えます。
+この関数は、開始シーケンスと終了シーケンスの間に挟まれた「候補」の
+文字列 (ポインタ) を返します。
+
+<pre class="example">     const char *candidate;
+     
+     candidate = eb_current_candidate(book);
+     </pre>
+
+   </body></html>
+

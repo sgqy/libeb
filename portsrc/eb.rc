@@ -1,0 +1,56 @@
+/*
+ * ebdll.rc
+ * copyright (c) 2001-2002, satomi. all rights reserved.
+ * $Id: ebdll.rc 4.0.1 2002/11/04 08:43:00 satomii Exp $
+ *
+ * this program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ *
+ * this program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ */
+#include <afxres.h>
+
+LANGUAGE LANG_JAPANESE, SUBLANG_DEFAULT
+
+/*
+ * version resoruce
+ */
+VS_VERSION_INFO VERSIONINFO
+	FILEVERSION		4,0,0,0
+	PRODUCTVERSION	4,0,0,0
+	FILEFLAGSMASK	0x3fL
+#ifdef _DEBUG
+	FILEFLAGS		0x1L
+#else
+	FILEFLAGS		0x0L
+#endif	/* _DEBUG */
+	FILEOS			0x4L
+	FILETYPE		0x2L
+	FILESUBTYPE		0x0L
+BEGIN
+	BLOCK "StringFileInfo"
+	BEGIN
+		BLOCK "041104b0"
+		BEGIN
+			VALUE "Comments", "Distributed under GPL version 2. NO WARRANTY. See the GPL for details.\0"
+			VALUE "CompanyName", " \0"
+			VALUE "FileDescription", "EB Library for Win32\0"
+			VALUE "FileVersion", "4.0beta3\0"
+			VALUE "InternalName", "eb\0"
+			VALUE "LegalCopyright", "EB Library Copyright (C) 1997-2003 Motoyuki Kasahara. Win32 support (C) 2000-2002 satomi. zlib Copyright (C) 1995-2002 Jean-loup Gailly and Mark Adler.\0"
+			VALUE "LegalTrademarks", "\0"
+			VALUE "OriginalFilename", "eb.dll\0"
+			VALUE "ProductName", "EB Library\0"
+			VALUE "ProductVersion", "4.0beta3\0"
+		END
+	END
+	BLOCK "VarFileInfo"
+	BEGIN
+		VALUE "Translation", 0x411, 1200
+	END
+END

@@ -1,0 +1,60 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Local%20Character">Local Character</a>,
+次:<a rel="next" accesskey="n" href="Binary-Data.html#Binary%20Data">Binary Data</a>,
+前:<a rel="previous" accesskey="p" href="Text-Data.html#Text%20Data">Text Data</a>,
+上:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter">外字</h2>
+
+   <p>文字コードに収録されていない、私的に定義した文字のことを、俗に「外字」
+と言います。
+外字として定義した個々の文字を識別するために、文字コードに収録された
+文字とは重複しない位置に、各文字の文字番号に割り振るのが普通です。
+(割り当てる文字番号の詳細については、see <a href="Character-Code.html#Character%20Code">文字コード</a>。)
+
+   <p>市販の電子ブック、EPWING でも、ほとんどが外字を使っています。
+外字の定義状況は書籍同士でバラバラで、まったく統一感はありません。
+つまり、同じ文字番号を使っていても、定義されている外字は書籍によって
+違います。
+外字は副本毎に定義することが可能ですが、一つの CD-ROM 書籍内でも副本に
+よって定義が異なることも珍しくありません。
+副本によっては、数百から数千の外字を定義していることもあります。
+
+   <p>CD-ROM 書籍では、定義した外字の字形データ (つまりフォント) を用意して
+います。
+フォントはビットマップデータであり、書籍によっては大きさの異なる数種類
+のフォントを用意しています。
+
+   <p>逆に言えば、外字に対して提供されるデータは、フォントだけです。
+ある文字番号を割り当てられた外字が、漢字なのか、発音記号なのか、そう
+いった補助的な情報は用意されていません。
+アプリケーションプログラムが外字をサポートするためには、外字のフォント
+をそのまま表示する以外に方法はないでしょう。
+
+<ul class="menu">
+<li><a accesskey="1" href="Narrow---Wide-Font.html#Narrow%20&amp;%20Wide%20Font">Narrow &amp; Wide Font</a>:           半角外字と全角外字
+<li><a accesskey="2" href="Font-Size-and-Font-Code.html#Font%20Size%20and%20Font%20Code">Font Size and Font Code</a>:      外字の大きさと外字コード
+<li><a accesskey="3" href="Current-Font-Height.html#Current%20Font%20Height">Current Font Height</a>:          選択中の外字フォントの高さ
+<li><a accesskey="4" href="Get-Font.html#Get%20Font">Get Font</a>:                     外字フォントの取り出し
+<li><a accesskey="5" href="Convert-Font.html#Convert%20Font">Convert Font</a>:                 外字フォントの変換
+<li><a accesskey="6" href="Local-Character-in-Text.html#Local%20Character%20in%20Text">Local Character in Text</a>:      テキスト中の外字
+<li><a accesskey="7" href="Font-Data-Types.html#Font%20Data%20Types">Font Data Types</a>:              データ型の詳細
+<li><a accesskey="8" href="Font-Constants.html#Font%20Constants">Font Constants</a>:               定数の詳細
+<li><a accesskey="9" href="Font-Functions.html#Font%20Functions">Font Functions</a>:               関数の詳細
+<li><a href="Font-Sample.html#Font%20Sample">Font Sample</a>:                  サンプルプログラム
+</ul>
+
+   </body></html>
+

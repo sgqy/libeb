@@ -1,0 +1,138 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Summary%20of%20Options">Summary of Options</a>,
+次:<a rel="next" accesskey="n" href="Comparision-Result.html#Comparision%20Result">Comparision Result</a>,
+前:<a rel="previous" accesskey="p" href="Delete-a-Book.html#Delete%20a%20Book">Delete a Book</a>,
+上:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter"><code>ebzip</code> のオプション一覧</h2>
+
+   <p><code>ebzip</code> コマンドは、伝統的な一文字オプション名と覚えやすい長い
+オプション名の両方を扱うことができます。
+長いオプション名を表すには、<code>-</code> ではなく <code>--</code> を用います。
+オプション名が一意に決まる範囲内で、名前の後方部分を省略することができま
+す。
+
+     <dl>
+<dt><code>-f</code>
+     <dd><dt><code>--force-overwrite</code>
+     <dd>確認を求めずに、既に存在しているファイルを上書きします。
+このオプションは、情報出力の動作のときや、<code>--test</code> (<code>-t</code>)
+オプションを指定したときは無視されます
+
+     <p>(詳しくは、see <a href="Overwrite-Old-Files.html#Overwrite%20Old%20Files">古いファイルの上書き</a>)。
+
+     <br><dt><code>-h</code>
+     <dd><dt><code>--help</code>
+     <dd>ヘルプメッセージを標準出力に出力して、終了します。
+
+     <br><dt><code>-i</code>
+     <dd><dt><code>--information</code>
+     <dd>指定された CD-ROM 書籍の圧縮状態を出力します。
+
+     <p>(詳しくは、 see <a href="Information.html#Information">情報出力</a>)。
+
+     <br><dt><code>-k</code>
+     <dd><dt><code>--keep</code>
+     <dd>出力側のファイルを書き込み終わっても、対応する入力側のファイルは削除し
+ません。
+このオプションは、情報出力の動作のときや、<code>--test</code> (<code>-t</code>)
+オプションを指定したときは無視されます
+
+     <p>(詳しくは、see <a href="Compression-Example-2.html#Compression%20Example%202">圧縮の実行例 (2)</a>)。
+
+     <br><dt><code>-l </code><var>整数</var><code></code>
+     <dd><dt><code>--level </code><var>整数</var><code></code>
+     <dd>圧縮レベルを指定します。
+<var>整数</var> は、<code>0</code>、<code>1</code>、<code>2</code>、<code>3</code>、<code>4</code>、
+<code>5</code> のいずれかでなくてはいけません。
+レベル 0 は、最も速いものの圧縮率は最悪です。
+レベル 3 は、最も遅いものの圧縮率は最良です。
+指定しなかったときのレベルは 0 です。
+このオプションは、圧縮以外の動作のときは無視されます。
+
+     <p>(詳しくは、see <a href="Compression-Level.html#Compression%20Level">圧縮レベル</a>)。
+
+     <br><dt><code>-n</code>
+     <dd><dt><code>--no-overwrite</code>
+     <dd>既に存在するファイルがあった場合、上書きの確認を求めずに、そのファイル
+は飛ばして次のファイルに進みます。
+このオプションは、情報出力の動作のときや、<code>--test</code> (<code>-t</code>)
+オプションを指定したときは無視されます
+
+     <p>(詳しくは、see <a href="Overwrite-Old-Files.html#Overwrite%20Old%20Files">古いファイルの上書き</a>)。
+
+     <br><dt><code>-o </code><var>ディレクトリ</var><code></code>
+     <dd><dt><code>--output-directory </code><var>ディレクトリ</var><code></code>
+     <dd>出力側のファイルを置くディレクトリを指定します。
+指定しなかったときは、カレントディレクトリ (<code>.</code>) になります。
+このオプションは、情報出力の動作のときや、<code>--test</code> (<code>-t</code>)
+オプションを指定したときは無視されます
+
+     <br><dt><code>-q</code>
+     <dd><dt><code>--quiet</code>
+     <dd><dt><code>--silence</code>
+     <dd>情報、警告メッセージを出力しません。
+ただし、圧縮・伸長時に出力側のファイルが既に存在していると、
+<code>ebzip</code> はその出力側のファイルを上書きして良いかどうか訊いてきます。
+この質問を抑制するには、<code>--force-overwrite</code>(<code>-f</code>) または
+<code>--no-overwrite</code>(<code>-n</code>) を指定して下さい。
+このオプションは、情報出力の動作のときは、無視されます
+
+     <br><dt><code>-s </code><var>型</var><code></code>
+     <dd><dt><code>--skip-content </code><var>型</var><code></code>
+     <dd>無視するファイルのデータ型を指定します。
+<var>型</var> は、データ型の名前をカンマ (<code>,</code>) で区切って並べたものでな
+くてはいけません。
+<code>ebzip</code> が現在のところ認識するデータ型の名前は、
+<code>font</code> (外字のフォント)、<code>graphic</code> (画像データ)、
+<code>sound</code> (音声データ)、<code>movie</code> (動画データ) です。
+指定しなかったときは、どのファイルも無視されません。
+
+     <br><dt><code>-S </code><var>副本</var><code></code>
+     <dd><dt><code>--subbook </code><var>副本</var><code></code>
+     <dd>圧縮・伸長・情報出力の対象とする副本を指定します。
+<var>副本</var> は、副本のディレクトリ名をカンマ (<code>,</code>) で区切って
+並べたものでなくてはいけません。
+指定しなかったときは、すべての副本が対象になります。
+
+     <p>(詳しくは、see <a href="Partial-Compression.html#Partial%20Compression">一部だけの圧縮</a>)。
+
+     <br><dt><code>-t</code>
+     <dd><dt><code>--test</code>
+     <dd>圧縮・伸長したデータを、実際のファイルには書き込みません。
+このオプションは、情報出力の動作のときは無視されます
+
+     <p>(詳しくは、see <a href="Test.html#Test">テスト</a>)。
+
+     <br><dt><code>-u</code>
+     <dd><dt><code>--uncompress</code>
+     <dd>CD-ROM 書籍を伸長します。
+
+     <p>(詳しくは、see <a href="Uncompression.html#Uncompression">伸長</a>)。
+
+     <br><dt><code>-v</code>
+     <dd><dt><code>--version</code>
+     <dd>バージョン番号を標準出力に出力して、終了します。
+
+     <br><dt><code>-z</code>
+     <dd><dt><code>--compress</code>
+     <dd>CD-ROM 書籍を圧縮します。
+
+     <p>(詳しくは、see <a href="Compression.html#Compression">圧縮</a>)。
+
+   </dl>
+
+   </body></html>
+

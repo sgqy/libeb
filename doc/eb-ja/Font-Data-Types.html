@@ -1,0 +1,59 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Font%20Data%20Types">Font Data Types</a>,
+次:<a rel="next" accesskey="n" href="Font-Constants.html#Font%20Constants">Font Constants</a>,
+前:<a rel="previous" accesskey="p" href="Local-Character-in-Text.html#Local%20Character%20in%20Text">Local Character in Text</a>,
+上:<a rel="up" accesskey="u" href="Local-Character.html#Local%20Character">Local Character</a>
+<hr><br>
+</div>
+
+<h3 class="section">データ型の詳細</h3>
+
+   <p>この節で説明しているデータ型を使うには、次のようにヘッダファイルを
+読み込んで下さい。
+
+<pre class="example">     #include &lt;eb/eb.h&gt;
+     </pre>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b>EB_Font_Code</b><i>
+     </i></td>
+<td align="right">Data type</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>外字コードは、外字の高さ (ピクセル数) を表します。
+現在のところ、定義されている高さは次の通りです。
+
+          <ul>
+<li><code>EB_FONT_16</code>
+<li><code>EB_FONT_24</code>
+<li><code>EB_FONT_30</code>
+<li><code>EB_FONT_48</code>
+<li><code>EB_FONT_INVALID</code>
+</ul>
+
+     <p>外字コードの実体は整数値ですが、<code>EB_FONT_16</code> の値は 16 では
+ありません。
+他も同様ですので、注意して下さい。
+
+     <p><code>EB_FONT_INVALID</code> は特別な外字コードで、不正な外字コード値を表す
+ために用います。
+</td></tr>
+</table>
+
+   </body></html>
+

@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+<title>ebzip</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name=description content="ebzip">
+<meta name=generator content="makeinfo 4.2">
+<link href="http://www.gnu.org/software/texinfo/" rel=generator-home>
+</head>
+<body>
+<p>
+Node:<a name="Options%20for%20Uncompression">Options for Uncompression</a>,
+Next:<a rel=next accesskey=n href="Uncompress-Compressed-Book.html#Uncompress%20Compressed%20Book">Uncompress Compressed Book</a>,
+Previous:<a rel=previous accesskey=p href="Uncompression-Example.html#Uncompression%20Example">Uncompression Example</a>,
+Up:<a rel=up accesskey=u href="Uncompression.html#Uncompression">Uncompression</a>
+<hr><br>
+
+<h3>Options for Uncompression</h3>
+
+<p>Most options have the same meanings at compression and uncompression.
+
+<p>When the <code>--keep</code> option is specified, <code>ebunzip</code> doesn't
+delete compressed files after uncompression.
+
+<p>Invoking <code>ebunzip</code> with the <code>--test</code> option, <code>ebunzip</code>
+doesn't write uncompressed data to acutual files. 
+This option is usuful for checking validity of compressed files. 
+See <a href="Test.html#Test">Test</a>, for more details about the <code>--test</code> option.
+
+<p>When the <code>--subbook</code> and/or <code>--skip-content</code> options are
+specified, <code>ebunzip</code> only uncompresses files matched to the given
+condition only. 
+See <a href="Partial-Compression.html#Partial%20Compression">Partial Compression</a>, for more details about these options.
+
+<p>When the <code>--force-overwrite</code> or <code>--no-overwrite</code> option is
+specified, <code>ebunzip</code> overwrites or skips files without confirmation
+for overwriting. 
+See <a href="Overwrite-Old-Files.html#Overwrite%20Old%20Files">Overwrite Old Files</a>, for more details about the
+<code>--force-overwrite</code> and <code>--no-overwrite</code> options.
+
+<p><code>ebunzip</code> ignores the <code>--level</code> option. 
+You don't have to specify the <code>--level</code> option at uncompression.
+
+</body></html>
+

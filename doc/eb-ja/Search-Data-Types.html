@@ -1,0 +1,112 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Search%20Data%20Types">Search Data Types</a>,
+次:<a rel="next" accesskey="n" href="Search-Functions.html#Search%20Functions">Search Functions</a>,
+前:<a rel="previous" accesskey="p" href="Get-Remained-Entries.html#Get%20Remained%20Entries">Get Remained Entries</a>,
+上:<a rel="up" accesskey="u" href="Search.html#Search">Search</a>
+<hr><br>
+</div>
+
+<h3 class="section">データ型の詳細</h3>
+
+   <p>この節で説明しているデータ型を使うには、次のようにヘッダファイルを
+読み込んで下さい。
+
+<pre class="example">     #include &lt;eb/eb.h&gt;
+     </pre>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b>EB_Hit</b><i>
+     </i></td>
+<td align="right">Data type</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_Hit</code> は、検索に一致したエントリの情報を格納するためのデータ型
+です。
+内部構造は、次のように定義されています。
+
+     <pre class="example">          typedef struct EB_Hit_Struct EB_Hit;
+          
+          struct EB_Hit_Struct {
+              EB_Position heading;  /* 見出しの位置 */
+              EB_Position text;     /* 本文の位置   */
+          };
+          </pre>
+
+     <p>アプリケーションプログラムは、直接 <code>EB_Hit</code> オブジェクトのメンバ
+を参照したり、セットしたりしても構いません。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b>EB_Position</b><i>
+     </i></td>
+<td align="right">Data type</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>データ型 <code>EB_Position</code> は、副本のデータの位置を表します。
+内部構造は、次のように定義されています。
+
+     <pre class="example">          typedef struct EB_Position_Struct EB_Position;
+          
+          struct EB_Position_Struct {
+              int page;     /* ページ番号 */
+              int offset;   /* ページ内のオフセット */
+          };
+          </pre>
+
+     <p>ページ番号は 1 から始まり、ページ内のオフセットは 0 〜 2047 の範囲と
+なります。
+ただし、アプリケーションプログラムを作成する上で、このことを覚えておく
+必要はありません。
+
+     <p>アプリケーションプログラムは、直接 <code>EB_Position</code> オブジェクトの
+メンバを参照したり、セットしたりしても構いません。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b>EB_Muti_Search_Code</b><i>
+     </i></td>
+<td align="right">Data type</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>データ型 <code>EB_Multi_Search_Code</code> は複合検索コードを表します。
+副本に用意されている複合検索は、それぞれ一意の複合検索コードを
+持っています。
+この型は符合付き整数型の別名として定義されていますので、2 つのコードを
+2 項演算子 <code>==</code> と <code>!=</code> で一致比較することができます。
+
+     <p>また、不正な複合検索コード値を表す <code>EB_MULTI_INVALID</code> という特別な
+副本コードが定義されています。
+利用可能な複合検索に対して、この複合検索コードが割り当てられることは
+ありません。
+</td></tr>
+</table>
+
+   </body></html>
+

@@ -1,0 +1,85 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Get%20Font">Get Font</a>,
+次:<a rel="next" accesskey="n" href="Convert-Font.html#Convert%20Font">Convert Font</a>,
+前:<a rel="previous" accesskey="p" href="Current-Font-Height.html#Current%20Font%20Height">Current Font Height</a>,
+上:<a rel="up" accesskey="u" href="Local-Character.html#Local%20Character">Local Character</a>
+<hr><br>
+</div>
+
+<h3 class="section">外字フォントの取り出し</h3>
+
+   <p>外字の高さを選択した状態であれば、外字のフォントデータ
+(ビットマップデータ) を取り出すことができます。
+
+   <p>フォントデータを取り出す関数は、
+全角外字なら <code>eb_wide_font_character_bitmap()</code>、
+半角外字なら <code>eb_narrow_font_character_bitmap()</code> です。
+
+   <p>全角外字 <code>0xa121</code> のフォントデータを取り出すプログラムは、次のよう
+になります。
+半角外字の場合は、呼び出す関数名が変わるだけです。
+
+<pre class="example">     /* <code>book</code> が <code>EB_Book</code> のオブジェクトで、すでに書籍に結び付け
+      * られ、副本と外字の高さを選択中だと仮定しています。*/
+     char bitmap[EB_SIZE_WIDE_FONT_48];
+     
+     if (eb_wide_font_character_bitmap(book, 0xa121, bitmap)
+         != EB_SUCCESS) {
+         return;
+     }
+     </pre>
+
+<p>ここでは、<code>bitmap</code> にフォントデータを格納しています。
+<code>bitmap</code> の領域として <code>EB_SIZE_WIDE_FONT_48</code> バイトを確保
+していますが、これは高さ 48 ピクセルの外字データを格納するために必要な
+サイズを表します。
+
+   <p>フォントデータのサイズは、外字の高さに応じて一定です。
+高さ 48 ピクセルは外字の中でも最大のサイズなので、このサイズの領域を
+用意すれば、どの高さの外字でも格納できます。
+
+   <p>外字データは、ビットマップ形式のデータになっています。
+背景色をビット値 0, 前景色をビット値 1 として、各ピクセルの値を並べて
+あります。
+並び方ですが、左上からまずは右に向かってピクセルを拾っていき、左端まで
+来たら一つ下の段に降りて、また右方向にピクセルを拾います。
+以下、一番下の段までこれを繰り返します。
+
+   <p>ただし、バイト内では、128, 64, 32, ...1 の桁の順にビット値を格納して
+います。
+つまり、128 の桁は一番左のピクセル、1 の桁は一番右のピクセルに対応
+します。
+
+   <p>以下に、16x16 の全角外字のビットマップの例と、そのバイト列を記します。
+背景色が□、前景色が■です。
+
+<pre class="example">     □□□□□□□□□□□□□□□□　　0x00, 0x00,
+     □□□□□□□□□□□□□□□□　　0x00, 0x00,
+     □□□■■■■■■□□□■□□□　　0x1f, 0x88,
+     □□□□□□□□■□■□■□□□　　0x00, 0xc8,
+     □□□□■□□■□□■□■□□□　　0x09, 0x28,
+     □□□□■□□■■■■■■□□□　　0x09, 0xf8,
+     □□■■■■■□□□■□■□□□　　0x3e, 0x28,
+     □□□□□□□□□□■□■□□□　　0x00, 0x28,
+     □□□■□□□□□□□□■□□□　　0x10, 0x08,
+     □□□■□□□□□□□□■□□□　　0x10, 0x08,
+     □□□■■■■■■■■■■□□□　　0x1f, 0xf8,
+     □□□■□□□□□□□□■□□□　　0x18, 0x08,
+     □□□■□□□□□□□□■□□□　　0x18, 0x08,
+     □□□■■■■■■■■■■□□□　　0x1f, 0xf8,
+     □□□□□□□□□□□□□□□□　　0x00, 0x00,
+     □□□□□□□□□□□□□□□□　　0x00, 0x00,
+     </pre>
+
+   </body></html>
+

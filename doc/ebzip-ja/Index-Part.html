@@ -1,0 +1,82 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Index%20Part">Index Part</a>,
+次:<a rel="next" accesskey="n" href="Header-Part.html#Header%20Part">Header Part</a>,
+前:<a rel="previous" accesskey="p" href="Data-Part.html#Data%20Part">Data Part</a>,
+上:<a rel="up" accesskey="u" href="Compressed-File-Format.html#Compressed%20File%20Format">Compressed File Format</a>
+<hr><br>
+</div>
+
+<h3 class="appendixsec">インデックス部</h3>
+
+   <p>圧縮時に、<code>ebzip</code> は圧縮した個々のスライスの <dfn>インデックス</dfn>
+(<dfn>index</dfn>) を記録します。
+個々のインデックスは、圧縮ファイルの先頭から圧縮されたスライスの先頭
+までの距離を表します。
+距離の単位はバイトです。
+
+<pre class="example">     +---------+---------+--           --+---------+---------+
+     |インデッ |インデッ |  ...........  |インデッ |インデッ |
+     |クス 1   |クス 2   |  ...........  |クス N   |クス END |
+     +---------+---------+--           --+---------+---------+
+          |         |                        |         |
+      +---+         +----+                   +------+  +-----------+
+      V                  V                          V              V
+     +------------------+------------------+--   --+--------------+
+     |    圧縮された    |    圧縮された    |  ...  |  圧縮された  |
+     |    スライス 1    |    スライス 2    |  ...  |  スライス N  |
+     +------------------+------------------+--   --+--------------+
+     </pre>
+
+<p>個々のインデックスは 2 〜 4 バイトの大きさを持ちます。
+インデックスの大きさは、元のファイルの大きさで決まります。
+
+   <p><table><tr align="left"><td valign="top">元のファイルの大きさ           </td><td valign="top">インデックスの大きさ
+<br></td></tr><tr align="left"><td valign="top">0 〜      65535 バイト  </td><td valign="top">2 バイト
+<br></td></tr><tr align="left"><td valign="top">65535 〜   16777215 バイト  </td><td valign="top">3 バイト
+<br></td></tr><tr align="left"><td valign="top">16777216 〜 4294967295 バイト  </td><td valign="top">4 バイト
+   <br></td></tr></table>
+
+   <p>インデックス内での、複数バイトからなる数値はすべて、値の大きい方の部分
+を表すバイト (most significant byte) が先に来た形で記録されます。
+たとえば、0x1234 は次のように記録されます。
+最初のバイトは 0x12 となり、次のバイトは 0x34 になります。
+
+<pre class="example">     +---------+---------+
+     |0001 0010|0011 0100|
+     +---------+---------+
+       (0x12)    (0x34)
+     </pre>
+
+   <p>インデックス部は、圧縮されたスライス 1 のインデックスで始まり、その後ろ
+に圧縮されたスライス 2 のインデックスが続きます。
+圧縮されたスライス N のインデックスの後ろには、「終端」へのインデックス
+が置かれます。
+このインデックスは、圧縮されたスライス N の末尾の次のバイトへのインデッ
+クスになります。
+また、圧縮されたファイルのサイズを示すことにもなります。
+
+<pre class="example">     +---------+---------+--           --+---------+---------+
+     |インデッ |インデッ |  ...........  |インデッ |インデッ |
+     |クス 1   |クス 2   |  ...........  |クス N   |クス END |
+     +---------+---------+--           --+---------+---------+
+     </pre>
+
+   <p>圧縮されたスライスの大きさがスライスサイズに等しいときは、そのスライス
+のデータは実際には圧縮されていないことを示します。
+
+   <p>元のファイルが空だったときは、インデックス部はインデックスを一つだけ持
+ちます。
+このインデックスは圧縮されたファイルの大きさを表します。
+
+   </body></html>
+

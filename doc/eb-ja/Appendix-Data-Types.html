@@ -1,0 +1,54 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Appendix%20Data%20Types">Appendix Data Types</a>,
+次:<a rel="next" accesskey="n" href="Appendix-Functions.html#Appendix%20Functions">Appendix Functions</a>,
+前:<a rel="previous" accesskey="p" href="Appendix-Alternation-Text.html#Appendix%20Alternation%20Text">Appendix Alternation Text</a>,
+上:<a rel="up" accesskey="u" href="Appendix-Data.html#Appendix%20Data">Appendix Data</a>
+<hr><br>
+</div>
+
+<h3 class="section">データ型の詳細</h3>
+
+   <p>この節で説明しているデータ型を使うには、次のようにヘッダファイルを
+読み込んで下さい。
+
+<pre class="example">     #include &lt;eb/appendix.h&gt;
+     </pre>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b>EB_Appendix</b><i>
+     </i></td>
+<td align="right">Data type</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_Appendix</code> 型は、一冊の CD-ROM 書籍を表します。
+CD-ROM 書籍へのアクセスは、すべてこの型のオブジェクトを介して行います。
+同時に複数の CD-ROM 書籍にアクセスする際は、書籍一冊毎にオブジェクトを
+作る必要があります。
+
+     <p><code>EB_Appendix</code> オブジェクトの操作は、すべて EB ライブラリが用意している
+関数で行います。
+アプリケーションプログラムは、直接 <code>EB_Appendix</code> オブジェクトのメンバ
+を参照したり、セットしたりすべきではありません。
+
+     <p><code>EB_Appendix</code> オブジェクトを使用する際は、まずそのオブジェクトに対して
+<code>eb_initialize_book()</code> を呼んで初期化しなくてはなりません。
+</td></tr>
+</table>
+
+   </body></html>
+

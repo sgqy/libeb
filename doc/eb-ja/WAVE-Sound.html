@@ -1,0 +1,49 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="WAVE%20Sound">WAVE Sound</a>,
+次:<a rel="next" accesskey="n" href="MPEG-Movie.html#MPEG%20Movie">MPEG Movie</a>,
+前:<a rel="previous" accesskey="p" href="Color-Image.html#Color%20Image">Color Image</a>,
+上:<a rel="up" accesskey="u" href="Binary-Data.html#Binary%20Data">Binary Data</a>
+<hr><br>
+</div>
+
+<h3 class="section">WAVE (PCM) 音声</h3>
+
+   <p>WAVE (PCM) 形式の音声データは EPWING にだけ存在します。
+(代わりに電子ブックには CD-DA 形式の音声データがありますが、EB ライブラリ
+では対応していません。)
+
+   <p>WAVE 形式の音声データを取り出すには、まず WAVE 音声の参照開始と終了を
+表すエスケープシーケンスへのフック <code>EB_HOOK_BEGIN_WAVE</code> と
+<code>EB_HOOK_END_WAVE</code> を使います。
+
+   <p>フック <code>EB_HOOK_BEGIN_WAVE</code> がフック関数に渡す引数のうち、
+<code>argv[2]</code> と <code>argv[3]</code> が音声データの開始位置のページ番号と
+オフセット、<code>argv[4]</code> と <code>argv[5]</code> が終了位置のページ番号と
+オフセットとなります。
+
+   <p>この開始位置と終了位置を関数 <code>eb_set_binary_wave()</code> に渡して、その
+位置にある音声データをこれから取り出すことを EB ライブラリに伝えます。
+
+<pre class="example">     /* <code>eb_set_binary_wave()</code> の関数プロトタイプ */
+     EB_Error_Code
+     eb_set_binary_wave(EB_Book *book, EB_Position *start_position,
+     EB_Position *end_position);
+     </pre>
+
+   <p>そして後は、実際に音声データを取り出します。
+これには、他のバイナリデータと同様に <code>eb_read_binary()</code> を用います。
+<code>eb_read_binary()</code> の使い方は、
+see <a href="Monochrome-Image.html#Monochrome%20Image">モノクロ図版</a> を参照してください。
+
+   </body></html>
+

@@ -1,0 +1,91 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="EB_Book%20Explanation">EB_Book Explanation</a>,
+次:<a rel="next" accesskey="n" href="eb_bind-to-Remote-Host.html#eb_bind%20to%20Remote%20Host">eb_bind to Remote Host</a>,
+前:<a rel="previous" accesskey="p" href="EB_Book.html#EB_Book">EB_Book</a>,
+上:<a rel="up" accesskey="u" href="EB_Book.html#EB_Book">EB_Book</a>
+<hr><br>
+</div>
+
+<h3 class="section"><code>EB_Book</code> オブジェクト</h3>
+
+   <p>CD-ROM 書籍へアクセスするには、まず <code>EB_Book</code> 型のオブジェクトを
+用意します。
+同時に複数の CD-ROM 書籍にアクセスするなら、書籍一冊毎にオブジェクトを
+作る必要があります。
+
+<pre class="example">     EB_Book book;
+     </pre>
+
+<p>もちろん、オブジェクトの領域は、<code>malloc()</code> で確保しても構いません。
+
+<pre class="example">     EB_Book *book_pointer;
+     
+     book_pointer = (EB_Book *) malloc(sizeof(EB_Book));
+     </pre>
+
+   <p><code>EB_Book</code> オブジェクトの中身 (変数 <code>book</code> の中身および
+<code>book_pointer</code> の指す領域) はまだ初期化されていませんので、次の
+要領でオブジェクトを初期化します。
+
+<pre class="example">     eb_initialize_book(&amp;book);
+     eb_initialize_book(book_pointer);
+     </pre>
+
+<p><code>eb_initialize()</code> へ渡す引数は <code>EB_Book</code> オブジェクトへの
+ポインタであって、<code>EB_Book</code> オブジェクトそのものではないことに注意
+して下さい。
+(EB ライブラリの他の関数も、すべてオブジェクトをポインタで渡します。)
+
+   <p>CD-ROM 書籍を使うには、続いて <code>EB_Book</code> オブジェクトを CD-ROM 書籍
+の実体に結び付けます。
+これは、関数 <code>eb_bind()</code> によって行います。
+
+<pre class="example">     ＥＢ＿Ｂｏｏｋ　　　　　　　　　　　　ＣＤ−ＲＯＭ書籍
+     オブジェクト　　　　　　　　　　┌────────────┐
+     ┌───┐　　　　　　　　　　　│　　　　　　　　　　　　│
+     │　　　┝━━━━━━━━━━━┥　／ｍｎｔ／ｃｄｒｏｍ　│
+     └───┘　ｅｂ＿ｂｉｎｄ（）　│　　　　　　　　　　　　│
+     　　　　　　　　　　　　　　　　└────────────┘
+     </pre>
+
+<p>実際のプログラムでは、次のようにします。
+
+<pre class="example">     if (eb_bind(&amp;book, "/mnt/cdrom") != EB_SUCCESS) {
+         printf("eb_bind() failed\n");
+         return;
+     }
+     </pre>
+
+<p><code>eb_bind()</code> に渡す書籍のパス (この例では <code>/mnt/cdrom</code>) は
+書籍のトップディレクトリ、つまり <code>catalog</code> または <code>catalogs</code>
+ファイルのあるディレクトリを指定します。
+
+   <p><code>EB_Book</code> オブジェクトを使い終わったら、
+<code>eb_finalize_book()</code> を呼んで後始末をします。
+オブジェクトは書籍との結び付きを解かれた状態に戻り、
+内部で割り当てられたメモリは解放され、開いていたファイルもすべて
+閉じられます。
+
+<pre class="example">     eb_finalize_book(&amp;book);
+     eb_finalize_book(book_pointer);
+     </pre>
+
+<p>オブジェクトの領域を <code>malloc()</code> で確保した場合は、
+<code>eb_finalize_book()</code> を呼んだ後ならば、オブジェクトの領域を安全に
+解放することができます。
+
+<pre class="example">     free(book_pointer);
+     </pre>
+
+   </body></html>
+

@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+<title>ebappendix</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="ebappendix">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Write%20catalog.app">Write catalog.app</a>,
+次:<a rel="next" accesskey="n" href="What-is-subbook.app.html#What%20is%20subbook.app">What is subbook.app</a>,
+前:<a rel="previous" accesskey="p" href="What-is-catalog.app.html#What%20is%20catalog.app">What is catalog.app</a>,
+上:<a rel="up" accesskey="u" href="Write-Appendix-Source.html#Write%20Appendix%20Source">Write Appendix Source</a>
+<hr><br>
+</div>
+
+<h3 class="section"><code>catalog(s).app</code> の書き方</h3>
+
+   <p><code>catalog(s).app</code> には、書籍に収録されている副本のディレクトリ名を
+1 行に 1 つずつ書き並べます。
+副本のディレクトリ名は、<code>ebinfo</code> コマンドを使うと容易に分かります。
+
+   <p>以下は、<code>ebinfo</code> の実行例です。
+
+<pre class="example">     % ebinfo /mnt/cdrom
+     ディスクの形式: EB/EBG/EBXA/EBXA-C/S-EBXA
+     文字コード: JIS X 0208
+     副本の数: 2
+     副本  1:
+       題名: 新英和辞典（第三版）
+       ディレクトリ: ejdict
+       検索方式: 前方一致 後方一致 条件 メニュー
+       フォントの大きさ: 16 24 30 48
+       半角フォントの文字: 0xa121 -- 0xa24e
+       全角フォントの文字: 0xa321 -- 0xa27e
+     副本  2:
+       題名: この書籍の使い方
+       ディレクトリ: howto
+       検索方式: 前方一致 後方一致 条件 メニュー
+       フォントの大きさ: 16 24 30 48
+       半角フォントの文字:
+       全角フォントの文字: 0xa321 -- 0xa27e
+     </pre>
+
+<p>この辞書用の appendix を作成する場合、<code>catalog(s).app</code> には次の
+ように記します。
+
+<pre class="example">     ejdict
+     howto
+     </pre>
+
+<p>(<code>ebinfo</code> コマンドに関しての詳細は、
+see <a href="../ebinfo-ja/Invoke-ebinfo.html#Invoke%20ebinfo"><code>ebinfo</code> の実行</a>)。
+
+   <p>ディレクトリ名の大文字、小文字は、同じものとして扱われます。
+また、空行およびおよび空白以外の最初の文字がハッシュ記号 (<code>#</code>)
+である行は無視されます。
+
+   <p>必ずもとの書籍の副本すべてを、同じ順序で <code>catalog(s).app</code> に
+記すようにして下さい。
+
+   </body></html>
+

@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+<title>ebrefile</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name=description content="ebrefile">
+<meta name=generator content="makeinfo 4.2">
+<link href="http://www.gnu.org/software/texinfo/" rel=generator-home>
+</head>
+<body>
+<p>
+Node:<a name="Introduction">Introduction</a>,
+Next:<a rel=next accesskey=n href="Invoke-ebrefile.html#Invoke%20ebrefile">Invoke ebrefile</a>,
+Previous:<a rel=previous accesskey=p href="index.html#Top">Top</a>,
+Up:<a rel=up accesskey=u href="index.html#Top">Top</a>
+<hr><br>
+
+<h2>Introduction</h2>
+
+<p>A CD-ROM book usually has some <dfn>subbooks</dfn>. 
+For example, a certain CD-ROM book has three subbooks; Japanese
+dictionary, Japense English dictinary and English Japanese dictionary. 
+Each subbook itself is an independent <dfn>book</dfn>.
+
+<br><pre>            (CD-ROM book)
++-----------------------------------+
+|  [English Dicctionary] (subbook)  |
+|  [Japanese Dicctionary](subbook)  |
+|  [Encyclopedia]        (subbook)  |
++-----------------------------------+
+</pre>
+
+<p>A CD-ROM book of EB/EBG/EBXA/EBXA-C/S-EBXA format has the file
+<code>catalog</code>,
+and a CD-ROM book of EPWING format has the file <code>catalogs</code>. 
+The files define what subbooks the CD-ROM book has. 
+They are resides at the top directory of the CD-ROM book.
+
+<p><code>ebrefile</code> reads an original catalog file and builds a new catalog
+file which defines the subbooks only specified by an user. 
+In other words, <code>ebrefile</code> can deletes particular subbook definitions
+from a catalog file. 
+If a CD-ROM book has three subbooks, <code>ebrefile</code> can imports any
+one or two subbooks to the new catalog file. 
+The <code>ebrefile</code> command is useful when you want to copy only a
+part of a CD-ROM book to a hard disk. 
+<code>ebrefile</code> is a part of EB Library distribution.
+
+<p><code>ebrefile</code> is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2, or (at your option)
+any later version.
+
+<p><code>ebrefile</code> is distributed in the hope that it will be useful,
+but <em>without any warranty</em>; without even the implied warranty of
+merchantability or fitness for a particular purpose.  See the
+GNU General Public License for more details.
+
+<p>In addition, you must follow the licenses of your CD-ROM books. 
+Though <code>ebzip</code> is free software, your books may not be free. 
+<code>ebrefile</code> modifies contents of a certain file in a CD-ROM book. 
+Please be careful.
+
+<p>This is edition 4.0beta3, for EB Library version 4.0beta3.
+
+</body></html>
+

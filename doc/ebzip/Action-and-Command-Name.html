@@ -1,0 +1,72 @@
+<html lang="en">
+<head>
+<title>ebzip</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name=description content="ebzip">
+<meta name=generator content="makeinfo 4.2">
+<link href="http://www.gnu.org/software/texinfo/" rel=generator-home>
+</head>
+<body>
+<p>
+Node:<a name="Action%20and%20Command%20Name">Action and Command Name</a>,
+Next:<a rel=next accesskey=n href="Invoke-ebzip.html#Invoke%20ebzip">Invoke ebzip</a>,
+Previous:<a rel=previous accesskey=p href="Introduction.html#Introduction">Introduction</a>,
+Up:<a rel=up accesskey=u href="index.html#Top">Top</a>
+<hr><br>
+
+<h2>Action and Command Name</h2>
+
+<p><code>ebzip</code> has three <dfn>action</dfn> modes; compression, uncompression
+and information.
+
+<ul>
+<li>compression
+<br>
+Compress a CD-ROM book.
+
+<li>uncompression
+<br>
+Uncompress a CD-ROM book compressed by <code>ebzip</code>.
+
+<li>information
+<br>
+Output information about compression status of a CD-ROM book compressed
+by <code>ebzip</code>.
+
+</ul>
+
+<p>When <code>ebzip</code> is invoked, the action is determined by invoked
+name of the <code>ebzip</code> command and command line options to
+<code>ebzip</code>. 
+The action is never changed during an execution of <code>ebzip</code>.
+
+<p><code>ebzip</code> has installed with three different command names;
+<code>ebzip</code>, <code>ebunzip</code> and <code>ebzipinfo</code>. 
+(On DOS and Windows systems, <code>ebzipinfo</code> is renamed to
+<code>ebzipinf</code>). 
+Usually, they are hard-linked like as follows:
+
+<br><pre>% ls -li ebzip ebunzip ebzipinfo
+38787 -rwxr-xr-x  3 bin   bin     73728 Jun 27 22:48 ebunzip
+38787 -rwxr-xr-x  3 bin   bin     73728 Jun 27 22:48 ebzip
+38787 -rwxr-xr-x  3 bin   bin     73728 Jun 27 22:48 ebzipinfo
+</pre>
+
+<p>When it is invoked as <code>ebunzip</code>, the default action is uncompression. 
+When it is invoked as <code>ebzipinfo</code>, information is the default
+action. 
+Otherwise, the default action is compression.
+
+<p>In addition, you can specify the action by the command line options;
+<code>--compress</code> (<code>-z</code>), <code>--uncompress</code> (<code>-u</code>) and
+<code>--information</code> (<code>-i</code>). 
+They are prior to invoked names. 
+In the following example, "compress" is the action of all the lines:
+
+<br><pre>ebunzip
+ebzip --uncompress
+ebzipinfo --uncompress
+</pre>
+
+</body></html>
+

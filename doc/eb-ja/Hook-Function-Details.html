@@ -1,0 +1,96 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Hook%20Function%20Details">Hook Function Details</a>,
+次:<a rel="next" accesskey="n" href="Hook-Code-List.html#Hook%20Code%20List">Hook Code List</a>,
+前:<a rel="previous" accesskey="p" href="Text-Data-Types.html#Text%20Data%20Types">Text Data Types</a>,
+上:<a rel="up" accesskey="u" href="Text-Data.html#Text%20Data">Text Data</a>
+<hr><br>
+</div>
+
+<h3 class="section">フック関数の詳細</h3>
+
+   <p>この節では、フック関数の仕様について記します。
+
+   <p>まず、フック関数を呼び出す <code>eb_read_text()</code> および
+<code>eb_read_heading()</code> のプロトタイプは次のようになっています。
+
+<pre class="example">     EB_Error_Code
+     eb_read_text(EB_Book *book, EB_Appendix *appendix,
+         EB_Hookset *hookset, void *container, size_t text_max_length,
+         char *text, ssize_t *text_length)
+     </pre>
+
+   <p>一方、フック関数のプロトタイプは、次のようになっています。
+
+<pre class="example">     EB_Error_Code
+     hook_function(EB_Book *book, EB_Appendix *appendix, void *container,
+         EB_Hook_Code code, int argc, const unsigned int *argv);
+     </pre>
+
+   <p>引数 <var>book</var>, <var>appendix</var>, <var>container</var> は、
+<code>eb_read_text()</code> あるいは <code>eb_read_heading()</code> に渡された値が
+そのままフック関数にも渡ってきます。
+
+   <p><var>appendix</var> というのは、書籍に対する補助データを提供するオブジェクト
+です
+(appendix (付録) について詳しくは see <a href="../ebappendix-ja/What-is-Appendix.html#What%20is%20Appendix">appendix (付録) とは</a>)。
+
+   <p>引数 <var>container</var> は、アプリケーションプログラムからフック関数に
+何かデータを渡したいときに使います。
+
+   <p>最後の <var>argc</var> と <var>argv</var> には、加工前のテキストデータが渡されます。
+文字に対するフックでは、文字コード番号が渡ってきます。
+エスケープシーケンスに対するフックでは、そのシーケンス自体のコード
+(<code>1f</code> で始まるコード) と、もしあればエスケープシーケンスへの引数を
+が渡ってきます。
+個々のフックにおいて、<var>argc</var> と <var>argv</var> にどうような値が渡って
+くるのか、詳しくは see <a href="Hook-Code-List.html#Hook%20Code%20List">フックコードの一覧</a>。
+
+   <p>フック関数の中から次に挙げる関数を呼び出すことで、テキストデータへの
+書き込みを行うことができます。
+
+     <ul>
+<li><code>eb_write_text()</code>
+<li><code>eb_write_text_string()</code>
+<li><code>eb_write_text_byte1()</code>
+<li><code>eb_write_text_byte2()</code>
+</ul>
+
+<p>これらの関数の仕様に関して詳しくは
+see <a href="Text-Data-Functions.html#Text%20Data%20Functions">[テキストデータ] 関数の詳細</a>。
+
+   <p>フック関数が <code>EB_SUCCESS</code> 以外の値を返すと、フック関数を呼び出した
+<code>eb_read_text()</code>, <code>eb_read_heading()</code> はエラーが発生したもの
+と見なし、そのエラーコードを
+そのままアプリケーションプログラムに返します。
+
+   <p>フック関数の中では、<var>book</var> に対して以下の関数を呼び出しては
+いけません。
+呼び出したときの動作は、未定義です。
+
+     <ul>
+<li><code>eb_seek_text()</code>
+<li><code>eb_read_text()</code>
+<li><code>eb_read_heading()</code>
+<li><code>eb_read_rawtext()</code>
+<li><code>eb_forward_text()</code>
+<li><code>eb_backward_text()</code>
+<li><code>eb_set_subbook()</code>
+<li><code>eb_unset_subbook()</code>
+<li><code>eb_load_all_subbook()</code>
+<li><code>eb_bind()</code>
+<li><code>eb_finalize_book()</code>
+<li><code>eb_finalize_library()</code>
+</ul>
+
+   </body></html>
+

@@ -1,0 +1,38 @@
+<html lang="en">
+<head>
+<title>ebzip</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name=description content="ebzip">
+<meta name=generator content="makeinfo 4.2">
+<link href="http://www.gnu.org/software/texinfo/" rel=generator-home>
+</head>
+<body>
+<p>
+Node:<a name="Overwrite%20Old%20Files">Overwrite Old Files</a>,
+Next:<a rel=next accesskey=n href="Compress-Compressed-Book.html#Compress%20Compressed%20Book">Compress Compressed Book</a>,
+Previous:<a rel=previous accesskey=p href="Partial-Compression.html#Partial%20Compression">Partial Compression</a>,
+Up:<a rel=up accesskey=u href="Compression.html#Compression">Compression</a>
+<hr><br>
+
+<h3>Overwrite Old Files</h3>
+
+<p><code>ebzip</code> asks you whether a file may be overwritten or not when the
+file already exists.
+
+<br><pre>==&gt; compress /dict/science/data/honmon &lt;==
+output to /dict/science/data/honmon.ebz
+
+the file already exists: /dict/science/data/honmon.ebz
+do you wish to overwrite (y or n)?
+</pre>
+
+<p>Please answer <code>y</code> or <code>n</code>. 
+If you answer as <code>n</code>, <code>ebzip</code> skips the file.
+
+<p>When the <code>--force-overwrite</code> option is specified, <code>ebzip</code>
+overwrites existed files without confirmation. 
+Similary, when the <code>--no-overwrite</code> option is specified,
+<code>ebzip</code> skips the file without confirmation.
+
+</body></html>
+

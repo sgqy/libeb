@@ -1,0 +1,643 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Font%20Functions">Font Functions</a>,
+次:<a rel="next" accesskey="n" href="Font-Sample.html#Font%20Sample">Font Sample</a>,
+前:<a rel="previous" accesskey="p" href="Font-Constants.html#Font%20Constants">Font Constants</a>,
+上:<a rel="up" accesskey="u" href="Local-Character.html#Local%20Character">Local Character</a>
+<hr><br>
+</div>
+
+<h3 class="section">関数の詳細</h3>
+
+   <p>この節で説明している関数を使うには、次のようにヘッダファイルを読み込んで
+下さい。
+
+<pre class="example">     #include &lt;eb/font.h&gt;
+     </pre>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_font</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, EB_Font_Code *</i><var>font_code</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_font()</code> は、選択している副本において、選択中の外字フォント
+の高さを表す外字コードを <var>font_code</var> の指す領域に書き込みます。
+
+     <p>成功すると関数は <code>EB_SUCCESS</code> を返します。
+失敗すると <var>font_code</var> の指す領域に <code>EB_FONT_INVALID</code> を
+書き込み、原因を示すエラーコードを返します。
+
+     <p>あらかじめ、外字フォントの高さが選択されていなければなりません。
+外字が選択されていなければ、<code>EB_ERR_NO_CUR_FONT</code> を返します。
+副本そのものを選択していない場合も、同様です。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_set_font</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, EB_Font_Code </i><var>font_code</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_set_font()</code> は、選択中の副本における外字フォントの高さを
+セットします。
+セットする外字フォントの「高さ」は、対応する外字コードを引数
+<var>font_code</var> で指定します。
+
+     <p>この関数は、成功すると <code>EB_SUCCESS</code> を返し、指定した「高さ」が
+「選択中の外字フォントの高さ」となります。
+すでに外字フォントの高さを選択していた場合は、いったん未選択の状態に
+してからあらためて <var>font_code</var> を選択します。
+
+     <p>失敗すると原因を示すエラーコードを返し、外字フォントの高さは未選択の
+状態になります。
+
+     <p>あらかじめ、<var>book</var> 内のいずれかの副本が選択されていなくては
+なりません。
+<var>book</var> が副本を選択していなければ、<code>EB_ERR_NO_CUR_SUB</code> を
+返します。
+また、その副本が持っていない外字フォントの高さが指定されると、
+<code>EB_ERR_NO_SUCH_FONT</code> を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">void <b>eb_unset_font</b><i> </i>(<i>EB_Book *</i><var>book</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_unset_font()</code> は、選択中の外字フォントの高さを未選択の
+状態に戻します。
+<var>book</var> が書籍に結び付いていない場合や副本が選択されていない場合、
+もしくは外字フォントの高さが選択されていない場合は何もしません。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">void <b>eb_font_list</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, EB_Font_Code *</i><var>font_list</var><i>, int *</i><var>font_count</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_font_list()</code> は、選択中の副本が定義している外字の高さの
+一覧を <code>EB_Font_Code</code> 型の配列にして、<var>font_list</var> の指す領域
+に書き込みます。
+
+     <p>配列は、最大で <code>EB_MAX_FONTS</code> 個の要素を持ちます。
+加えて、書籍が収録している副本の個数を <var>font_count</var> の指す領域に
+書き込みます。
+(現在のバージョンでは 、<code>EB_MAX_FONTS</code> の値は 4 になっています。
+高さ 16, 24, 30, 48 ピクセルの 4 種類です。)
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+失敗すると、<var>font_count</var> の指す領域に 0 を書き込み、原因を示す
+エラーコードを返します。
+
+     <p>あらかじめ、<var>book</var> 内のいずれかの副本が選択されていなくては
+なりません。
+<var>book</var> が副本を選択していなければ、<code>EB_ERR_NO_CUR_SUB</code> を
+返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">int <b>eb_have_font</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, EB_Font_Code </i><var>font_code</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_font()</code> は、<var>font_code</var> で指定した高さの外字フォント
+を、選択中の副本が持っているかどうかを調べます。
+
+     <p>持っていれば 1 を返し、持っていなければ 0 を返します。
+<var>book</var> が副本を選択していない場合も 0 を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_font_height</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, int *</i><var>height</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_font_height()</code> は、<var>book</var> が選択中の外字フォントの高さ
+(縦方向のピクセル数) を <var>height</var> の指す領域に書き込みます。
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+失敗すると、<var>height</var> の指す領域に 0 を書き込み、原因を示すエラーコード
+を返します。
+
+     <p>あらかじめ、<var>book</var> は外字フォントの高さを選択していなくてはなりません。
+選択していない場合は、<code>EB_ERR_NO_CUR_FONT</code> を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_font_height2</b><i> </i>(<i>EB_Font_Code </i><var>font_code</var><i>, int *</i><var>height</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>eb_font_height()</code> と似ていますが、選択中の副本ではなく、引数
+<var>font_height</var> で指定された外字コードの高さ (縦方向のピクセル数) を
+書き込む点が異なります。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">int <b>eb_have_narrow_font</b><i> </i>(<i>EB_Book *</i><var>book</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">int <b>eb_have_wide_font</b><i> </i>(<i>EB_Book *</i><var>book</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_have_narrow_font()</code> は、選択中の副本が半角外字を定義して
+いるかどうかを調べます。
+同様に、関数 <code>eb_have_wide_font()</code> は、全角外字を定義しているか
+どうかを調べます。
+
+     <p>定義していれば 1 を、定義していなければ 0 を返します。
+<var>book</var> が副本を選択していない場合も 0 を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_narrow_font_width</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, int *</i><var>width</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_wide_font_width</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, int *</i><var>width</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_narrow_font_width()</code> は、<var>book</var> が選択中の外字フォント
+の高さにおける半角外字の幅 (横方向のピクセル数) を、<var>height</var> の指す
+領域に書き込みます。
+同様に、<code>eb_wide_font_width()</code> は全角外字の幅を書き込みます。
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+失敗すると、<var>width</var> の指す領域に 0 を書き込み、原因を示すエラーコード
+を返します。
+
+     <p>あらかじめ、<var>book</var> は外字の高さを選択していなくてはなりません。
+選択していない場合は、<code>EB_ERR_NO_CUR_FONT</code> を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_narrow_font_width2</b><i> </i>(<i>EB_Font_Code </i><var>font_code</var><i>, int *</i><var>width</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_wide_font_width2</b><i> </i>(<i>EB_Font_Code </i><var>font_code</var><i>, int *</i><var>width</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>eb_narrow_font_width()</code>, <code>eb_wide_font_width()</code> と似て
+いますが、選択中の副本ではなく、引数<var>font_height</var> で指定された
+外字コードの幅 (横方向のピクセル数) を書き込む点が異なります。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_narrow_font_size</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, size_t *</i><var>size</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_wide_font_size</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, size_t *</i><var>size</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_narrow_font_size()</code> は、<var>book</var> が選択中の外字フォント
+の高さにおける半角外字一個分のデータサイズ (バイト数) を、<var>size</var> の
+指す領域に書き込みます。
+同様に、<code>eb_wide_font_size()</code> は全角外字のサイズを書き込みます。
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+失敗すると、<var>size</var> の指す領域に 0 を書き込み、原因を示すエラーコード
+を返します。
+
+     <p>あらかじめ、<var>book</var> は外字フォントの高さを選択していなくてはなりません。
+選択していない場合は、<code>EB_ERR_NO_CUR_FONT</code> を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_narrow_font_size2</b><i> </i>(<i>EB_Font_Code </i><var>font_code</var><i>, size_t *</i><var>size</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_wide_font_size2</b><i> </i>(<i>EB_Font_Code </i><var>font_code</var><i>, size_t *</i><var>size</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>eb_narrow_font_size()</code>, <code>eb_wide_font_size()</code> と似ていますが、
+選択中の副本ではなく、引数 <var>font_height</var> で指定された外字コードの
+外字一個分のデータサイズを書き込む点が異なります。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_narrow_font_start</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, int *</i><var>start</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_wide_font_start</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, int *</i><var>start</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_narrow_font_start()</code> は、<var>book</var> が選択中の副本における
+半角外字の先頭の文字番号 (半角外字の文字番号の中で最小のもの) を、
+<var>start</var> の指す領域に書き込みます。
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+失敗すると、原因を示すエラーコードを返します。
+
+     <p>あらかじめ、<var>book</var> は副本を選択していなくてはなりません。
+選択していない場合は、<code>EB_ERR_NO_CUR_SUB</code> を返します。
+副本が半角外字を定義していない場合は、<code>EB_ERR_NO_CUR_FONT</code> を
+返します。
+
+     <p>関数 <code>eb_wide_font_start()</code> は、半角外字ではなく全角外字について
+調べるという点を除いて、<code>eb_narrow_font_start()</code> と同じです。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_narrow_font_end</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, int *</i><var>end</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_wide_font_end</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, int *</i><var>end</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_narrow_font_end()</code> は、<var>book</var> が選択中の副本における
+半角外字の最後の文字番号 (半角外字の文字番号の中で最大のもの) を、
+<var>start</var> の指す領域に書き込みます。
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+失敗すると、原因を示すエラーコードを返します。
+
+     <p>あらかじめ、<var>book</var> は副本を選択していなくてはなりません。
+選択していない場合は、<code>EB_ERR_NO_CUR_SUB</code> を返します。
+副本が半角外字を定義していない場合は、<code>EB_ERR_NO_CUR_FONT</code> を
+返します。
+
+     <p>関数 <code>eb_wide_font_end()</code> は、半角外字ではなく全角外字について
+調べるという点を除いて、<code>eb_narrow_font_end()</code> と同じです。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_narrow_font_character_bitmap</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, int </i><var>character_number</var><i>, char *</i><var>bitmap</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_wide_font_character_bitmap</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, int </i><var>character_number</var><i>, char *</i><var>bitmap</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_narrow_font_character_bitmap()</code> は、<var>book</var> が選択中
+の副本で定義している、半角外字のビットマップデータを取り出します。
+取り出す外字の文字番号を、<var>character_number</var> で指定します。
+
+     <p>成功すると、関数はビットマップデータを <var>bitmap</var> の指す領域に書き込み、
+<code>EB_SUCCESS</code> を返します。
+失敗すると、<var>bitmap</var> の指す領域に空文字列を書き込み、原因を示す
+エラーコードを返します。
+
+     <p>あらかじめ、<var>book</var> は外字フォントの高さを選択していなくてはなりません。
+選択していない場合は、<code>EB_ERR_NO_CUR_FONT</code> を返します。
+副本が半角外字を定義していない場合も、やはり <code>EB_ERR_NO_CUR_FONT</code>
+を返します。
+文字番号 <var>character_number</var> が外字の定義範囲外にある場合は、
+<code>EB_ERR_NO_SUCH_CHAR_BMP</code> を返します。
+
+     <p>関数 <code>eb_wide_font_character_bitmap()</code> は、半角外字ではなく
+全角外字のビットマップデータを取り出すという点を除いて、
+<code>eb_narrow_font_character_bitmap()</code> と同じです。
+
+     <p>ビットマップデータの形式については、
+see <a href="Get-Font.html#Get%20Font">外字フォントの取り出し</a>。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_forward_narrow_font_character</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, int </i><var>n</var><i>, int *</i><var>character_number</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_forward_wide_font_character</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, int </i><var>n</var><i>, int *</i><var>character_number</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_forward_narrow_font_character()</code> は、<var>book</var> が選択中
+の副本で定義されている半角外字の文字番号 <var>character_number</var> の
+<var>n</var> 個後ろに位置する外字の文字番号を取得します。
+
+     <p>まず、関数を呼び出す際に、<var>character_number</var> の指す領域に文字番号を
+書き込んでおきます。
+関数の処理が成功すると、戻ったときに <var>n</var> 個分だけ後方の文字番号に
+書き換わっています。
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+失敗すると、原因を示すエラーコードを返します。
+
+     <p>あらかじめ、<var>book</var> は副本を選択していなくてはなりません。
+選択していない場合は、<code>EB_ERR_NO_CUR_SUB</code> を返します。
+副本が半角外字を持っていない場合は、<code>EB_ERR_NO_CUR_FONT</code> を返します。
+
+     <p><var>n</var> 個後ろにもう外字がない場合や、呼び出した際に
+<var>character_number</var> の指す領域に書き込んであった文字番号が外字の
+定義範囲外にある場合は <code>EB_ERR_NO_SUCH_CHAR_BMP</code> を返します。
+
+     <p><var>n</var> には負の数を指定することもできます。
+この場合、次の呼び出しと等価になります。
+
+     <pre class="example">          /* n &lt; 0 とする */
+          eb_backward_narrow_font_character (book, -n, character_number);
+          </pre>
+
+     <p>関数 <code>eb_forward_wide_font_character()</code> は、半角外字ではなく
+全角外字について操作するという点を除いて、
+<code>eb_forward_narrow_font_character()</code> と同じです。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_backward_narrow_font_character</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, int </i><var>n</var><i>, int *</i><var>character_number</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_backward_wide_font_character</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, int </i><var>n</var><i>, int *</i><var>character_number</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_backward_narrow_font_character()</code> は
+<code>eb_forward_narrow_font_character()</code> とはちょうど逆の関数です。
+<var>book</var> が選択中の副本で定義されている半角外字の文字番号
+<var>character_number</var> の <var>n</var> 個前方に位置する外字の文字番号を
+取得します。
+
+     <p>同様に、<code>eb_backward_wide_font_character()</code> は、全角外字について
+<var>n</var> 個前方の外字の文字番号を取得する関数で、
+<code>eb_forward_wide_font_character()</code> と反対の関数です。
+
+     <p><var>n</var> には負の数を指定することも可能で、それぞれ次の呼び出しと等価
+になります。
+
+     <pre class="example">          /* 半角外字の場合 (n &lt; 0) */
+          eb_forward_narrow_font_character (book, -n, character_number);
+          
+          /* 全角外字の場合 (n &lt; 0) */
+          eb_forward_wide_font_character (book, -n, character_number);
+          </pre>
+     </td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_narrow_font_xbm_size</b><i> </i>(<i>EB_Font_Code </i><var>height</var><i>, size_t *</i><var>size</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_narrow_font_xpm_size</b><i> </i>(<i>EB_Font_Code </i><var>height</var><i>, size_t *</i><var>size</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_narrow_font_gif_size</b><i> </i>(<i>EB_Font_Code </i><var>height</var><i>, size_t *</i><var>size</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_narrow_font_bmp_size</b><i> </i>(<i>EB_Font_Code </i><var>height</var><i>, size_t *</i><var>size</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_wide_font_xbm_size</b><i> </i>(<i>EB_Font_Code </i><var>height</var><i>, size_t *</i><var>size</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_wide_font_xpm_size</b><i> </i>(<i>EB_Font_Code </i><var>height</var><i>, size_t *</i><var>size</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_wide_font_gif_size</b><i> </i>(<i>EB_Font_Code </i><var>height</var><i>, size_t *</i><var>size</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_wide_font_bmp_size</b><i> </i>(<i>EB_Font_Code </i><var>height</var><i>, size_t *</i><var>size</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>最初の 4 つの関数
+(<code>eb_narrow_font_xbm_size()</code> 〜 <code>eb_narrow_font_bmp_size()</code>)
+は、外字コード <var>height</var> の
+半角外字一個のビットマップを XBM, XPM, GIF, BMP 形式にそれぞれ変換
+したときのデータサイズを <var>size</var> の指す領域に書き込みます。
+
+     <p>同様に、後ろの 4 つの関数
+(<code>eb_wide_font_xbm_size()</code> 〜 <code>eb_wide_font_bmp_size()</code>)
+は、全角外字を変換したときのデータサイズを書き込みます。
+
+     <p>いずれの関数も、成功すると <code>EB_SUCCESS</code> を返します。
+失敗すると、<var>size</var> の指す領域に 0 を書き込み、原因を示すエラーコード
+を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">void <b>eb_bitmap_to_xbm</b><i> </i>(<i>const char *</i><var>bitmap</var><i>, int </i><var>width</var><i>, int </i><var>height</var><i>, char *</i><var>image</var><i>, size_t *</i><var>image_length</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">void <b>eb_bitmap_to_xpm</b><i> </i>(<i>const char *</i><var>bitmap</var><i>, int </i><var>width</var><i>, int </i><var>height</var><i>, char *</i><var>image</var><i>, size_t *</i><var>image_length</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">void <b>eb_bitmap_to_gif</b><i> </i>(<i>const char *</i><var>bitmap</var><i>, int </i><var>width</var><i>, int </i><var>height</var><i>, char *</i><var>image</var><i>, size_t *</i><var>image_length</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">void <b>eb_bitmap_to_bmp</b><i> </i>(<i>const char *</i><var>bitmap</var><i>, int </i><var>width</var><i>, int </i><var>height</var><i>, char *</i><var>image</var><i>, size_t *</i><var>image_length</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>これら 4 つの関数は、<code>eb_narrow_font_character()</code> または
+<code>eb_wide_font_character()</code> で取り出した外字のビットマップを XBM,
+XPM, GIF, BMP 形式にそれぞれ変換します。
+
+     <p>ビットマップデータの指す領域を <var>bitmap</var> で指定し、ビットマップの
+高さと幅を <var>width</var>, <var>height</var> で渡します。
+
+     <p>関数の呼び出しから戻ると、<var>image</var> の指す領域に変換後のデータが
+書き込まれ、<var>image_length</var> の指す領域に変換後のデータの大きさが
+書き込まれます。
+
+     <p>XPM, GIF への変換では、前景色は黒、背景色は透明になります。
+BMP への変換では、前景色は黒、背景色は白になります。
+XBM はモノクロ図版用のデータ形式なので、色の設定はありません。
+</td></tr>
+</table>
+
+   </body></html>
+

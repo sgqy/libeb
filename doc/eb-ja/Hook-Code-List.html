@@ -1,0 +1,829 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Hook%20Code%20List">Hook Code List</a>,
+次:<a rel="next" accesskey="n" href="Hookset-Access-Functions.html#Hookset%20Access%20Functions">Hookset Access Functions</a>,
+前:<a rel="previous" accesskey="p" href="Hook-Function-Details.html#Hook%20Function%20Details">Hook Function Details</a>,
+上:<a rel="up" accesskey="u" href="Text-Data.html#Text%20Data">Text Data</a>
+<hr><br>
+</div>
+
+<h3 class="section">フックコードの一覧</h3>
+
+   <p>この節で説明しているフックコードを使うには、次のようにヘッダファイルを
+読み込んで下さい。
+
+<pre class="example">     #include &lt;eb/text.h&gt;
+     </pre>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_NULL</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_HOOK_NULL</code> は厳密にはフックではなく、<code>eb_set_hooks()</code> で
+複数のフック関数を登録する際に、<code>EB_Hook</code> 配列の末尾の要素を示す
+ために用います。
+このフックコードに対して、フック関数は登録できません。
+
+     <p>詳しくは、see <a href="Text-Data-Functions.html#Text%20Data%20Functions">[テキストデータ] フック関数の詳細</a>。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_INITIALIZE</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_HOOK_INITIALIZE</code> は、<code>eb_seek_text()</code> を呼び出した直後の
+最初の <code>eb_read_text()</code>, <code>eb_read_heading()</code> の呼び出し時に
+処理されます。
+何か初期化処理をしたいときに、使うと良いでしょう。
+
+     <p>このフックが、フック関数に渡す <code>argc</code> は 0 です。
+フック関数を登録していない状態では、このフックはテキストデータに何も
+書き込みません。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_BEGIN_NARROW</td>
+</tr>
+
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_END_NARROW</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_HOOK_BEGIN_NARROW</code> および <code>EB_HOOK_END_NARROW</code> は、
+半角表示の開始と終了を表すエスケープシーケンスに対するフックです。
+
+     <p>どちらのフックも、フック関数に渡す <code>argc</code> は 1 です。
+<code>argv[0]</code> はエスケープシーケンスのコードそのもので、
+<code>EB_HOOK_BEGIN_NARROW</code> なら <code>0x1f04</code>、
+<code>EB_HOOK_END_NARROW</code> なら <code>0x1f05</code> になります。
+
+     <p>フック関数を登録していない状態では、これらのフックはテキストデータに何も
+書き込みません。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_BEGIN_SUBSCRIPT</td>
+</tr>
+
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_END_SUBSCRIPT</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_HOOK_BEGIN_SUBSCRIPT</code> および <code>EB_HOOK_END_SUBSCRIPT</code> は、
+下付き表示の開始と終了を表すエスケープシーケンスに対するフックです。
+
+     <p>どちらのフックも、フック関数に渡す <code>argc</code> は 1 です。
+<code>argv[0]</code> の値はエスケープシーケンスのコードそのもので、
+<code>EB_HOOK_BEGIN_SUBSCRIPT</code> なら <code>0x1f06</code>、
+<code>EB_HOOK_END_SUBSCRIPT</code> なら <code>0x1f07</code> になります。
+
+     <p>フック関数を登録していない状態では、これらのフックはテキストデータに
+何も書き込みません。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_SET_INDENT</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_HOOK_SET_INDENT</code> は、テキストデータの行頭の字下げ指定を表す
+エスケープシーケンスに対するフックです。
+
+     <p>このフックが、フック関数に渡す <code>argc</code> は 2 です。
+<code>argv[0]</code> はエスケープシーケンスのコードそのもので、<code>0x1f09</code>
+になります。
+<code>argv[1]</code> が、字下げの量を表します。
+
+     <p>字下げの量の単位が、何であるのかは不明です。
+また、字下げ量の最小値は、0 の場合と 1 の場合の二通りがあります。
+いずれにしろ、字下げは 1 ずつ増えたり減ったりします。
+
+     <p>フック関数を登録していない状態では、このフックはテキストデータに何も
+書き込みません。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_NEWLINE</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_HOOK_SET_NEWLINE</code> は、改行を表すエスケープシーケンスに対する
+フックです。
+
+     <p>ただし、<code>eb_read_heading()</code> (見出しの読み込み) による処理では、
+改行を表すエスケープシーケンスは区切りコードとしても扱われます。
+そのため、エスケープシーケンスが見つかってもこのフックの処理は行われず、
+ただちに読み込み処理は終了します。
+
+     <p>このフックが、フック関数に渡す <code>argc</code> は 1 です。
+<code>argv[0]</code> はエスケープシーケンスのコードそのもので、<code>0x1f0a</code> に
+なります。
+
+     <p>フック関数を登録していない状態では、このフックはテキストデータに何も
+書き込みませんが、<code>eb_initialize_hookset()</code> で <code>EB_Hook</code>
+オブジェクトを初期化すると、フック関数として <code>eb_hook_newline()</code>
+が自動的に登録されます。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_BEGIN_SUPERSCRIPT</td>
+</tr>
+
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_END_SUPERSCRIPT</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_HOOK_BEGIN_SUPERSCRIPT</code> および <code>EB_HOOK_END_SUPERSCRIPT</code>
+は、上付き表示の開始と終了を表すエスケープシーケンスに対するフックです。
+
+     <p>どちらのフックも、フック関数に渡す <code>argc</code> は 1 です。
+<code>argv[0]</code> はエスケープシーケンスのコードそのもので、
+<code>EB_HOOK_BEGIN_SUPERSCRIPT</code> なら <code>0x1f0e</code>、
+<code>EB_HOOK_END_SUPERSCRIPT</code> なら <code>0x1f0f</code> になります。
+
+     <p>フック関数を登録していない状態では、これらのフックはテキストデータに何も
+書き込みません。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_BEGIN_NO_NEWLINE</td>
+</tr>
+
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_END_NO_NEWLINE</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_HOOK_BEGIN_NO_NEWLINE</code> および <code>EB_HOOK_END_NO_NEWLINE</code> は、
+改行禁止の開始と終了を表すエスケープシーケンスに対するフックです。
+
+     <p>どちらのフックも、フック関数に渡す <code>argc</code> は 1 です。
+<code>argv[0]</code> はエスケープシーケンスのコードそのもので、
+<code>EB_HOOK_BEGIN_NO_NEWLINE</code> なら <code>0x1f10</code>、
+<code>EB_HOOK_END_NO_NEWLINE</code> なら <code>0x1f11</code> になります。
+
+     <p>フック関数を登録していない状態では、これらのフックはテキストデータに何も
+書き込みません。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_BEGIN_EMPHASIS</td>
+</tr>
+
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_END_EMPHASIS</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_HOOK_BEGIN_EMPHASIS</code> および <code>EB_HOOK_END_EMPHASIS</code> は、
+強調表示の開始と終了を表すエスケープシーケンスに対するフックです。
+
+     <p>どちらのフックも、フック関数に渡す <code>argc</code> は 1 です。
+<code>argv[0]</code> はエスケープシーケンスのコードそのもので、
+<code>EB_HOOK_BEGIN_EMPHASIS</code> なら <code>0x1f12</code>、
+<code>EB_HOOK_END_EMPHASIS</code> なら <code>0x1f13</code> になります。
+
+     <p>フック関数を登録していない状態では、これらのフックはテキストデータに何も
+書き込みません。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_BEGIN_CANDIDATE</td>
+</tr>
+
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_END_CANDIDATE_LEAF</td>
+</tr>
+
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_END_CANDIDATE_GROUP</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_HOOK_BEGIN_CANDIDATE</code> は、複合検索の候補となる語の開始を表す
+エスケープシーケンスに対するフックです。
+
+     <p>それに対して、終了を表すエスケープシーケンスに対するフックは 2 種類あり
+ます。
+一つは <code>EB_HOOK_END_CANDIDATE_LEAF</code> で、候補となる語が実際に検索の
+入力語として使えるものであることを示します。
+もう一つは <code>EB_HOOK_END_CANDIDATE_GROUP</code> で、候補となる語はさらに
+細かい選択肢に分かれていることを示します。
+(したがって、候補となる語を検索の入力語として使うことはできません。)
+
+     <p>フック <code>EB_HOOK_BEGIN_CANDIDATES</code> が、フック関数に渡す <code>argc</code>
+は 1 です。
+<code>argv[0]</code> はエスケープシーケンスのコードそのもので、<code>0x1f43</code>
+になります。
+
+     <p>フック <code>EB_HOOK_END_CANDIDATE_LEAF</code> および
+<code>EB_HOOK_END_CANDIDATE_GROUP</code> が、フック関数に渡す <code>argc</code> は
+3 です。
+どちらのフックも、<code>argv[0]</code> はエスケープシーケンスのコードそのもので、
+<code>0x1f63</code> になります。
+フック <code>EB_HOOK_END_CANDIDATE_GROUP</code> の <code>argv[1]</code> と
+<code>argv[2]</code> は、次の階層の候補一覧データの開始ページ番号とオフセット
+です。
+これは、<code>EB_Position</code> オブジェクト
+(see <a href="Search-Data-Types.html#Search%20Data%20Types">[検索] データ型の詳細</a>)
+の <code>page</code> および <code>offset</code> メンバの値に相当します。
+フック <code>EB_HOOK_END_CANDIDATE_LEAF</code> では、<code>argv[1]</code>,
+<code>argv[2]</code> は 2 つとも 0 になっています。
+
+     <p>フック関数を登録していない状態では、これらのフックはテキストデータに何も
+書き込みません。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_BEGIN_REFERENCE</td>
+</tr>
+
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_END_REFERENCE</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_HOOK_BEGIN_REFERENCE</code> および <code>EB_HOOK_END_REFERENCE</code> は、
+別位置のテキストデータの参照開始と終了を表すエスケープシーケンスに
+対するフックです。
+
+     <p>フック <code>EB_HOOK_BEGIN_REFERENCE</code> が、フック関数に渡す <code>argc</code>
+は 2 です。
+<code>argv[0]</code> はエスケープシーケンスのコードそのもので、<code>0x1f42</code>
+になります。
+<code>argv[1]</code> の意味は不明です。
+
+     <p><code>EB_HOOK_END_REFERENCE</code> が、フック関数に渡す <code>argc</code> は 3 です。
+<code>argv[0]</code> はエスケープシーケンスのコードそのもので、<code>0x1f62</code>
+になります。
+<code>argv[1]</code> と <code>argv[2]</code> は、参照先のページ番号とオフセットです。
+これは、<code>EB_Position</code> オブジェクト
+(see <a href="Search-Data-Types.html#Search%20Data%20Types">[検索] データ型の詳細</a>)
+の <code>page</code> および <code>offset</code> メンバの値に相当します。
+
+     <p>フック関数を登録していない状態では、これらのフックはテキストデータに何も
+書き込みません。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_BEGIN_KEYWORD</td>
+</tr>
+
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_END_KEYWORD</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_HOOK_BEGIN_KEYWORD</code> および <code>EB_HOOK_END_KEYWORD</code> は、
+検索キーの開始と終了を表すエスケープシーケンスに対するフックです。
+
+     <p>フック <code>EB_HOOK_BEGIN_KEYWORD</code> が、フック関数に渡す <code>argc</code> は
+2 です。
+<code>argv[0]</code> はエスケープシーケンスのコードそのもので、<code>0x1f41</code>
+になります。
+<code>argv[1]</code> の意味は不明です。
+
+     <p><code>EB_HOOK_END_KEYWORD</code> は、フック関数に 1 個の引数を渡します。
+<code>argv[0]</code> はエスケープシーケンスのコードそのもので、<code>0x1f61</code>
+になります。
+
+     <p>フック関数を登録していない状態では、これらのフックはテキストデータに何も
+書き込みません。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_BEGIN_DECORATION</td>
+</tr>
+
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_END_DECORATION</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_HOOK_BEGIN_DECORATION</code> および <code>EB_HOOK_END_DECORATION</code>
+は、文字修飾の開始と終了を表すエスケープシーケンスに対するフックです。
+
+     <p>フック <code>EB_HOOK_BEGIN_DECORATION</code> が、フック関数に渡す <code>argc</code>
+は 2 です。
+<code>argv[0]</code> はエスケープシーケンスのコードそのもので、<code>0x1fe0</code>
+になります。
+<code>argv[1]</code> の意味は不明です。
+
+     <p><code>EB_HOOK_END_KEYWORD</code> は、フック関数に 1 個の引数を渡します。
+<code>argv[0]</code> はエスケープシーケンスのコードそのもので、<code>0x1fe1</code>
+になります。
+
+     <p>フック関数を登録していない状態では、これらのフックはテキストデータに何も
+書き込みません。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_NARROW_FONT</td>
+</tr>
+
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_WIDE_FONT</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_HOOK_NARROW_FONT</code> および <code>EB_HOOK_WIDE_FONT</code> は、それぞれ
+半角外字と全角外字に対するフックです。
+
+     <p>どちらのフックも、フック関数に渡す <code>argc</code> は 1 です。
+<code>argv[0]</code> は、外字の文字番号を表します。
+
+     <p>フック関数を登録していない状態では、このフックはテキストデータに何も
+書き込みませんが、<code>eb_initialize_hookset()</code> で <code>EB_Hook</code>
+オブジェクトを初期化すると、フック関数として
+<code>eb_hook_narrow_character_text()</code> および
+<code>eb_hook_wide_character_text()</code> が自動的に登録されます。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_ISO8859_1</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_HOOK_ISO8859_1</code> は、ISO 8859-1 (ラテン文字 1) 文字に対する
+フックです。
+
+     <p>このフックが、フック関数に渡す <code>argc</code> は 1 です。
+<code>argv[0]</code> は、ISO 8859-1 の文字番号を表します。
+
+     <p>フック関数を登録していない状態では、<code>argv[0]</code> の値をそのまま
+テキストデータに書き込みます。
+つまり、文字はそのまま ISO 8859-1 として、1 バイト書き込まれます。
+
+     <p>このフックが利用されるのは、処理中の書籍の文字コードが
+<code>EB_CHARCODE_ISO8859_1</code> の場合だけです。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_NARROW_JISX0208</td>
+</tr>
+
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_WIDE_JISX0208</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_HOOK_NARROW_JISX0208</code> と <code>EB_HOOK_WIDE_JISX0208</code> は、
+半角および全角の JIS X 0208 (日本語のかな漢字) 文字に対するフックです。
+
+     <p>どちらのフックも、フック関数に渡す <code>argc</code> は 1 です。
+<code>argv[0]</code> は、JIS X 0208 の文字を日本語 EUC で表現したときの文字番号
+を表します。
+
+     <p>フック関数を登録していない状態では、<code>argv[0]</code> の値をそのまま
+テキストデータに書き込みます。
+つまり、文字はそのまま日本語 EUC として、2 バイト書き込まれます。
+
+     <p>このフックが利用されるのは、
+処理中の書籍の文字コードが <code>EB_CHARCODE_JISX0208</code> か
+<code>EB_CHARCODE_JISX0208_GB2312</code> の場合だけです。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_GB2312</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_HOOK_GB2312</code> は、GB 2312 (中国語の簡体字) 文字に対するフック
+です。
+
+     <p>このフックが、フック関数に渡す <code>argc</code> は 1 です。
+<code>argv[0]</code> は、GB 2312 の文字を中国語 EUC で表現したときの文字番号
+を表します。
+
+     <p>フック関数を登録していない状態では、<code>argv[0]</code> の値をそのまま
+テキストデータに書き込みます。
+つまり、文字はそのまま中国語 EUC として、2 バイト書き込まれます。
+
+     <p>このフックが利用されるのは、処理中の書籍の文字コードが
+<code>EB_CHARCODE_JISX0208_GB2312</code> の場合だけです。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_BEGIN_MONO_GRAPHIC</td>
+</tr>
+
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_END_MONO_GRAPHIC</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_HOOK_BEGIN_MONO_GRAPHIC</code> および <code>EB_HOOK_END_MONO_GRAPIHC</code>
+は、モノクロ図版の参照開始と終了を表すエスケープシーケンスに対する
+フックです。
+
+     <p>フック <code>EB_HOOK_BEGIN_MONO_GRAPHIC</code> が、フック関数に渡す <code>argc</code>
+は 4 です。
+<code>argv[0]</code> はエスケープシーケンスのコードそのもので、<code>0x1f32</code>
+か <code>0x1f44</code> のいずれかになります。
+<code>argv[2]</code> と <code>argv[3]</code> は、図版の高さと幅 (ピクセル数) を意味
+します。
+ただし、電子ブックのモノクロ図版 (最初の引数が <code>0x1f32</code> の場合)
+には、図版の高さと幅の情報が欠けているので、値はどちらも 0 になります。
+<code>argv[1]</code> の意味は不明です。
+
+     <p><code>EB_HOOK_END_MONO_GRAPHIC</code> が、フック関数に渡す <code>argc</code> は 3
+です。
+<code>argv[0]</code> は、エスケープシーケンスのコードそのものです。
+<code>EB_HOOK_BEGIN_MONO_GRAPHIC</code> の <code>argv[0]</code> が <code>0x1f32</code>
+なら、<code>EB_HOOK_END_MONO_GRAPHIC</code> の <code>argv[0]</code> は <code>0x1f52</code>
+になり、<code>0x1f44</code> なら <code>0x1f64</code> になります。
+<code>argv[1]</code> と <code>argv[2]</code> は、図版データのページ番号とオフセット
+です。
+これは、<code>EB_Position</code> オブジェクト
+(see <a href="Search-Data-Types.html#Search%20Data%20Types">[検索] データ型の詳細</a>)
+の <code>page</code> および <code>offset</code> メンバの値に相当します。
+
+     <p>図版データの取り出し方については、see <a href="Monochrome-Image.html#Monochrome%20Image">モノクロ図版</a>
+を参照してください。
+
+     <p>フック関数を登録していない状態では、これらのフックはテキストデータに何も
+書き込みません。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_BEGIN_GRAY_GRAPHIC</td>
+</tr>
+
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_END_GRAY_GRAPHIC</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>これらのフック名称は、グレースケール図版のために予約されていますが、
+EB ライブラリ 4.0beta3 ではまだ対応していません。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_BEGIN_COLOR_BMP</td>
+</tr>
+
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_BEGIN_COLOR_JPEG</td>
+</tr>
+
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_END_COLOR_GRAPHIC</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_HOOK_BEGIN_COLOR_BMP</code> と <code>EB_HOOK_COLOR_JPEG</code> は、
+それぞれ BMP 形式と JPEG 形式のカラー図版の参照開始を表す
+エスケープシーケンスに対するフックです。
+参照開始のフックは BMP と JPEG とでフックが分かれていますが、終了の
+フックは共通で、<code>EB_HOOK_END_COLOR_GRAPIHC</code> になります。
+
+     <p>フック <code>EB_HOOK_BEGIN_COLOR_BMP</code> と <code>EB_HOOK_COLOR_JPEG</code> が、
+フック関数に渡す <code>argc</code> は 4 です。
+<code>argv[0]</code> はエスケープシーケンスのコードそのもので、<code>0x1f4d</code>
+になります。
+<code>argv[2]</code> と <code>argv[3]</code> は、図版の幅と高さ (ピクセル数) を意味
+します。
+<code>argv[1]</code> の意味は不明です。
+
+     <p>フック <code>EB_HOOK_END_COLOR_BMP</code> が、フック関数に渡す <code>argc</code> は
+3 です。
+<code>argv[0]</code> はエスケープシーケンスのコードそのもので、<code>0x1f6d</code> に
+なります。
+<code>argv[1]</code> と <code>argv[2]</code> は、図版データのページ番号とオフセットです。
+これは、<code>EB_Position</code> オブジェクト
+(see <a href="Search-Data-Types.html#Search%20Data%20Types">[検索] データ型の詳細</a>)
+の <code>page</code> および <code>offset</code> メンバの値に相当します。
+
+     <p>図版データの取り出し方については、see <a href="Color-Image.html#Color%20Image">カラー図版</a>
+を参照してください。
+
+     <p>フック関数を登録していない状態では、これらのフックはテキストデータに何も
+書き込みません。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_BEGIN_IN_COLOR_BMP</td>
+</tr>
+
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_BEGIN_IN_COLOR_JPEG</td>
+</tr>
+
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_END_IN_COLOR_GRAPHIC</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_HOOK_BEGIN_IN_COLOR_BMP</code> と <code>EB_HOOK_IN_COLOR_JPEG</code> は、
+それぞれ BMP 形式と JPEG 形式のインラインカラー図版の参照開始を表す
+エスケープシーケンスに対するフックです。
+参照開始のフックは BMP と JPEG とでフックが分かれていますが、終了の
+フックは共通で、<code>EB_HOOK_END_IN_COLOR_GRAPIHC</code> になります。
+
+     <p>フック <code>EB_HOOK_BEGIN_IN_COLOR_BMP</code> と <code>EB_HOOK_IN_COLOR_JPEG</code>
+が、フック関数に渡す <code>argc</code> は 4 です。
+<code>argv[0]</code> はエスケープシーケンスのコードそのもので、<code>0x1f3c</code>
+になります。
+<code>argv[2]</code> と <code>argv[3]</code> は、図版の幅と高さ (ピクセル数) を意味
+します。
+<code>argv[1]</code> の意味は不明です。
+
+     <p>フック <code>EB_HOOK_END_IN_COLOR_BMP</code> が、フック関数に渡す <code>argc</code>
+は 3 です。
+<code>argv[0]</code> はエスケープシーケンスのコードそのもので、<code>0x1f5c</code>
+になります。
+<code>argv[1]</code> と <code>argv[2]</code> は、図版データのページ番号とオフセット
+です。
+これは、<code>EB_Position</code> オブジェクト
+(see <a href="Search-Data-Types.html#Search%20Data%20Types">[検索] データ型の詳細</a>)
+の <code>page</code> および <code>offset</code> メンバの値に相当します。
+
+     <p>図版データの取り出し方については、see <a href="Color-Image.html#Color%20Image">カラー図版</a>
+を参照してください。
+
+     <p>フック関数を登録していない状態では、これらのフックはテキストデータに何も
+書き込みません。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_BEGIN_WAVE</td>
+</tr>
+
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_END_WAVE</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_HOOK_BEGIN_WAVE</code> および <code>EB_HOOK_END_WAVE</code> は、
+WAVE (PCM) 形式の音声データの参照開始と終了を表すエスケープシーケンス
+に対するフックです。
+
+     <p>フック <code>EB_HOOK_BEGIN_WAVE</code> が、フック関数に渡す <code>argc</code> は 6
+です。
+<code>argv[0]</code> はエスケープシーケンスのコードそのもので、<code>0x1f4a</code>
+になります。
+<code>argv[2]</code> と <code>argv[3]</code> は音声データの開始位置のページ番号と
+オフセット、<code>argv[4]</code> と <code>argv[5]</code> は終了位置のページ番号と
+オフセットをそれぞれ表します。
+<code>argv[1]</code> の意味は不明です。
+
+     <p><code>EB_HOOK_END_WAVE</code> が、フック関数に渡す <code>argc</code> は 1 です。
+<code>argv[0]</code> はエスケープシーケンスのコードそのもので、<code>0x1f6a</code>
+になります。
+
+     <p>音声データの取り出し方については、see <a href="WAVE-Sound.html#WAVE%20Sound">WAVE 音声</a> を
+参照して下さい。
+
+     <p>フック関数を登録していない状態では、これらのフックはテキストデータに何も
+書き込みません。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_BEGIN_MPEG</td>
+</tr>
+
+<tr>
+<td align="left"><b></b><i>
+     </i></td>
+<td align="right">EB_HOOK_END_MPEG</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>EB_HOOK_BEGIN_MPEG</code> および <code>EB_HOOK_END_MPEG</code> は、MPEG 形式
+の動画データの参照開始と終了を表すエスケープシーケンスに対するフック
+です。
+
+     <p>フック <code>EB_HOOK_BEGIN_MPEG</code> が、フック関数に渡す <code>argc</code> は 6
+です。
+<code>argv[0]</code> はエスケープシーケンスのコードそのもので、<code>0x1f39</code>
+になります。
+<code>argv[2]</code> 〜 <code>argv[5]</code> は、動画データのファイル名をエンコード
+した数値列になります。
+<code>argv[1]</code> の意味は不明です。
+
+     <p><code>EB_HOOK_END_MPEG</code> が、フック関数に渡す <code>argc</code> は 1 です。
+<code>argv[0]</code> はエスケープシーケンスのコードそのもので、<code>0x1f59</code>
+になります。
+
+     <p>動画データの取り出し方については、see <a href="MPEG-Movie.html#MPEG%20Movie">MPEG 動画</a> を
+参照して下さい。
+
+     <p>フック関数を登録していない状態では、これらのフックはテキストデータに何も
+書き込みません。
+</td></tr>
+</table>
+
+   </body></html>
+

@@ -1,0 +1,73 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Current%20Subbook">Current Subbook</a>,
+次:<a rel="next" accesskey="n" href="Subbook-Sample.html#Subbook%20Sample">Subbook Sample</a>,
+前:<a rel="previous" accesskey="p" href="Subbook-Code.html#Subbook%20Code">Subbook Code</a>,
+上:<a rel="up" accesskey="u" href="Subbook.html#Subbook">Subbook</a>
+<hr><br>
+</div>
+
+<h3 class="section">選択中の副本</h3>
+
+   <p><code>EB_Book</code> オブジェクトは、結びつけられた CD-ROM 書籍の中の任意の
+副本から一つ選んで、<dfn>選択中の副本 (current subbook)</dfn> として指定する
+ことができます。
+複数の副本を、同時に選択することはできません。
+単語の検索や、本文データの取得など、ほとんどの操作は、選択中の副本に
+対してだけ行えます。
+
+<p><code>eb_bind()</code> で <code>EB_Book</code> オブジェクトを書籍に結び付けた直後
+は、いずれの副本も選択されていない状態になっています。
+
+<pre class="example">     ＥＢ＿Ｂｏｏｋ　　　　　　　　　ＣＤ−ＲＯＭ書籍
+     オブジェクト
+     ┌────┐　　　　　　　┌─────────────┐
+     │選択中　│　　　　　　　│　副本０：　［国語辞典］　│
+     │の副本　│　　　　　　　│　副本１：　［英々辞典］　│
+     │＜なし＞│　　　　　　　│　副本２：　［百科事典］　│
+     └────┘　　　　　　　└─────────────┘
+     </pre>
+
+   <p>副本の選択を行うには、関数 <code>eb_set_subbook()</code> を使用します。
+<code>eb_set_subbook()</code> は、引数として渡された副本コードにしたがって
+副本を選択します。
+以下は、先頭の副本 (<code>sub_codes[0]</code>) を選択する場合の例です。
+
+<pre class="example">     /* <code>book</code> が <code>EB_Book</code> のオブジェクトで、すでに書籍に結び付け
+      * られていると仮定しています。*/
+     EB_Subbook_Code sub_codes[EB_MAX_SUBBOOKS];
+     int sub_count;
+     
+     if (eb_subbook_list(&amp;book, sub_codes, &amp;sub_count)
+         != EB_SUCCESS) {
+         printf("eb_subbook_list() failed\n");
+         return;
+     }
+     if (eb_set_subbook(&amp;book, sub_codes[0]) != EB_SUCCESS) {
+         printf("eb_subbook_list() failed\n");
+         return;
+     }
+     </pre>
+
+<p>成功すると、次のように副本が選択された状態になります。
+
+<pre class="example">     ＥＢ＿Ｂｏｏｋ　　　　　　　　　ＣＤ−ＲＯＭ書籍
+     オブジェクト
+     ┌────┐　　　　　　　┌─────────────┐
+     │選択中　│　　┏━━━━┿━副本０：　［国語辞典］　│
+     │の副本　│　　┃　　　　│　副本１：　［英々辞典］　│
+     │　＊━━┿━━┛　　　　│　副本２：　［百科事典］　│
+     └────┘　　　　　　　└─────────────┘
+     </pre>
+
+   </body></html>
+

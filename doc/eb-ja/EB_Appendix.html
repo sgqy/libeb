@@ -1,0 +1,93 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="EB_Appendix">EB_Appendix</a>,
+次:<a rel="next" accesskey="n" href="Appendix-Subbook.html#Appendix%20Subbook">Appendix Subbook</a>,
+前:<a rel="previous" accesskey="p" href="Appendix-Data.html#Appendix%20Data">Appendix Data</a>,
+上:<a rel="up" accesskey="u" href="Appendix-Data.html#Appendix%20Data">Appendix Data</a>
+<hr><br>
+</div>
+
+<h3 class="section"><code>EB_Appendix</code> オブジェクト</h3>
+
+   <p>CD-ROM 書籍本体を扱うには <code>EB_Book</code> オブジェクトを用いましたが、
+appendix を扱うには <code>EB_Appendix</code> オブジェクトを使います。
+<code>EB_Appendix</code> オブジェクトを操作するための関数は、<code>EB_Book</code>
+のものとは異なりますが、操作手順はよく似ています。
+
+   <p><code>EB_Appendix</code> オブジェクトは、個々の appendix に対して 1 個ずつ
+作る必要があります。
+
+<pre class="example">     EB_Appendix app;
+     </pre>
+
+<p>もちろん、オブジェクトの領域は、<code>malloc()</code> で確保しても構いません。
+
+<pre class="example">     EB_Appendix *app_pointer;
+     
+     app_pointer = (EB_Appendix *) malloc(sizeof(EB_Appendix));
+     </pre>
+
+   <p>オブジェクトは、使う前に必ず <code>eb_initialize_appendix()</code> という関数
+で中身を初期化しなくてはなりません。
+<code>EB_Book</code> オブジェクトでも <code>eb_initialize_book()</code> で初期化
+する必要がありましたが、それと同じです。
+
+<pre class="example">     eb_initialize_appendix(&amp;app);
+     eb_initialize_appendix(app_pointer);
+     </pre>
+
+   <p>続いて、オブジェクトを appendix の実体に結び付けるために、
+<code>eb_bind_appendix()</code> を呼び出します。
+これは、<code>EB_Book</code> オブジェクトの <code>eb_bind()</code> に相当します。
+
+<pre class="example">     ＥＢ＿Ａｐｐｅｎｄｉｘ　　　　　　　　　　ａｐｐｅｎｄｉｘ
+     オブジェクト　　　　　　　　　　　　┌────────────┐
+     ┌───┐　　　　　　　　　　　　　│　　　　　　　　　　　　│
+     │　　　┝━━━━━━━━━━━━━┥　／ｍｎｔ／ｄｉｃｔ　　│
+     └───┘　ｅｂ＿ｂｉｎｄ　　　　　│　　　　　　　　　　　　│
+     　　　　　　＿ａｐｐｅｎｄｉｘ（）　└────────────┘
+     </pre>
+
+<p>実際のプログラムでは、次のようにします。
+
+<pre class="example">     if (eb_bind_appendix(&amp;app, "/mnt/dict") != EB_SUCCESS) {
+         printf("eb_bind_appendix() failed\n");
+         return;
+     }
+     </pre>
+
+<p><code>eb_bind_appendix()</code> に渡す appendix のパス
+(この例では <code>/mnt/dict</code>) は appendix のトップディレクトリ、つまり
+<code>catalog</code> または <code>catalogs</code> ファイルのあるディレクトリを
+指定します。
+パスには、遠隔アクセス識別子 (例: <code>ebnet://localhost/dict.app</code>)
+を指定することも可能です。
+
+   <p><code>EB_Appendix</code> オブジェクトを使い終わったら、
+<code>eb_finalize_appendix()</code> を呼んで後始末をします。
+オブジェクトは appendix との結び付きを解かれた状態に戻り、
+内部で割り当てられたメモリは解放され、開いていたファイルもすべて
+閉じられます。
+
+<pre class="example">     eb_finalize_appendix(&amp;app);
+     eb_finalize_appendix(app_pointer);
+     </pre>
+
+<p>オブジェクトの領域を <code>malloc()</code> で確保した場合は、
+<code>eb_finalize_appendix()</code> を呼んだ後ならば、オブジェクトの領域を
+安全に解放することができます。
+
+<pre class="example">     free(app_pointer);
+     </pre>
+
+   </body></html>
+

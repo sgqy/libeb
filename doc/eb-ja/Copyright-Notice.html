@@ -1,0 +1,52 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Copyright%20Notice">Copyright Notice</a>,
+次:<a rel="next" accesskey="n" href="Menu.html#Menu">Menu</a>,
+前:<a rel="previous" accesskey="p" href="Hook-and-Character-Code.html#Hook%20and%20Character%20Code">Hook and Character Code</a>,
+上:<a rel="up" accesskey="u" href="Text-Data.html#Text%20Data">Text Data</a>
+<hr><br>
+</div>
+
+<h3 class="section">著作権表示</h3>
+
+   <p>先に記したように、テキストデータには何種類かあり、その中に
+<dfn>著作権表示 (copyright notice)</dfn> というものがあります。
+名前の通り、著作権表示に関するテキストデータを収めたものです。
+
+   <p>一般に、著作権表示は本文とはまったく独立したデータとして用意されます。
+したがって、本文を先頭から末尾まで読んでみても、著作権表示はどこにも
+見つかりません。
+
+   <p>選択中の副本について、著作権表示の開始位置を知るには <code>eb_copyright()</code>
+を使います。
+この関数は、副本が著作権表示を持っていなければ <code>EB_ERR_NO_SUCH_SEARCH</code>
+を返しますので、著作権表示の有無も同時に分かります。
+(開始位置は取得せずに、有無だけを調べたいときは、<code>eb_have_copyright()</code>
+という関数が使えます。)
+
+<pre class="example">     EB_Position position;
+     EB_Error_Code err;
+     
+     err = eb_copyright(&amp;book, &amp;position);
+     if (err == EB_ERR_NO_SUCH_SEARCH) {
+         /* 著作権表示はない */
+     } else if (err != EB_SUCCESS) {
+         /* それ以外のエラー */
+        return;
+     }
+     </pre>
+
+   <p>後は、得られた位置 (<code>position</code>) にシークして、<code>eb_read_text()</code>
+でテキストデータを読み込みます。
+
+   </body></html>
+

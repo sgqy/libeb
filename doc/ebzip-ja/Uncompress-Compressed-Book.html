@@ -1,0 +1,33 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Uncompress%20Compressed%20Book">Uncompress Compressed Book</a>,
+前:<a rel="previous" accesskey="p" href="Options-for-Uncompression.html#Options%20for%20Uncompression">Options for Uncompression</a>,
+上:<a rel="up" accesskey="u" href="Uncompression.html#Uncompression">Uncompression</a>
+<hr><br>
+</div>
+
+<h3 class="section">圧縮された書籍の伸長</h3>
+
+   <p>S-EBXA および EPWING 規格でも圧縮形式を定義しており、CD-ROM 書籍には
+これらの圧縮形式を実際に採用しているものがあります。
+しかし、S-EBXA や EPWINGの圧縮形式は、ebzip の圧縮形式とは異なります。
+
+   <p><code>ebzip</code> は S-EBXA や EPWING 圧縮形式で圧縮された CD-ROM 書籍も伸長
+することができますが、圧縮することはできません。
+
+   <p>S-EBXA 形式で圧縮された <code>START</code> ファイルや、EPWING 形式で圧縮された
+<code>HONMON2</code>, <code>HONMONS</code> ファイルを伸長すると、伸長後のファイル
+には拡張子 <code>.org</code> が付加されます
+(例: <code>honmon2</code> → <code>honmon2.org</code>)。
+
+   </body></html>
+

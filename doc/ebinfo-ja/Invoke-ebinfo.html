@@ -1,0 +1,87 @@
+<html lang="en">
+<head>
+<title>ebinfo</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="ebinfo">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Invoke%20ebinfo">Invoke ebinfo</a>,
+次:<a rel="next" accesskey="n" href="Details-about-Information.html#Details%20about%20Information">Details about Information</a>,
+前:<a rel="previous" accesskey="p" href="Introduction.html#Introduction">Introduction</a>,
+上:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="chapter"><code>ebinfo</code> の実行</h2>
+
+   <p><code>ebinfo</code> の一般的な起動方法は次の通りです。
+
+<pre class="example">     % ebinfo <var>書籍へのパス</var>
+     </pre>
+
+<p><var>書籍へのパス</var> には、CD-ROM 書籍のトップディレクトリ、つまり
+<code>catalog</code> または <code>catalogs</code> ファイルが存在するディレクトリを
+指定します。
+パスは、ローカルなパス (例: <code>/mnt/dict</code>) でも遠隔アクセス識別子
+(例: <code>ebnet://localhost/dict</code>) でも構いません。
+複数のパスを書くことはできませんが、以下のように、パスの指定を省くことは
+できます。
+
+<pre class="example">     % ebinfo
+     </pre>
+
+<p>この場合、<code>ebinfo</code> はカレントディレクトリ (<code>.</code>) が指定されたも
+のと判断します。
+<code>ebinfo</code> は指定された書籍に関する情報を、次のような感じで出力します。
+
+<pre class="example">     % ebinfo /mnt/cdrom
+     ディスクの形式: EB/EBG/EBXA/EBXA-C/S-EBXA
+     文字コード: JIS X 0208
+     副本の数: 2
+     副本  1:
+       題名: 新英和辞典（第三版）
+       ディレクトリ: ejdict
+       検索方式: 前方一致 後方一致 条件 メニュー
+       フォントの大きさ: 16 24 30 48
+       半角フォントの文字: 0xa121 -- 0xa24e
+       全角フォントの文字: 0xa321 -- 0xa27e
+     副本  2:
+       題名: この書籍の使い方
+       ディレクトリ: howto
+       検索方式: 前方一致 後方一致 条件 メニュー
+       フォントの大きさ: 16 24 30 48
+       半角フォントの文字:
+       全角フォントの文字: 0xa321 -- 0xa27e
+     </pre>
+
+   <p>副本 (subbook) が複合検索 (multi-search) に対応している場合、
+<code>--multi-search</code> (または <code>-m</code>) オプションを指定すると、
+<code>ebinfo</code> は複合検索に関する詳細な情報も合わせて出力します。
+複合検索に関する情報は、次のような感じになります。
+
+<pre class="example">       複合検索 1:
+         ラベル 1: 国または地域
+           候補: 有
+         ラベル 2: 時期
+           候補: 無
+         ラベル 3: カテゴリ
+           候補: 有
+         ラベル 4: 出典
+           候補: 無
+       multi search 2:
+         ラベル 1: 著者
+           候補: 無
+         ラベル 2: 題名
+           候補: 無
+         ラベル 3: 日付
+           候補: 無
+         ラベル 4: 出版社
+           候補: 無
+     </pre>
+
+   </body></html>
+

@@ -1,0 +1,85 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Init%20and%20Exit%20Functions">Init and Exit Functions</a>,
+前:<a rel="previous" accesskey="p" href="Init-and-Exit-Sample.html#Init%20and%20Exit%20Sample">Init and Exit Sample</a>,
+上:<a rel="up" accesskey="u" href="Init-and-Exit.html#Init%20and%20Exit">Init and Exit</a>
+<hr><br>
+</div>
+
+<h3 class="section">関数の詳細</h3>
+
+   <p>この項で説明している関数を使うには、<code>eb/eb.h</code> を読み込んで下さい。
+
+<pre class="example">     #include &lt;eb/eb.h&gt;
+     </pre>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_initialize_library</b><i> </i>(<i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_initialize_library()</code> は、EB ライブラリを初期化します。
+アプリケーションプログラムは、EB ライブラリの他の関数を呼ぶ前に、必ず
+一回だけこの関数を呼ぶ必要があります。
+
+     <p>メッセージの国際化機能 (NLS) を有効にして EB ライブラリをコンパイル
+した場合、<code>eb_initialize_library()</code> は <code>bindtextdomain()</code> を
+呼び出します。
+したがって、アプリケーションプログラムが <code>setlocale()</code> を呼び出す
+のは、この関数を呼び出す前である必要があります。
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+失敗すると、原因を示すエラーコードを返します。
+
+     <p>ライブラリを初期化せずに、EB ライブラリの他の関数を呼んだ場合の動作は
+未定義です。
+また、すでに初期化を済ませた状態で、再度 <code>eb_initialize_library()</code>
+を呼んでもいけません。
+呼んだ場合の動作は未定義です。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">void <b>eb_finalize_library</b><i> </i>(<i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_finalize_library()</code> は、EB ライブラリを使い終わった際の
+後始末を行います。
+ただし、アプリケーションプログラム側で使用した
+<code>EB_Book</code>、<code>EB_Hookset</code>、<code>EB_Appendix</code> オブジェクトの
+後始末は行いません。
+オブジェクトを後始末するには、それぞれ専用の関数
+<code>eb_finalize_book()</code>、<code>eb_finalize_hookset()</code>、
+<code>eb_finalize_appendix()</code>
+を各オブジェクトに対して別途呼んでやる必要があります。
+
+     <p>ライブラリの後始末をした後は、EB ライブラリのいかなる関数も呼んでは
+いけません。
+呼んだ場合の動作は未定義です。
+</td></tr>
+</table>
+
+   </body></html>
+

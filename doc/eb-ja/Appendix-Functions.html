@@ -1,0 +1,584 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Appendix%20Functions">Appendix Functions</a>,
+次:<a rel="next" accesskey="n" href="Appendix-Sample.html#Appendix%20Sample">Appendix Sample</a>,
+前:<a rel="previous" accesskey="p" href="Appendix-Data-Types.html#Appendix%20Data%20Types">Appendix Data Types</a>,
+上:<a rel="up" accesskey="u" href="Appendix-Data.html#Appendix%20Data">Appendix Data</a>
+<hr><br>
+</div>
+
+<h3 class="section">関数の詳細</h3>
+
+   <p>この節で説明している関数を使うには、次のようにヘッダファイルを読み込んで
+下さい。
+
+<pre class="example">     #include &lt;eb/appendix.h&gt;
+     </pre>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">void <b>eb_initialize_appendix</b><i> </i>(<i>EB_Appendix *</i><var>app</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_initialize_appendix()</code> は、<var>app</var> の指す
+<code>EB_Appendix</code> オブジェクトを初期化します。
+<code>EB_Appendix</code> オブジェクトに対して EB ライブラリの他の関数を呼ぶ前に、
+必ずそのオブジェクトを初期化しなくてはなりません。
+初期化していないオブジェクトに対して、EB ライブラリの他の関数を呼んだ
+場合の動作は未定義です。
+また、すでに初期化したオブジェクトに対して、
+再度 <code>eb_initialize_appendix()</code> を呼んではいけません。
+呼んだ場合の動作は未定義です。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">void <b>eb_finalize_appendix</b><i> </i>(<i>EB_Appendix *</i><var>app</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_finalize_appendix()</code> は、<var>app</var> が指す <code>EB_Appendix</code>
+オブジェクトの後始末を行います。
+
+     <p>オブジェクトが割り当てて管理していたメモリはすべて解放され、
+ファイルディスクリプタもすべて閉じられます。
+オブジェクトが appendix と結び付いていた場合は、結び付きが解かれます。
+
+     <p>後始末をしたオブジェクトに対して <code>eb_bind_appendix()</code> を呼ぶことで、
+オブジェクトを再利用することができます。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">void <b>eb_bind_appendix</b><i> </i>(<i>EB_Appendix *</i><var>app</var><i>, const char *</i><var>path</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_bind_appendix()</code> は、<var>app</var> の指す
+<code>EB_Appendix</code> オブジェクトを、パス <var>path</var> にある appendix に
+結び付けます。
+パスには、appendix のトップディレクトリか遠隔アクセス識別子を指定します。
+appendix のトップディレクトリとは、<code>catalog</code> あるいは <code>catalogs</code>
+ファイルの存在するディレクトリを指します。
+
+     <p>オブジェクトがすでにappendix に結び付いていた場合、その appendix との
+結び付きを解いてから、<var>path</var> にある appendix に結び付けます。
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+このとき、副本は未選択の状態になります。
+失敗すると、オブジェクトを appendix との結び付きを解かれた状態にして、
+原因を示すエラーコードを返します。
+
+     <p><var>path</var> は、<code>EB_MAX_PATH_LENGTH</code> バイトに収まていなくては
+なりません。
+さらに、<var>path</var> が相対パスのときは、絶対パスに変換した結果がこの長さ
+に収まっていなくてはなりません。
+これを超えると、<code>EB_ERR_TOO_LONG_FILE_NAME</code> を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">int <b>eb_is_appendix_bound</b><i> </i>(<i>EB_Appendix *</i><var>app</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_is_appendix_bound()</code> は、<var>app</var> が appendix に
+結び付いているかどうかを調べます。
+結び付いていれば 1 を返し、そうでなければ 0 を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_appendix_path</b><i> </i>(<i>EB_Appendix *</i><var>app</var><i>, char *</i><var>path</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_appendix_path()</code> は、<var>app</var> に結び付いている appendix
+のパスもしくは遠隔アクセス識別子を、<var>path</var> の指す領域に書き込みます。
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+失敗すると、<var>path</var> の指す領域に空文字列を書き込み、原因を示す
+エラーコードを返します。
+
+     <p><var>app</var> は、あらかじめ書籍に結び付いている必要があります。
+結びついていない場合は、<code>EB_ERR_UNBOUND_BOOK</code> を返します。
+
+     <p><var>path</var> に書き込むパス名のバイト数は、最長で <code>EB_MAX_PATH_LENGTH</code>
+になります。
+この長さは、末尾のナル文字を含みません。
+関数が返すパスは正規化された形になっているので、<code>eb_bind_appendix()</code>
+に渡したときのものと同じとは限りません。
+たとえば、相対パスだった場合は、絶対パスに変換されます。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_load_all_appendix_subbooks</b><i> </i>(<i>EB_Appendix *</i><var>app</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_load_all_appendix_subbooks()</code> は、<var>app</var> 内のすべての
+副本を初期化します。
+通常、副本の初期化は、その副本が初めて選択されたときに自動的に行われますが、
+この関数は初期化を前倒しで行います。
+初期化の対象となるのは、この関数を呼び出した時点でまだ初期化していない
+すべての副本です。
+この関数は、スタンドアロンで動作するサーバアプリケーションなどで有効です。
+クライアントからの接続を受ける前にこの関数を呼ぶことで、副本の初期化の
+ためにクライアントを待たせなくて済みます。
+
+     <p>初期化の対象となったすべての副本の初期化に成功すれば、関数は
+<code>EB_SUCCESS</code> を返します。
+一冊でも初期化に失敗した場合は、残りの副本の初期化を諦め、原因を示す
+エラーコードを返します。
+
+     <p><var>app</var> は、あらかじめ appendix に結び付けられていなくてはなりません。
+結びついていない場合は、<code>EB_ERR_UNBOUND_APP</code> を返します。
+
+     <p>この関数を呼び出すと、<var>app</var> は、副本を選択していない状態になります。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_appendix_subbook_list</b><i> </i>(<i>EB_Book *</i><var>app</var><i>, EB_Subbook_Code *</i><var>subbook_list</var><i>, int *</i><var>subbook_count</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_appendix_subbook_list()</code> は、<var>app</var> 内のすべて副本の
+副本コードを <code>EB_Subbook_Code</code> 型の配列にして、<var>subbook_list</var>
+の指す領域に書き込みます。
+配列は、最大で <code>EB_MAX_SUBBOOKS</code> 個の要素を持ちます。
+加えて、appendix が収録している副本の個数を <var>subbook_count</var> の指す
+領域に書き込みます。
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+失敗すると、<var>subbook_count</var> の指す領域に 0 を書き込み、原因を示す
+エラーコードを返します。
+
+     <p><var>app</var> は、あらかじめ appendix に結び付けられていなくてはなりません。
+結びついていない場合は、<code>EB_ERR_UNBOUND_APP</code> を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_appendix_subbook</b><i> </i>(<i>EB_Book *</i><var>app</var><i>, EB_Subbook_Code *</i><var>subbook_code</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_appendix_subbook()</code> は、<var>app</var> が選択中の副本の
+副本コードを <var>subbook_code</var> の指す領域に書き込みます。
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+失敗すると、<var>subbook_code</var> の指す領域に <code>EB_SUBBOOK_INVALID</code>
+を書き込み、原因を示すエラーコードを返します。
+
+     <p>あらかじめ、<var>app</var> はいずれかの副本を選択していなくてはなりません。
+選択していない場合は、<code>EB_ERR_NO_CUR_APPSUB</code> を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_appendix_subbook_directory</b><i> </i>(<i>EB_Book *</i><var>app</var><i>, char *</i><var>directory</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_appendix_subbook_directory()</code> は、<var>app</var> 内で現在選択中
+の副本のデータファイルを収めたディレクトリ名を、<var>directory</var> の指す
+領域に書き込みます。
+
+     <p>ディレクトリ名の文字列の長さは、最長で <code>EB_MAX_DIRECTORY_NAME_LENGTH</code>
+バイトです。
+この長さに、末尾のナル文字は含みません。
+ディレクトリ名は ASCII の数字、英小文字、アンダースコアで構成されます。
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+失敗すると、<var>directory</var> の指す領域に空文字列を書き込み、原因に
+を示すエラーコードを返します。
+
+     <p>あらかじめ、<var>app</var> 内のいずれかの副本が選択されていなくてはなりません。
+選択していない場合は、<code>EB_ERR_NO_CUR_APPSUB</code> を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_appendix_subbook_directory2</b><i> </i>(<i>EB_Book *</i><var>app</var><i>, EB_Subbook_Code </i><var>subbook_code</var><i>, char *</i><var>directory</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p><code>eb_appendix_subbook_directory()</code> と似ていますが、選択中の副本では
+なく、引数 <var>subbook_code</var> で指定された副本のディレクトリ名を書き込む
+点が異なります。
+
+     <p><var>app</var> は副本を選択していなくても構いませんが、あらかじめ
+appendix に結び付けられていなければなりません。
+結びついていない場合は、<code>EB_ERR_UNBOUND_APP</code> を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_set_appendix_subbook</b><i> </i>(<i>EB_Book *</i><var>app</var><i>, EB_Subbook_Code </i><var>code</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_set_appendix_subbook()</code> は、<var>app</var> の副本 <var>code</var>
+を選択します。
+すでに副本を選択していた場合は、いったん未選択の状態にしてから副本
+<var>subbook_code</var> を選択します。
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+このとき、外字は未選択の状態となり、検索、テキストデータの読み込み、
+バイナリデータの読み込みについての状態記録は、すべてリセットされます。
+失敗すると、副本を未選択の状態にして、原因を示すエラーコードを返します。
+
+     <p>あらかじめ、<var>app</var> は appendix に結び付けられていなければなりません。
+結びついていない場合は、<code>EB_ERR_UNBOUND_APP</code> を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">void <b>eb_unset_appendix_subbook</b><i> </i>(<i>EB_Book *</i><var>app</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_unset_appendix_subbook()</code> は、<var>app</var> が選択している副本
+を未選択の状態にします。
+<var>app</var> が appendix に結び付いていないか、副本が選択されていない場合は、
+何もしません。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">int <b>eb_have_stop_code</b><i> </i>(<i>EB_Book *</i><var>app</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_have_stop_code()</code> は、<var>app</var> が選択中の副本で
+区切りコードが定義されているかどうかを調べます。
+
+     <p>定義していれば 1 を返します。
+定義していないか、そもそも副本が選択されていない場合は 0 を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_stop_code</b><i> </i>(<i>EB_Book *</i><var>app</var><i>, int *</i><var>stop_code</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_stop_code()</code> は、<var>app</var> が選択中の副本で定義している
+区切りコードを <var>stop_code</var> の指す領域に書き込みます。
+<var>stop_code[0]</var>, <var>stop_code[1]</var> に、区切りコードの値として
+それぞれ <code>0x0000</code> 〜 <code>0xffff</code> が書き込まれます。
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+失敗すると、関数は <var>stop_code[0]</var> と <var>stop_code[1]</var> に <code>-1</code>
+を書き込み、原因を示すエラーコードを返します。
+
+     <p>あらかじめ、<var>app</var> は副本を選択していなくてはなりません。
+選択していない場合は、<code>EB_ERR_NO_CUR_APPSUB</code> を返します。
+副本が区切りコードを定義していない場合は、<code>EB_ERR_NO_STOPCODE</code> を
+返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">int <b>eb_have_narrow_alt</b><i> </i>(<i>EB_Book *</i><var>app</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">int <b>eb_have_wide_alt</b><i> </i>(<i>EB_Book *</i><var>app</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_have_narrow_alt()</code> は、選択中の副本が半角外字に対する
+代替文字列を定義しているかどうかを調べます。
+同様に、関数 <code>eb_have_wide_alt()</code> は、全角外字に対する代替文字列
+を定義しているかどうかを調べます。
+
+     <p>定義していれば 1 を、定義していなければ 0 を返します。
+<var>app</var> が副本を選択していない場合も 0 を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_narrow_alt_start</b><i> </i>(<i>EB_Book *</i><var>app</var><i>, int *</i><var>start</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_wide_alt_start</b><i> </i>(<i>EB_Book *</i><var>app</var><i>, int *</i><var>start</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_narrow_alt_start()</code> は、<var>app</var> が選択中の副本における
+半角外字に対する代替文字列の定義範囲を調べ、先頭の文字番号 (半角外字の
+文字番号の中で最小のもの) を <var>start</var> の指す領域に書き込みます。
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+失敗すると、原因を示すエラーコードを返します。
+
+     <p>あらかじめ、<var>app</var> は副本を選択していなくてはなりません。
+選択していない場合は、<code>EB_ERR_NO_CUR_APPSUB</code> を返します。
+副本が半角外字に対する代替文字列を定義していない場合は、
+<code>EB_ERR_NO_ALT</code> を返します。
+
+     <p>関数 <code>eb_wide_font_start()</code> は、半角外字ではなく全角外字について
+調べるという点を除いて、<code>eb_narrow_font_start()</code> と同じです。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_narrow_alt_end</b><i> </i>(<i>EB_Book *</i><var>app</var><i>, int *</i><var>end</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_wide_alt_end</b><i> </i>(<i>EB_Book *</i><var>app</var><i>, int *</i><var>end</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_narrow_alt_end()</code> は、<var>app</var> が選択中の副本における
+半角外字に対する代替文字列の定義範囲を調べ、最後の文字番号 (半角外字の
+文字番号の中で最大のもの) を <var>start</var> の指す領域に書き込みます。
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+失敗すると、原因を示すエラーコードを返します。
+
+     <p>あらかじめ、<var>app</var> は副本を選択していなくてはなりません。
+選択していない場合は、<code>EB_ERR_NO_CUR_APPSUB</code> を返します。
+副本が半角外字に対する代替文字列を定義していない場合は、
+<code>EB_ERR_NO_ALT</code> を返します。
+
+     <p>関数 <code>eb_wide_font_start()</code> は、半角外字ではなく全角外字について
+調べるという点を除いて、<code>eb_narrow_font_start()</code> と同じです。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_narrow_alt_character_text</b><i> </i>(<i>EB_Book *</i><var>app</var><i>, int </i><code>character_number</code><i>, char *</i><var>text</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_wide_alt_character_text</b><i> </i>(<i>EB_Book *</i><var>app</var><i>, int </i><code>character_number</code><i>, char *</i><var>text</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_narrow_alt_character_text()</code> は、<var>book</var> が選択中の
+副本で定義している、半角外字の代替文字列を取り出します。
+外字の文字番号を、<var>character_number</var> で指定します。
+
+     <p>成功すると、関数は代替文字列を <var>text</var> の指す領域に書き込み、
+<code>EB_SUCCESS</code> を返します。
+失敗すると、<var>text</var> の指す領域に空文字列を書き込み、原因を示す
+エラーコードを返します。
+
+     <p>代替文字列は最長で <code>EB_MAX_ALTERNATION_TEXT_LENGTH</code> バイト
+(= 31 バイト) です。
+ただし、この長さにはナル文字の分は含んでいないので、<var>text</var> の領域
+にはもう 1 バイト分必要です。
+
+     <p>代替文字列がどの文字コードで書かれているかは、appendix の中には
+記録されていません。
+しかし、appendix は必ず特定の書籍に対応して作成されるものなので、書籍の
+文字コードから次のように判断すれば、問題ないでしょう。
+
+          <ul>
+<li>書籍が ISO 8859-1 で書かれている場合は、代替文字列も ISO 8859-1
+<li>それ以外の場合、代替文字列は日本語 EUC
+</ul>
+
+     <p>あらかじめ、<var>app</var> は副本を選択していなくてはなりません。
+選択していない場合は、<code>EB_ERR_NO_CUR_APPSUB</code> を返します。
+文字番号 <var>character_number</var> が外字の定義範囲外にある場合は、
+<code>EB_ERR_NO_SUCH_CHAR_TEXT</code> を返します。
+
+     <p>副本が半角外字に対する代替文字列を (<var>character_number</var> に限らず
+まったく) 定義していない場合は、<code>EB_ERR_NO_ALT</code> を返します。
+そうではなく、一部の文字番号については半角外字に対する代替文字列を
+定義しているものの、<var>character_number</var> に対する代替文字列は存在しない
+場合、関数は <code>EB_SUCCESS</code> を返し、<var>text</var> の指す領域には
+空文字列が書き込まれます。
+
+     <p>関数 <code>eb_wide_alt_character_text()</code> は、半角外字ではなく
+全角外字に対する代替文字列を取り出すという点を除いて、
+<code>eb_narrow_alt_character_text()</code> と同じです。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_backward_narrow_alt_character</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, int </i><var>n</var><i>, int *</i><var>character_number</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_backward_wide_alt_character</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, int </i><var>n</var><i>, int *</i><var>character_number</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_forward_narrow_alt_character()</code> は、<var>app</var> が選択中
+の副本において定義されている、半角外字に対する代替文字列の文字番号
+<var>character_number</var> の <var>n</var> 個後ろに位置する文字の文字番号を
+取得します。
+
+     <p>まず、関数を呼び出す際に、<var>character_number</var> の指す領域に文字番号を
+書き込んでおきます。
+関数の処理が成功すると、戻ったときに <var>n</var> 個分だけ後方の文字番号に
+書き換わっています。
+
+     <p>成功すると、関数は <code>EB_SUCCESS</code> を返します。
+失敗すると、原因を示すエラーコードを返します。
+
+     <p>あらかじめ、<var>app</var> は副本を選択していなくてはなりません。
+選択していない場合は、<code>EB_ERR_NO_CUR_APPSUB</code> を返します。
+副本が半角外字に対する代替文字列を定義していない場合は、
+<code>EB_ERR_NO_ALT</code> を返します。
+
+     <p><var>n</var> 個後ろにもう外字がない場合や、呼び出した際に
+<var>character_number</var> の指す領域に書き込んであった文字番号が外字の
+定義範囲外にある場合は <code>EB_ERR_NO_SUCH_CHAR_TEXT</code> を返します。
+
+     <p><var>n</var> には負の数を指定することもできます。
+この場合、次の呼び出しと等価になります。
+
+     <pre class="example">          /* n &lt; 0 とする */
+          eb_backward_narrow_font_character (book, -n, character_number);
+          </pre>
+
+     <p>関数 <code>eb_forward_wide_alt_character()</code> は、半角外字ではなく
+全角外字について操作するという点を除いて、
+<code>eb_forward_narrow_alt_character()</code> と同じです。
+</td></tr>
+</table>
+
+   </body></html>
+

@@ -1,0 +1,532 @@
+<html lang="en">
+<head>
+<title>EB Library</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="EB Library">
+<meta name="generator" content="makeinfo 4.5">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+</head>
+<body>
+<div class="node">
+<p>
+ノード:<a name="Text%20Data%20Functions">Text Data Functions</a>,
+前:<a rel="previous" accesskey="p" href="Builtin-Hook-Functions.html#Builtin%20Hook%20Functions">Builtin Hook Functions</a>,
+上:<a rel="up" accesskey="u" href="Text-Data.html#Text%20Data">Text Data</a>
+<hr><br>
+</div>
+
+<h3 class="section">テキストデータ操作関数の詳細</h3>
+
+   <p>この節で説明している関数を使うには、次のようにヘッダファイルを読み込んで
+下さい。
+
+<pre class="example">     #include &lt;eb/text.h&gt;
+     </pre>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">int <b>eb_have_text</b><i> </i>(<i>EB_Book *</i><var>book</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">int <b>eb_have_menu</b><i> </i>(<i>EB_Book *</i><var>book</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">int <b>eb_have_copyright</b><i> </i>(<i>EB_Book *</i><var>book</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_have_text()</code> は、<var>book</var> の選択している副本が、本文を
+持っているかどうかを調べます。
+同様に、<code>eb_have_menu()</code> はメニューを持っているかどうか、
+<code>eb_have_copyright()</code> は著作権表示を持っているかどうか調べます。
+
+     <p>いずれの関数も、持っていれば 1 を返し、持っていなければ 0 を返します。
+<var>book</var> が副本を選択していない場合も 0 を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_text</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, EB_Position *</i><var>position</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_menu</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, EB_Position *</i><var>position</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_copyright</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, EB_Position *</i><var>position</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_text()</code> は、<var>book</var> が選択している副本の本文の
+開始位置を <var>position</var> の指す領域に書き込みます。
+同様に、<code>eb_menu()</code> はメニューの開始位置を、
+<code>eb_have_copyright()</code> は著作権表示の開始位置を書き込みます。
+
+     <p>成功すると、これらの関数は <code>EB_SUCCESS</code> を返します。
+失敗すると、<var>position</var> に必ずシークが失敗する位置を書き込んで、
+原因を示すエラーコードを返します。
+
+     <p>あらかじめ、<var>book</var> 内のいずれかの副本が選択されていなくてはなりません。
+<var>book</var> が副本を選択していなければ、<code>EB_ERR_NO_CUR_SUB</code> を返します。
+選択中の副本が、対象となるテキストデータを持っていなければ、
+<code>EB_ERR_NO_SUCH_SEARCH</code> を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_seek_text</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, const EB_Position *</i><var>position</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_seek_text()</code> は、<var>book</var> が選択している副本の
+テキストデータファイルをシークします。
+シーク位置は <var>position</var> で指定します。
+このとき、<var>position</var> は常にファイルの先頭からの位置として解釈
+されます。
+(相対位置へのシーク機能は、EB ライブラリにはありません。)
+
+     <p>シークを行うと、それまでに行った読み込みの状態記録がリセットされます。
+<code>eb_read_text()</code>, <code>eb_read_heading()</code>, <code>eb_read_rawtext()</code>
+を用いてテキストデータを読み込むには、前もってこの関数を呼び出して
+おく必要があります。
+
+     <p>成功すると、この関数は <code>EB_SUCCESS</code> を返します。
+失敗すると、原因を示すエラーコードを返します。
+
+     <p>あらかじめ、<var>book</var> 内のいずれかの副本が選択されていなくてはなりません。
+<var>book</var> が副本を選択していなければ、<code>EB_ERR_NO_CUR_SUB</code> を返します。
+選択中の副本にテキストデータが存在しないときは、<code>EB_ERR_NO_TEXT</code>
+を返します。
+
+     <p>なお、書籍によっては、テキストデータを収めたファイルには他のデータも
+一緒に格納されていることがありますが、テキスト以外のデータにアクセス
+しても、テキストデータの現在位置、読み込みに関する状態記録は変化しません。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_tell_text</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, EB_Position *</i><var>position</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_seek_text()</code> は、<var>book</var> が選択している副本の
+テキストデータファイルの現在のアクセス位置を返します。
+
+     <p>成功すると、<var>position</var> の指す領域に現在のアクセス位置を書き込み、
+<code>EB_SUCCESS</code> を返します。
+失敗すると、シークが必ず失敗する位置を書き込み、原因を示すエラーコード
+を返します。
+
+     <p>あらかじめ、<var>book</var> 内のいずれかの副本が選択されていなくてはなりません。
+<var>book</var> が副本を選択していなければ、<code>EB_ERR_NO_CUR_SUB</code> を返します。
+選択中の副本にテキストデータが存在しないときは、<code>EB_ERR_NO_TEXT</code>
+を返します。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_read_text</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, EB_Appendix *</i><var>appendix</var><i>, EB_Hookset *</i><var>hookset</var><i>, void *</i><var>container</var><i>, size_t </i><var>text_max_length</var><i>, char *</i><var>text</var><i>, ssize_t *</i><var>text_length</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_read_heading</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, EB_Appendix *</i><var>appendix</var><i>, EB_Hookset *</i><var>hookset</var><i>, void *</i><var>container</var><i>, size_t </i><var>text_max_length</var><i>, char *</i><var>text</var><i>, ssize_t *</i><var>text_length</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_read_text()</code> と <code>eb_read_heading()</code> は、<var>book</var>
+が選択している副本のテキストデータファイルの現在のアクセス位置からデータ
+を読み込みます。
+<code>eb_read_heading()</code> は見出しの読み込みに用い、<code>eb_read_text()</code>
+はそれ以外のテキストデータの読み込みに用います。
+
+     <p>読み込まれたテキストデータは、必要に応じて文字コードの変換
+(see <a href="Character-Code.html#Character%20Code">文字コード</a>) が行われた後に、<var>hookset</var>
+の指すフックセットにしたがって加工されます。
+<var>hookset</var> が <code>NULL</code> のときは、代わりに EB ライブラリ側で用意
+している <dfn>標準のフックセット (default hookset)</dfn> が用いられます。
+このフックセットは、<code>eb_initialize_hookset()</code> によって初期化した
+だけのフックセットと等価です。
+
+     <p>フックセットによって加工された後に、テキストデータは <var>text</var> の指す
+領域に書き込まれ、書き込んだバイト数が <var>text_length</var> の指す領域に
+書き込まれます。
+<var>text</var> はナル文字で終端されますが、<var>text_length</var> にはナル文字
+の分は勘定に入れません。
+テキストデータは、<var>text_max_length</var> で指定されたバイト数を超えて
+書き込むことはありません。
+ただし、<var>text_max_length</var> にもナル文字の分は勘定に入っていません
+ので、<var>text</var> は <var>text_max_length</var> + 1 バイト分のデータを格納
+できる大きさが必要です。
+
+     <p>どちらの関数も、成功すれば <code>EB_SUCCESS</code> を返し、失敗すれば
+<var>text_length</var> の指す領域に 0 を書き込んで原因を示すエラーコード
+を返します。
+
+     <p>あらかじめ、<var>book</var> 内のいずれかの副本が選択されていなくてはなりません。
+<var>book</var> が副本を選択していなければ、<code>EB_ERR_NO_CUR_SUB</code> を返します。
+
+     <p>また、<code>eb_read_text()</code> と <code>eb_read_heading()</code> を呼び出すには、
+あらかじめ <code>eb_seek_text()</code> の呼び出しを成功させ、テキストデータ
+のアクセス位置がセットされた状態にしておかなくてはなりません。
+シークをせずに呼び出すと、<code>EB_ERR_NO_PREV_SEEK</code> を返します。
+
+     <p>逆に一度シークすれば、区切りコードが検出されるまでの間なら、関数を
+繰り返し呼ぶことでテキストデータの続きを読み込むことができます。
+区切りコードが検出されると、関数を呼び出しても読み込みは行われません。
+その場合でも、他にエラーが発生しなければ <code>EB_SUCCESS</code> が返り、
+<var>text</var> には空文字列が書き込まれます。
+
+     <p>ただし、一度 <code>eb_read_text()</code> を呼び出してテキストデータを読み込み
+始めたら、繰り返し呼び出す際も、<code>eb_read_text()</code> を使わなければ
+なりません。
+途中から <code>eb_read_heading()</code> および後述の <code>eb_read_rawtext()</code>
+に切り替えて呼び出すと <code>EB_ERR_DIFF_CONTENT</code> エラーが返ります。
+関数 <code>eb_read_heading()</code> についても同様です。
+この制限は、再度 <code>eb_seek_text()</code> を呼び出すか、
+<code>eb_set_subbook()</code> で副本を選択し直すまで続きます。
+
+     <p><var>appendix</var> が <code>NULL</code> ではなく、区切りコードの情報を持った副本
+を選択中であれば、本文の区切りコードとしてその値を使用します。
+それ以外の場合は、<code>eb_read_text()</code> が区切りコードを自動判別を試み
+ます。
+ただし、この判定は完璧なものではないので、書籍によっては変な位置で本文
+が切れてしまうかも知れません。
+(本文以外のテキストデータに関しては、このような問題は起きません。)
+
+     <p>引数 <var>container</var> は、アプリケーションプログラムからフック関数にデータ
+を渡すためのものです。
+<code>eb_read_text()</code>, <code>eb_read_heading()</code> では、直接この引数の値
+を参照することはありません。
+
+     <p>引数 <var>appendix</var>, <var>container</var> は、そのままフック関数に渡されます。
+これらの引数は <code>NULL</code> でも構いません。
+(呼び出されるフック関数で支障がなければ。)
+
+     <p>なお、フック関数や <code>eb_read_text()</code>, <code>eb_read_heading()</code>
+自身が文字ないしエスケープシーケンス一個分に対するデータを書き込もうと
+したときに、<var>text</var> に十分な空き領域がないということが起こり得ます。
+その場合、関数は途中まで <var>text</var> に書き込むことはせずに、いったん
+処理を終えて戻ります。
+したがって、マルチバイト文字のデータが途中で切れたりすることはありません。
+
+     <p>書き込めなかった分は、当然ながら <var>text_length</var> の勘定には入りません。
+書き込めなかったデータは <var>book</var> 内部に保存されているので、もう一度
+<code>eb_read_text()</code>, <code>eb_read_heading()</code> を呼び出すと、前回の
+呼び出しで書き込めなかったデータがまず <var>text</var> の先頭に書き込まれます。
+書き込んだデータは <var>text_length</var> の勘定に入ります。
+
+     <p>ただし、<code>book</code> が保存しているデータの長さが <var>max_text_length</var> を
+超えていると、何も書き込まずに関数は終了します。
+このとき、書き込めなかったデータは引き続き保存されます。
+つまり、<code>text_max_length</code> があまりに小さく、かつ保持しているデータ
+のほうが長いと、何度呼び出しても <code>text</code> への書き込みが進みませんので、
+注意が必要です。
+
+     <p><code>eb_seek_text()</code> を呼び出すか、<code>eb_set_subbook()</code> で副本を選択
+し直すと、保存していたデータは破棄されます。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_read_rawtext</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, size_t </i><var>text_max_length</var><i>, char *</i><var>text</var><i>, ssize_t *</i><var>text_length</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_read_rawtext()</code> は、<var>book</var> が選択している副本の
+テキストデータファイルの現在のアクセス位置からデータを読み込みます。
+
+     <p><code>eb_read_text()</code> と似ていますが、この関数はフックセットによるデータ
+の加工や文字コードの変換を一切行わず、データを内部表現のまま返します。
+読み込むテキストデータの種類は、何であっても構いません。
+
+     <p>読み込んだテキストデータは <var>text</var> の指す領域に書き込まれ、書き込んだ
+バイト数が <var>text_length</var> の指す領域に書き込まれます。
+テキストデータは、<var>text_max_length</var> で指定されたバイト数を超えて
+書き込むことはありません。
+ただし、<code>eb_read_text()</code> と異なり、<var>text</var> はナル文字で終端
+されません。
+マルチバイト文字やエスケープシーケンスの途中で <var>text</var> の残り領域
+が足りなくなった場合も、途中までは書き込みます。
+
+     <p>処理が成功すれば <code>EB_SUCCESS</code> を返し、失敗すれば <var>text_length</var>
+の指す領域に 0 を書き込んで原因を示すエラーコードを返します。
+
+     <p>あらかじめ、<var>book</var> 内のいずれかの副本が選択されていなくてはなりません。
+<var>book</var> が副本を選択していなければ、<code>EB_ERR_NO_CUR_SUB</code> を返します。
+
+     <p>また、この関数を呼び出すには、あらかじめ <code>eb_seek_text()</code> の呼び出し
+を成功させ、テキストデータのアクセス位置がセットされた状態にして
+おかなくてはなりません。
+シークをせずに呼び出すと、<code>EB_ERR_NO_PREV_SEEK</code> を返します。
+
+     <p>この関数は、繰り返し呼び出すことで、前回読み込んだテキストデータの続き
+を読み込むことができます。
+ただし、区切りコードの検出を行いませんので、ひたすら呼び出しを続けると、
+テキストデータファイルの末尾まで行ってしまいます。
+
+     <p>一度 <code>eb_read_rawtext()</code> を呼び出してテキストデータを読み込み
+始めたら、繰り返し呼び出す際も、<code>eb_read_rawtext()</code> を使わなければ
+なりません。
+途中から、<code>eb_read_text()</code> や <code>eb_read_text()</code> に切り替えると、
+<code>EB_ERR_DIFF_CONTENT</code> エラーが返ります。
+この制限は、再度 <code>eb_seek_text()</code> を呼び出すか、
+<code>eb_set_subbook()</code> で副本を選択し直すまで続きます。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">int <b>eb_is_text_stopped</b><i> </i>(<i>EB_Book *</i><var>book</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_is_text_stopped()</code> は、最後に読み込んだテキストデータが
+末尾に達したかどうかを判定します。
+
+     <p><var>book</var> が選択中の副本で、最後に <code>eb_read_text()</code> または
+<code>eb_read_heading()</code> でテキストデータを読み込んだ際に、区切りコード
+を検出したか、テキストデータの末尾に達して読み込みを終えていれれば、この
+関数は 1 を返します。
+それ以外のときは、0 を返します。
+
+     <p><var>book</var> が副本を選択していない場合や、選択中の副本にテキストデータが
+存在しない場合も 0 が返ります。
+
+     <p><code>eb_read_text()</code> または <code>eb_read_heading()</code> でテキストデータ
+を読み込んでいない場合も、同様に 0 が返ります。
+テキストデータを読み込んだ後であっても、テキストデータの読み込みに関する
+状態記録をリセットする関数 (eb_read_text() の項を参照) を呼んでしまうと、
+読み込んでいないと見なされますので、注意して下さい。
+
+     <p>通常はこの関数を使わなくても、<code>eb_read_text()</code> や
+<code>eb_read_heading()</code> が 0 を返したら、テキストデータの末尾に達した
+とみなして差し支えないでしょう。
+ただしその際は、引数 <code>text_max_length</code> の値を十分大きく取って下さい。
+
+        </td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_write_text_byte1</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, int </i><var>byte1</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_write_text_byte2</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, int </i><var>byte1</var><i>, int </i><var>byte2</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_write_text_string</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, const char *</i><var>string</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_write_text</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, const char *</i><var>stream</var><i>, size_t </i><var>stream_length</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>これらの関数は、いずれもフック関数の中から、テキストデータを書き込む
+ために用います。
+書き込むデータの種類によって、使い分けて下さい。
+
+     <p><code>eb_write_text_byte1()</code> は、<var>byte1</var> で指定した 1 バイトの値を
+書き込みます。
+<code>eb_write_text_byte2()</code> は、<var>byte1</var>, <var>byte2</var> で指定した
+2 バイトを書き込みます。
+<code>eb_write_text_string()</code> は、<var>string</var> で指定した文字列を
+書き込みます。
+<code>eb_write_text()</code> は、<var>stream</var> から始まる長さ <var>stream_length</var>
+バイトのバイト列を書き込みます。
+
+     <p>どの関数も、成功すると <code>EB_SUCCESS</code> を返し、失敗すると原因を示す
+エラーコードを返します。
+
+     <p>最終的に、書き込んだテキストデータは、フック関数の呼び出し元である
+<code>eb_read_text()</code>, <code>eb_read_heading()</code> から
+アプリケーションプログラムに渡されます。
+
+     <p>フック関数として呼び出されていないときに、これらの関数を呼び出した場合
+の動作は未定義です。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">const char * <b>eb_current_candidate</b><i> </i>(<i>EB_Book *</i><var>book</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_current_candidate()</code> は、アクセス中のテキストデータの
+現在位置に書かれている、複合検索の候補となる語を返します。
+
+     <p>返す文字列の長さは、最長で <code>EB_MAX_WORD_LENGTH</code> バイトになります。
+ただし、この長さにナル文字は含みません。
+
+     <p>この関数は非常に特殊で、複合検索の候補となる語の終了を意味する
+エスケープシーケンスへのフックである <code>EB_HOOK_END_CANDIDATE_LEAF</code>
+および <code>EB_HOOK_END_CANDIDATE_GROUP</code> に対するフック関数の中でのみ
+呼び出すことができます。
+それ以外の場所で呼び出したときの動作は、未定義です。
+
+     <p>この関数の呼び出し方ですが、フック関数に渡ってきた <code>EB_Book</code>
+オブジェクト (へのポインタ) を、そのままこの関数に引数として渡して
+やります。
+
+     <p><var>book</var> の文字コード
+(see <a href="EB_Book-Data-Types.html#EB_Book%20Data%20Types">[CD-ROM 書籍と <code>EB_Book</code> オブジェクト] データ型の詳細</a>)
+が <code>EB_CHARCODE_ISO8859_1</code> なら、関数の返す文字列は ISO 8859-1
+になり、それ以外の文字コードの場合は日本語 EUC になります。
+関数の返す文字列は、他のフックによる加工処理の影響を受けません。
+文字コードの変換を行う以外は、内部データをそのまま返します。
+
+     <p>なお、この関数が返した文字列を参照できるのは、フック関数から戻るまでの
+間だけですので、注意して下さい。
+</td></tr>
+</table>
+
+<p>
+<table width="100%">
+<tr>
+<td align="left">EB_Error_Code <b>eb_forward_text</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, EB_Appendix *</i><var>appendix</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+
+<tr>
+<td align="left">EB_Error_Code <b>eb_backward_text</b><i> </i>(<i>EB_Book *</i><var>book</var><i>, EB_Appendix *</i><var>appendix</var><i></i>)<i>
+     </i></td>
+<td align="right">機能</td>
+</tr>
+</table>
+<table width="95%" align="center">
+<tr><td>
+
+     <p>関数 <code>eb_forward_text()</code> と <code>eb_backward_text()</code> は、
+<var>book</var> が選択している副本の本文のアクセス位置を前後に移動させ、
+本文の区切りコードを単位とした頭出しを行います。
+ちょうど、音楽 CD の曲の頭出しと同じです。
+
+     <p><code>eb_forward_text()</code> は本文の末尾方向に向かってアクセス位置を
+進め、<code>eb_backward_text()</code> は先頭方向に向かってアクセス位置を
+戻します。
+
+     <p><code>eb_forward_text()</code> の呼び出しでは、アクセス位置は必ず次の語の
+説明の開始位置まで移動します。
+それに対して <code>eb_backward_text()</code> の呼び出しでは、移動先が状態
+によって異なります。
+もし、現在のアクセス位置がその単語の説明の先頭にあるときは、
+<code>eb_backward_text()</code> の呼び出しによって、一つ前の単語の説明の
+先頭にアクセス位置が移動します。
+アクセス位置が単語の説明の途中や末尾にあるときは、その単語の説明の
+先頭に移動します。
+
+     <p>この関数は、成功すると <code>EB_SUCCESS</code> を返し、失敗すると原因を示す
+エラーコードを返します。
+
+     <p>あらかじめ、<var>book</var> 内のいずれかの副本が選択されていなくてはなりません。
+<var>book</var> が副本を選択していなければ、<code>EB_ERR_NO_CUR_SUB</code> を返します。
+
+     <p>加えて、これらの関数を呼び出すには、あらかじめ <code>eb_seek_text()</code> か
+<code>eb_read_text()</code> を呼び出しが成功していないといけません。
+(<code>eb_read_text()</code> の呼び出しを成功させるには、さらに前もって
+<code>eb_seek_text()</code> の呼び出しを成功させることが条件となります。)
+
+     <p><code>eb_read_text()</code> ではなく、<code>eb_read_heading()</code> や
+<code>eb_read_rawtext()</code> の呼び出しに成功した後でこの関数を呼び出すと、
+<code>EB_ERR_DIFF_CONTENT</code> を返します。
+また、前もって <code>eb_seek_text()</code> でシークせずにこの関数を呼び出すと、
+<code>EB_ERR_NO_PREV_SEEK</code> を返します。
+
+     <p>本文データの末尾や先頭に達してしまって、その方向にもう本文がないときは、
+<code>EB_ERR_END_OF_CONTENT</code> を返します。
+
+     <p><var>appendix</var> が <code>NULL</code> ではなく、区切りコードの情報を持った副本
+を選択中であれば、本文の区切りコードとしてその値を使用します。
+それ以外の場合は、<code>eb_read_text()</code> と同じ方法で区切りコードの
+自動判別を試みます。
+
+     <p>アクセス位置上にあるのがメニューや著作権表示のように、本文以外の
+テキストデータであっても、構いません。
+ただし、本文以外のテキストデータの内部には、頭出し位置が一箇所しか
+ありませんので、この関数が役に立つ状況はほとんどありません。
+
+     <p>(メニューでは、個々の階層のメニューデータが、それぞれ独立した
+テキストデータになっているため、頭出しを行っても前後のメニューデータへは
+移動できません。
+複合検索の候補一覧も同様です。)
+</td></tr>
+</table>
+
+   </body></html>
+
