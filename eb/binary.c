@@ -813,7 +813,7 @@ eb_set_binary_mpeg(book, argv)
      * path of the movie.
      */
     char movie_file_name[EB_MAX_FILE_NAME_LENGTH + 1];
-    char movie_path_name[PATH_MAX + 1];
+    char movie_path_name[EB_MAX_PATH_LENGTH + 1];
     EB_Error_Code error_code;
     EB_Subbook *subbook;
     Zio_Code zio_code;

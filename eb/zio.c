@@ -56,6 +56,9 @@
 
 #include "zio.h"
 
+/*
+ * memcpy(), memchr(), memcmp(), memmove() and memset().
+ */
 #ifndef HAVE_MEMCPY
 #define memcpy(d, s, n) bcopy((s), (d), (n))
 #ifdef __STDC__
@@ -71,6 +74,9 @@ char *memset();
 #endif /* not __STDC__ */
 #endif
 
+/*
+ * Flags for open().
+ */
 #ifndef O_BINARY
 #define O_BINARY 0
 #endif
@@ -95,6 +101,9 @@ char *memset();
 #define SEEK_END 2
 #endif
 
+/*
+ * Generic pointer type.
+ */
 #ifndef VOID
 #ifdef __STDC__
 #define VOID void
@@ -103,6 +112,9 @@ char *memset();
 #endif
 #endif
 
+/*
+ * Mutual exclusion lock of Pthreads.
+ */
 #ifndef ENABLE_PTHREAD
 #define pthread_mutex_lock(m)
 #define pthread_mutex_unlock(m)

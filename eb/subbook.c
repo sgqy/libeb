@@ -201,8 +201,6 @@ eb_load_all_subbooks(book)
     EB_Book *book;
 {
     EB_Error_Code error_code;
-    EB_Subbook_Code subbook_code;
-    EB_Font_Code font_code;
     EB_Subbook *subbook;
     int i, j;
 
@@ -215,22 +213,6 @@ eb_load_all_subbooks(book)
     if (book->path == NULL) {
 	error_code = EB_ERR_UNBOUND_BOOK;
 	goto failed;
-    }
-
-    /*
-     * Get the current subbook and the current font.
-     */
-    if (book->subbook_current != NULL) {
-	subbook_code = book->subbook_current->code;
-	if (book->subbook_current->narrow_current != NULL)
-	    font_code = book->subbook_current->narrow_current->font_code;
-	else if (book->subbook_current->wide_current != NULL)
-	    font_code = book->subbook_current->wide_current->font_code;
-	else
-	    font_code = EB_FONT_INVALID;
-    } else {
-	subbook_code = EB_SUBBOOK_INVALID;
-	font_code = EB_FONT_INVALID;
     }
 
     /*
@@ -253,25 +235,7 @@ eb_load_all_subbooks(book)
 		goto failed;
 	}
     }
-
-    /*
-     * Restore the current subbook and the current font.
-     */
-    if (subbook_code == EB_SUBBOOK_INVALID)
-	eb_unset_subbook(book);
-    else {
-	error_code = eb_set_subbook(book, subbook_code);
-	if (error_code != EB_SUCCESS)
-	    goto failed;
-    }
-
-    if (font_code == EB_FONT_INVALID)
-	eb_unset_font(book);
-    else {
-	error_code = eb_set_font(book, font_code);
-	if (error_code != EB_SUCCESS)
-	    goto failed;
-    }
+    eb_unset_subbook(book);
 
     LOG(("out: eb_load_all_subbooks() = %s", eb_error_string(EB_SUCCESS)));
     eb_unlock(&book->lock);
@@ -902,8 +866,8 @@ eb_set_subbook_eb(book, subbook_code)
 {
     EB_Error_Code error_code;
     EB_Subbook *subbook;
-    char text_path_name[PATH_MAX + 1];
-    char graphic_path_name[PATH_MAX + 1];
+    char text_path_name[EB_MAX_PATH_LENGTH + 1];
+    char graphic_path_name[EB_MAX_PATH_LENGTH + 1];
     Zio_Code text_zio_code;
     Zio_Code graphic_zio_code;
 
@@ -996,9 +960,9 @@ eb_set_subbook_epwing(book, subbook_code)
 {
     EB_Error_Code error_code;
     EB_Subbook *subbook;
-    char text_path_name[PATH_MAX + 1];
-    char graphic_path_name[PATH_MAX + 1];
-    char sound_path_name[PATH_MAX + 1];
+    char text_path_name[EB_MAX_PATH_LENGTH + 1];
+    char graphic_path_name[EB_MAX_PATH_LENGTH + 1];
+    char sound_path_name[EB_MAX_PATH_LENGTH + 1];
     Zio_Code text_zio_code;
     Zio_Code graphic_zio_code;
     Zio_Code sound_zio_code;
