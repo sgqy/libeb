@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinEBZip", "WinEBZip.csproj", "{A22873A6-13CB-4869-B092-AF8773695830}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{A22873A6-13CB-4869-B092-AF8773695830}.Debug.ActiveCfg = Debug|.NET
+		{A22873A6-13CB-4869-B092-AF8773695830}.Debug.Build.0 = Debug|.NET
+		{A22873A6-13CB-4869-B092-AF8773695830}.Release.ActiveCfg = Release|.NET
+		{A22873A6-13CB-4869-B092-AF8773695830}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
