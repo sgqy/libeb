@@ -3,13 +3,13 @@
 ;
 [Setup]
 AppName=EB Library
-AppVerName=EB Library 4.1.3
+AppVerName=EB Library 4.2
 AppPublisher=Motoyuki Kasahara
 AppPublisherURL=http://www.sra.co.jp/people/m-kasahr/eb/
 DefaultDirName={pf}\EB Library
 DefaultGroupName=EB Library
 OutputDir=.
-OutputBaseFileName=eb-4.1.3-win32
+OutputBaseFileName=eb-4.2-win32
 AllowNoIcons=yes
 LicenseFile=COPYING.txt
 
@@ -41,8 +41,8 @@ Source: "portsrc\eb\sysdefs.h"; DestDir: "{app}\include\eb";
 Source: "..\eb\eb\text.h"; DestDir: "{app}\include\eb";
 Source: "..\eb\eb\zio.h"; DestDir: "{app}\include\eb";
 Source: "portsrc\config.h"; DestDir: "{app}\include\eb";
-Source: "..\eb\zlib\zconf.h"; DestDir: "{app}\include";
-Source: "..\eb\zlib\zlib.h"; DestDir: "{app}\include";
+Source: "..\zlib\zconf.h"; DestDir: "{app}\include";
+Source: "..\zlib\zlib.h"; DestDir: "{app}\include";
 Source: "intl\libintl.h"; DestDir: "{app}\include";
 Source: "iconv\iconv.h"; DestDir: "{app}\include";
 Source: "iconv\libcharset.h"; DestDir: "{app}\include";

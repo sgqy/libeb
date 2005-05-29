@@ -34,6 +34,7 @@ EXPORTS
 	eb_canonicalize_path_name
 	eb_character_code
 	eb_compose_movie_file_name
+	eb_compose_movie_path_name
 	eb_compose_path_name
 	eb_compose_path_name2
 	eb_compose_path_name3
@@ -60,7 +61,6 @@ EXPORTS
 	eb_finalize_fonts
 	eb_finalize_hookset
 	eb_finalize_library
-	eb_finalize_multi_searches
 	eb_finalize_search
 	eb_finalize_search_contexts
 	eb_finalize_searches
@@ -83,6 +83,7 @@ EXPORTS
 	eb_forward_wide_alt_character
 	eb_forward_wide_font_character
 	eb_have_copyright
+	eb_have_cross_search
 	eb_have_endword_search
 	eb_have_exactword_search
 	eb_have_font
@@ -113,7 +114,6 @@ EXPORTS
 	eb_initialize_hookset
 	eb_initialize_library
 	eb_initialize_log
-	eb_initialize_multi_searches
 	eb_initialize_search
 	eb_initialize_search_contexts
 	eb_initialize_searches
@@ -153,6 +153,7 @@ EXPORTS
 	eb_narrow_font_character_bitmap
 	eb_narrow_font_end
 	eb_narrow_font_gif_size
+	eb_narrow_font_png_size
 	eb_narrow_font_size
 	eb_narrow_font_size2
 	eb_narrow_font_start
@@ -176,6 +177,7 @@ EXPORTS
 	eb_reset_binary_context
 	eb_reset_search_contexts
 	eb_reset_text_context
+	eb_search_cross
 	eb_search_endword
 	eb_search_exactword
 	eb_search_keyword
@@ -220,6 +222,7 @@ EXPORTS
 	eb_wide_font_character_bitmap
 	eb_wide_font_end
 	eb_wide_font_gif_size
+	eb_wide_font_png_size
 	eb_wide_font_size
 	eb_wide_font_size2
 	eb_wide_font_start

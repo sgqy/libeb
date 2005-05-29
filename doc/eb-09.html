@@ -1,22 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
-
 <!-- #file "eb.html" -->
-
 <html lang="ja">
-
 <head>
-
 <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
-
 <link rel="stylesheet" type="text/css" href="eb.css">
-
 <link rev="made" href="mailto:m-kasahr@sra.co.jp">
-
 <title>EB ライブラリ</title>
-
 </head>
-
-
 
 <body>
 <p>
@@ -105,8 +95,8 @@ struct EB_Position_Struct {
 </blockquote>
 
 <p>
-ところで、検索時に一致したエントリの見出しや本文を読み込む際にも、
-位置情報の指定には <code>EB_Position</code> 型が使われます。
+検索して見つかった一致エントリの見出しや本文を読み込む際にも、位置情報
+の指定には <code>EB_Position</code> 型が使われます。
 一致したエントリの情報は、関数 <code>eb_hit_list()</code> によって
 <code>EB_Hit</code> という型のオブジェクトに書き込まれますが、
 <code>EB_Hit</code> 型は次のように定義されています。
@@ -555,6 +545,91 @@ EBXA-C では、文字コードとして GB 2312 と JIS X 0208 が使われますが
 では、どちらも 0xa1a1 〜 0xfefe にマッピングされて衝突するため、最低
 でもどちらか一方をフックして文字の表現方法を変えないと、正しく出力
 できません。
+</p>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  -->
+<h3><a name="cross-search-result">クロス検索の検索結果</a></h3>
+
+<p>
+すでに <a href="eb-08.html#search">「検索」</a> の章で述べたように、CD-ROM 書籍
+には前方一致検索、後方一致検索といった複数の検索メソッドがあります。
+EB ライブラリで検索を行うと、どの検索メソッドでも、一致したエントリの
+情報は、以下のような <code>EB_Hit</code> 型のオブジェクトとして
+受け取ります。
+</p>
+
+<blockquote class="program">
+<pre>
+typedef struct {
+    EB_Position heading;   /* 見出しの位置 */
+    EB_Position text;      /* 本文の位置   */
+} EB_Hit;
+</pre>
+</blockquote>
+
+<p>
+しかしクロス検索では、<code>EB_Hit</code> の見出しと本文の位置は
+まったく同じになります。
+したがって、見出しと本文のテキストデータを読み込むには、他の検索メソッド
+のようにそれぞれの位置にシークして読み込むというやり方ではうまく
+いきません。
+</p>
+
+<p>
+以下に、クロス検索の見出しと本文を読み込むプログラム例を示します。
+</p>
+
+<blockquote class="program">
+<pre>
+/* 見出し位置へのシークを行う */
+if (eb_seek_text(&amp;book, &amp;hits[0].heading) != EB_SUCCESS) {
+    fprintf(stderr, "an error occurs.\n");
+    return;
+}
+/* 見出しの読み込みを行う */
+if (eb_read_heading(&amp;book, NULL, NULL, NULL, MAX_LENGTH,
+    heading, &amp;heading_length) != EB_SUCCESS) {
+    fprintf(stderr, "an error occurs.\n");
+    return;
+}
+/* 先ほど読み込んだ見出しの、次の部分へ飛ぶ */
+if (eb_forward_heading(&amp;book) != EB_SUCCESS) {
+    fprintf(stderr, "an error occurs.\n");
+    return;
+}
+/* 本文の読み込みを行う */
+if (eb_read_heading(&amp;book, NULL, NULL, NULL, MAX_LENGTH,
+    text, &amp;text_length) != EB_SUCCESS) {
+    fprintf(stderr, "an error occurs.\n");
+    return;
+}
+</pre>
+</blockquote class="program">
+
+<p>
+クロス検索でも、見出しの内容を読み込む方法は他の検索メソッドと変わり
+はなく、<code>eb_read_heading()</code> を使います。
+変わっているのは、本文の読み込みです。
+<code>eb_read_text()</code> ではなく、<code>eb_read_heading()</code>
+を使います。
+見出しを読み込むための関数 <code>eb_read_heading()</code> を、本文を
+読み込むために呼ぶというのは奇妙な話ですが、これはクロス検索の本文が
+見出しと同じ形式になっているためです。
+通常、見出しは一行程度しか書かれていませんが、実際のところクロス検索
+の本文も一行程度しかありません。
+</p>
+
+<p>
+また、本文は見出しのすぐ後に書かれているため、上記のように見出しを
+読み込んだ後で <code>eb_forward_heading()</code> という関数を呼び、
+その後で本文を読み込むためにもう一度 <code>eb_read_heading()</code> を
+呼ぶという変わった手順を踏みます。
+</p>
+
+<p>
+本文だけが必要で見出しが要らなければ、シーク直後に
+<code>eb_forward_heading()</code> を呼ぶようにします。
+その後で <code>eb_read_heading()</code> を呼ぶと、本文を読み込みます。
 </p>
 
 <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  -->
@@ -1101,7 +1176,8 @@ main(int argc, char *argv[])
     subbook_index = atoi(argv[2]);
 
     /*「現在の副本 (current subbook)」を設定。*/
-    if (eb_set_subbook(&amp;book, subbook_list[subbook_index]) &lt; 0) {
+    error_code = eb_set_subbook(&amp;book, subbook_list[subbook_index]);
+    if (error_code != EB_SUCCESS) {
         fprintf(stderr, "%s: failed to set the current subbook, %s\n",
             argv[0], eb_error_message(error_code));
         goto die;
@@ -2808,6 +2884,47 @@ EB ライブラリは、基本的なフック関数をいくつか用意しています。
 テキストデータになっているため、頭出しを行っても前後のメニューデータへは
 移動できません。
 複合検索の候補一覧も同様です。)
+</p>
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
+<h4><a name="func:forward_heading"><code>EB_Error_Code eb_forward_heading (EB_Book *<var>book</var>)</code></a></h4>
+
+<p>
+関数 <code>eb_forward_heading()</code> は、<var>book</var> が選択している
+副本の見出しのアクセス位置を後に移動させ、見出しの区切りを単位とした頭出し
+を行います。
+</p>
+
+<p>
+本文の頭出しを行う関数 <code>eb_forward_text()</code> の見出し版です。
+ただし、見出しで頭出しを行う機会は、クロス検索の本文取得に限られるため、
+<code>eb_backward_heading()</code> という関数は用意していません。
+</p>
+
+<p>
+この関数を呼ぶと、アクセス位置が次の見出しの開始位置まで移動します。
+(クロス検索では、見出し領域の中に「見出し」と「本文」が交互に書かれて
+いますが、データ構造上「本文」と「見出し」は区別が付きません。
+アクセス位置がクロス検索の見出し領域内の場合、この関数を呼ぶと最も近い
+「見出し」もしくは「本文」の開始位置まで移動します。)
+</p>
+
+<p>
+<code>eb_read_heading()</code> ではなく、<code>eb_read_text()</code> や
+<code>eb_read_rawtext()</code> の呼び出しに成功した後でこの関数を
+呼び出すと、<code>EB_ERR_DIFF_CONTENT</code> を返します。
+また、前もって <code>eb_seek_text()</code> でシークせずにこの関数を
+呼び出すと、<code>EB_ERR_NO_PREV_SEEK</code> を返します。
+</p>
+
+<p>
+この関数は、成功すると <code>EB_SUCCESS</code> を返し、失敗すると原因を示す
+エラーコードを返します。
+</p>
+
+<p>
+クロス検索以外の検索メソッドの見出しの格納位置に対して、この関数を
+呼ぶことも可能ですが、そのような必要に迫られる機会はないでしょう。
 </p>
 
 <!-- ================================================================ -->

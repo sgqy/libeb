@@ -22,7 +22,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories=".\portsrc,.\portsrc\eb,.\intl,..\eb\zlib"
+				AdditionalIncludeDirectories=".\portsrc,.\portsrc\eb,.\intl,..\zlib"
 				PreprocessorDefinitions="WIN32;EB_BUILD_LIBRARY;HAVE_CONFIG_H;_EB;EB_EXPORTS;NDEBUG"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
@@ -87,7 +87,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\portsrc,.\portsrc\eb,.\intl,..\eb\zlib"
+				AdditionalIncludeDirectories=".\portsrc,.\portsrc\eb,.\intl,..\zlib"
 				PreprocessorDefinitions="WIN32;EB_BUILD_LIBRARY;HAVE_CONFIG_H;_EB;EB_EXPORTS;_DEBUG"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -292,6 +292,26 @@
 			</File>
 			<File
 				RelativePath="..\eb\eb\copyright.c">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_MBCS;EB_BUILD_LIBRARY;HAVE_CONFIG_H;_EB;EB_EXPORTS;NDEBUG;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_MBCS;EB_BUILD_LIBRARY;HAVE_CONFIG_H;_EB;EB_EXPORTS;_DEBUG;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\eb\eb\cross.c">
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool

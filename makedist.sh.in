@@ -62,9 +62,6 @@ sed -e 's/^    //' > .distfiles <<__END__
     portsrc/sys/time.h
     portsrc/unistd.h
     portsrc/utime.h
-    zlib/zconfig.h
-    zlib/zlib.def
-    zlib/zlib.rc
     doc/*.html
     doc/*.css
 __END__

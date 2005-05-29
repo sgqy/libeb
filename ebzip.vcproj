@@ -22,7 +22,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories=".\portsrc,.\intl,.\iconv,..\eb,..\eb\libebutils,..\eb\zlib,..\eb\eb"
+				AdditionalIncludeDirectories=".\portsrc,.\intl,.\iconv,..\eb,..\eb\libebutils,..\zlib,..\eb\eb"
 				PreprocessorDefinitions="_CONSOLE;WIN32;HAVE_CONFIG_H;NDEBUG"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
@@ -81,7 +81,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\portsrc,.\intl,.\iconv,..\eb,..\eb\libebutils,..\eb\zlib,..\eb\eb"
+				AdditionalIncludeDirectories=".\portsrc,.\intl,.\iconv,..\eb,..\eb\libebutils,..\zlib,..\eb\eb"
 				PreprocessorDefinitions="_CONSOLE;WIN32;HAVE_CONFIG_H;_DEBUG"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"

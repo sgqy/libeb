@@ -1,22 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
-
 <!-- #file "eb.html" -->
-
 <html lang="ja">
-
 <head>
-
 <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
-
 <link rel="stylesheet" type="text/css" href="eb.css">
-
 <link rev="made" href="mailto:m-kasahr@sra.co.jp">
-
 <title>EB ライブラリ</title>
-
 </head>
-
-
 
 <body>
 <p>
@@ -624,6 +614,7 @@ EB ライブラリでは、動画データのファイル名はフック関数
 用います。
 たとえば、個々の動画に一意の ID のようなものを振りたい場合は、ファイル
 名を ID として使うと良いかも知れません。
+なお、この関数で変換して得られるファイル名にはパスが含まれていません。
 </p>
 
 <p>
@@ -632,7 +623,7 @@ EB ライブラリでは、動画データのファイル名はフック関数
 に変換されたファイル名が格納されます。
 ファイル名は最長で <code>EB_MAX_DIRECTORY_NAME_LENGTH</code> (= 8) バイト
 になります。
-この長さには終端のナル文字の分を含んでいませんので、格納領域にははもう
+この長さには終端のナル文字の分を含んでいませんので、格納領域にはもう
 1 バイト余裕が要ります。
 </p>
 
@@ -640,10 +631,57 @@ EB ライブラリでは、動画データのファイル名はフック関数
 なお、格納されたファイル名は、実際に存在するファイル名とは若干異なって
 いる可能性があります。
 たとえば、英字の大文字と小文字、接尾子の有無などの違いがこれに当たります。
+この関数は、あくまで文字列に機械的に変換するだけなので、ファイルが実在
+するかどうかのチェックはしません。
 </p>
 
 <p>
 成功すると、関数は <code>EB_SUCCESS</code> を返します。
+</p>
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
+<h4><a name="func:compose_movie_path_name"><code>EB_Error_Code eb_compose_movie_path_name (EB_Book *<var>book</var>, const unsigned int *<var>argv</var>, char *<var>composed_path_name</var>)</code></a></h4>
+
+<p>
+関数 <code>eb_compose_movie_path_name()</code> は、動画データのファイル名
+を通常の文字列に変換します。
+働きは、前述の関数 <code>eb_compose_movie_file_name()</code> に良く
+似ていますが、<code>eb_compose_movie_path_name()</code> が返すファイル名
+は、絶対パスの形式になっている点が異なります。
+</p>
+
+<p>
+また、<code>eb_compose_movie_path_name()</code> では、ファイル名が実在
+するかどうかのチェックを行うという点も、大きな違いです。
+ファイル名を文字列に変換した上で、英字の大文字と小文字の違いや接尾子の
+有無は、実在のファイルに合わせて調整したものを返します。
+したがって、パスを除いた部分で比較しても、
+<code>eb_compose_movie_file_name()</code> が返すファイル名とは必ずしも
+一致しません。
+</p>
+
+<p>
+引数 <code>book</code> は、動画ファイルを収録している副本を選択して
+おかなければなりません。
+副本を選択していなければ、<code>EB_ERR_NO_CUR_SUB</code> を返します。
+</p>
+
+<p>
+引数 <code>argv</code> の意味は、<code>eb_compose_movie_file_name()</code>
+と同じです。
+</p>
+
+<p>
+ファイル名の変換が成功すると、関数は <var>composed_path_name</var> が
+指す先の領域に、文字列形式に変換された動画ファイル名を格納し、
+<code>EB_SUCCESS</code> を返します。
+ファイル名は最長で <code>EB_MAX_PATH_LENGTH</code> バイトになります。
+この長さには終端のナル文字の分を含んでいませんので、格納領域にはもう
+1 バイト余裕が要ります。
+</p>
+
+<p>
+ファイル名が実在しないと、<code>EB_ERR_BAD_FILE_NAME</code> を返します。
 </p>
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->

@@ -21,7 +21,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="&quot;zconfig.h&quot;"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\zlib,.\portsrc,..\eb\zlib"
+				AdditionalIncludeDirectories=".\portsrc,..\zlib,..\zlib\win32"
 				PreprocessorDefinitions="_LIB;WIN32;_DEBUG"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -74,7 +74,7 @@
 				AdditionalOptions="&quot;zconfig.h&quot;"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories=".\zlib,.\portsrc,..\eb\zlib"
+				AdditionalIncludeDirectories=".\portsrc,..\zlib,..\zlib\win32"
 				PreprocessorDefinitions="_LIB;WIN32;NDEBUG"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
@@ -122,7 +122,7 @@
 			Name="Source Files"
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
 			<File
-				RelativePath="..\eb\zlib\adler32.c">
+				RelativePath="..\zlib\adler32.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
@@ -142,7 +142,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\eb\zlib\compress.c">
+				RelativePath="..\zlib\compress.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
@@ -162,7 +162,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\eb\zlib\crc32.c">
+				RelativePath="..\zlib\crc32.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
@@ -182,7 +182,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\eb\zlib\deflate.c">
+				RelativePath="..\zlib\deflate.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
@@ -202,7 +202,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\eb\zlib\gzio.c">
+				RelativePath="..\zlib\gzio.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
@@ -222,7 +222,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\eb\zlib\infblock.c">
+				RelativePath="..\zlib\infback.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
@@ -242,7 +242,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\eb\zlib\infcodes.c">
+				RelativePath="..\zlib\inffast.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
@@ -262,7 +262,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\eb\zlib\inffast.c">
+				RelativePath="..\zlib\inflate.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
@@ -282,7 +282,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\eb\zlib\inflate.c">
+				RelativePath="..\zlib\inftrees.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
@@ -302,7 +302,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\eb\zlib\inftrees.c">
+				RelativePath="..\zlib\trees.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
@@ -322,7 +322,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\eb\zlib\infutil.c">
+				RelativePath="..\zlib\uncompr.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
@@ -342,47 +342,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\eb\zlib\trees.c">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\eb\zlib\uncompr.c">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\eb\zlib\zutil.c">
+				RelativePath="..\zlib\zutil.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool

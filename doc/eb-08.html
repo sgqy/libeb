@@ -1,22 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
-
 <!-- #file "eb.html" -->
-
 <html lang="ja">
-
 <head>
-
 <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
-
 <link rel="stylesheet" type="text/css" href="eb.css">
-
 <link rev="made" href="mailto:m-kasahr@sra.co.jp">
-
 <title>EB ライブラリ</title>
-
 </head>
-
-
 
 <body>
 <p>
@@ -35,6 +25,7 @@ EB ライブラリでは、次のような検索メソッドが利用できます。
 <li>後方一致検索 (end-word search)
 <li>完全一致検索 (exact-word search)
 <li>条件検索 (keyword search)
+<li>クロス検索 (cross search)
 <li>複合検索 (multi search)
 </ul>
 
@@ -231,6 +222,22 @@ if (eb_hit_list(&amp;book, MAX_HITS, hits, &amp;hit_count)
 }
 </pre>
 </blockquote>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  -->
+<h3><a name="cross-search">クロス検索</a></h3>
+
+<p>
+クロス検索は、条件検索の亜種とも言うべき検索メソッドです。
+EPWING や電子ブックをみても、どういうルールで使い分けがなされているのか
+分からない程、両者は実によく似ています。
+</p>
+
+<p>
+EB ライブラリでクロス検索を行う関数は <code>eb_search_cross()</code> 
+ですが、使い方は条件検索の関数 <code>eb_search_keyword()</code> と
+まったく同じです。
+使い方の詳細は、<a href="eb-08.html#keyword-search">「条件検索」</a> をご覧下さい。
+</p>
 
 <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  -->
 <h3><a name="multi-search">複合検索</a></h3>
@@ -598,7 +605,7 @@ main(int argc, char *argv[])
     int subbook_count;
     int subbook_index;
     int hit_count;
-    size_t heading_length;
+    ssize_t heading_length;
     int i;
 
     /* コマンド行引数をチェック。*/
@@ -891,6 +898,50 @@ struct EB_Position_Struct {
 </p>
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
+<h4><a name="func:multi_title"><code>EB_Error_Code eb_multi_title (EB_Book *<var>book</var>, EB_Multi_Search_Code <var>multi_id</var>, char *<var>title</var>)</code></a></h4>
+
+<p>
+関数 <code>eb_multi_search_list()</code> は、<var>book</var> が選択中の
+副本に用意されている複合検索 <var>multi_id</var> の題名を <var>title</var>
+の指す領域に書き込みます。
+題目は最長で <code>EB_MAX_MULTI_TITLE_LENGTH</code> バイトになります。
+この長さに、ナル文字は含みません。
+</p>
+
+<p>
+書籍の文字コード
+(<a href="eb-05.html#eb_book-data-types">「[CD-ROM 書籍と <code>EB_Book</code> オブジェクト] データ型の詳細」</a> を参照のこと)
+が <code>EB_CHARCODE_ISO8859_1</code> なら、題目を表す文字列は ISO 8859-1
+になり、それ以外の文字コードなら日本語 EUC になります。
+</p>
+
+<p>
+書籍によっては、複合検索は用意していても、複合検索の題名データを持って
+いないことがあります。
+その場合、EB ライブラリが代わりに付けた題名が <var>title</var> に
+書き込まれます。
+</p>
+
+<p>
+書籍の文字コードが <code>EB_CHARCODE_ISO8859_1</code> なら、
+EB ライブラリが付ける題名は、"Multi Search 1", "Multi Search 2", ...
+になります。
+それ以外の文字コードであれば、題名は日本語 EUC で書かれた「複合検索 1」
+「複合検索 2」... という文字列になります。
+</p>
+	
+<p>
+成功すると、関数は <code>EB_SUCCESS</code> を返します。
+失敗すると、<var>label</var> の指す領域には空文字列を書き込み、原因を示す
+エラーコードを返します。
+</p>
+
+<p>
+あらかじめ、<var>book</var> はいずれかの副本を選択していなくてはなりません。
+選択していない場合は、<code>EB_ERR_NO_CUR_SUB</code> を返します。
+</p>
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
 <h4><a name="func:multi_entry_label"><code>EB_Error_Code eb_multi_entry_label (EB_Book *<var>book</var>, EB_Multi_Search_Code <var>multi_id</var>, int <var>entry_index</var>, char *<var>label</var>)</code></a></h4>
 
 <p>
@@ -1013,12 +1064,15 @@ struct EB_Position_Struct {
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
 <h4><a name="func:search_keyword"><code>EB_Error_Code eb_search_keyword (EB_Book *<var>book</var>, const char * const <var>input_words</var>[])</code></a></h4>
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
+<h4><a name="func:search_cross"><code>EB_Error_Code eb_search_cross (EB_Book *<var>book</var>, const char * const <var>input_words</var>[])</code></a></h4>
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
 <h4><a name="func:search_multi"><code>EB_Error_Code eb_search_multi (EB_Book *<var>book</var>, EB_Multi_Search_Code <var>multi_id</var>, const char * const <var>input_words</var>[])</code></a></h4>
 
 <p>
-関数 <code>eb_search_word()</code> は、<var>book</var> が選択中の副本に
-対する条件検索をリクエストします。
-同様に <code>eb_search_multi()</code> は複合検索をリクエストします。
+関数 <code>eb_search_keyword()</code> は、<var>book</var> が選択中の
+副本に対する条件検索をリクエストします。
+同様に <code>eb_search_cross()</code> はクロス検索を、
+<code>eb_search_multi()</code> は複合検索をそれぞれリクエストします。
 </p>
 
 <p>
@@ -1030,7 +1084,7 @@ struct EB_Position_Struct {
 </p>
 
 <p>
-どちらの関数も検索をリクエストするだけで、一致したエントリの情報を
+いずれの関数も検索をリクエストするだけで、一致したエントリの情報を
 返すことはしません。
 一致したエントリの取得には <code>eb_hit_list()</code> を使います。
 関数は、成功すると <code>EB_SUCCESS</code> を返します。
@@ -1063,7 +1117,8 @@ struct EB_Position_Struct {
 
 <p>
 末尾の NULL を除いた配列の要素数は、条件検索では <code>EB_MAX_KEYWORDS</code>
-以下、複合検索では <code>EB_MAX_MULTI_ENTRIES</code> 以下でなくては
+以下、クロス検索では <code>EB_MAX_CROSS_ENTRIES</code> 以下、
+複合検索では <code>EB_MAX_MULTI_ENTRIES</code> 以下でなくては
 なりません。
 個数が多すぎると <code>EB_ERRO_TOO_MANY_WORDS</code> を返します。
 空文字列の要素を差し引いた個数ではなく、単純に渡された要素数が上限を
@@ -1089,6 +1144,7 @@ struct EB_Position_Struct {
 <li><code>eb_search_endword()</code>  (後方一致検索)
 <li><code>eb_search_exactword()</code>  (完全一致検索)
 <li><code>eb_search_keyword()</code>  (条件検索)
+<li><code>eb_search_cross()</code>  (クロス検索)
 <li><code>eb_search_multi()</code>  (複合検索)
 </ul>
 
@@ -1121,6 +1177,7 @@ struct EB_Position_Struct {
 <li><code>eb_search_endword()</code>
 <li><code>eb_search_exactword()</code>
 <li><code>eb_search_keyword()</code>
+<li><code>eb_search_cross()</code>
 <li><code>eb_search_multi()</code>
 </ul>
 
