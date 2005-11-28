@@ -3,13 +3,13 @@
 ;
 [Setup]
 AppName=EB Library
-AppVerName=EB Library 4.2.1
+AppVerName=EB Library 4.2.2
 AppPublisher=Motoyuki Kasahara
 AppPublisherURL=http://www.sra.co.jp/people/m-kasahr/eb/
 DefaultDirName={pf}\EB Library
 DefaultGroupName=EB Library
 OutputDir=.
-OutputBaseFileName=eb-4.2.1-win32
+OutputBaseFileName=eb-4.2.2-win32
 AllowNoIcons=yes
 LicenseFile=COPYING.txt
 

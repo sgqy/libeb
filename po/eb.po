@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2004  Motoyuki Kasahara
+# Copyright (C) 2005  Motoyuki Kasahara
 #
 msgid ""
 msgstr ""
