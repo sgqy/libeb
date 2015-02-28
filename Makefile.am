@@ -6,18 +6,18 @@ else
 SAMPLES_SUBDIR =
 endif
 
-SUBDIRS = eb libebutils ebappendix ebfont ebinfo ebrefile ebstopcode ebzip \
+SUBDIRS = ebu libebutils ebappendix ebfont ebinfo ebrefile ebstopcode ebzip \
 	doc po-eb po-ebutils m4 $(SAMPLES_SUBDIR)
 
 EXTRA_DIST = ChangeLog.0 ChangeLog.1 ChangeLog.2 move-if-change \
-   eb.conf.in misc/ebfixlog misc/ebdump
-CLEANFILES = eb.conf
+   ebu.conf.in misc/ebfixlog misc/ebdump README.org
+CLEANFILES = ebu.conf
 
 appendixdir = $(pkgdatadir)/appendix
 appendix_DATA =
-sysconf_DATA = eb.conf
+sysconf_DATA = ebu.conf
 
-eb.conf: eb.conf.in Makefile
+ebu.conf: ebu.conf.in Makefile
 	rm -f $@
 	sed -e 's;\@VERSION\@;$(VERSION);' \
 	   -e 's;\@EBCONF_EBINCS\@;$(EBCONF_EBINCS);' \

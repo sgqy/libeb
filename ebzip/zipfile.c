@@ -55,7 +55,7 @@ static void trap(int signal_number);
  */
 int
 ebzip_zip_file(const char *out_file_name, const char *in_file_name,
-    Zio_Code in_zio_code, Zip_Speedup *speedup)
+	       Zio_Code in_zio_code, Zip_Speedup *speedup)
 {
     return ebzip_zip_file_internal(out_file_name, in_file_name,
 	in_zio_code, 0, speedup);
@@ -82,17 +82,19 @@ ebzip_zip_file_internal(const char *out_file_name, const char *in_file_name,
     Zio_Code in_zio_code, int index_page, Zip_Speedup *speedup)
 {
     Zio in_zio, out_zio;
-    unsigned char *in_buffer = NULL, *out_buffer = NULL;
+    unsigned char *buffer, *in_buffer, *out_buffer;
     off_t in_total_length, out_total_length;
     ssize_t in_length;
-    size_t out_length;
+    size_t *out_length;
     struct stat in_status, out_status;
-    off_t slice_location = 0;
+    off_t *slice_location;
     off_t next_location;
     size_t index_length;
     int progress_interval;
     int total_slices;
-    int i;
+    int i, j, k;
+    int failed = 0;
+    int slice_size = EB_SIZE_PAGE << ebzip_level;
 
     zio_initialize(&in_zio);
     zio_initialize(&out_zio);
@@ -130,18 +132,17 @@ ebzip_zip_file_internal(const char *out_file_name, const char *in_file_name,
     /*
      * Allocate memories for in/out buffers.
      */
-    in_buffer = (unsigned char *)malloc(EB_SIZE_PAGE << ZIO_MAX_EBZIP_LEVEL);
-    if (in_buffer == NULL) {
+    buffer = (unsigned char *)malloc((slice_size * 2 + ZIO_SIZE_EBZIP_MARGIN
+	+ sizeof(off_t) + sizeof(size_t)) * ebzip_slice_number);
+    if (!buffer) {
 	fprintf(stderr, _("%s: memory exhausted\n"), invoked_name);
 	goto failed;
     }
 
-    out_buffer = (unsigned char *) malloc((EB_SIZE_PAGE << ZIO_MAX_EBZIP_LEVEL)
-	+ ZIO_SIZE_EBZIP_MARGIN);
-    if (out_buffer == NULL) {
-	fprintf(stderr, _("%s: memory exhausted\n"), invoked_name);
-	goto failed;
-    }
+    out_length = (size_t *)buffer;
+    slice_location = (off_t *)buffer + sizeof(size_t) * ebzip_slice_number;
+    in_buffer = buffer + (sizeof(size_t) + sizeof(off_t)) * ebzip_slice_number;
+    out_buffer = in_buffer + slice_size * ebzip_slice_number;
 
     /*
      * If the file `out_file_name' already exists, confirm and unlink it.
@@ -226,7 +227,7 @@ ebzip_zip_file_internal(const char *out_file_name, const char *in_file_name,
      * Initialize `zip'.
      */
     out_zio.code = ZIO_EBZIP1;
-    out_zio.slice_size = EB_SIZE_PAGE << ebzip_level;
+    out_zio.slice_size = slice_size;
     out_zio.file_size = in_zio.file_size;
     out_zio.crc = 1;
     out_zio.mtime = in_status.st_mtime;
@@ -263,16 +264,14 @@ ebzip_zip_file_internal(const char *out_file_name, const char *in_file_name,
      *     total_slices = N = (file_size + slice_size - 1) / slice_size
      *     index_length = (N + 1) * index_width
      */
-    total_slices = (out_zio.file_size + out_zio.slice_size - 1)
-	/ out_zio.slice_size;
+    total_slices = (out_zio.file_size + slice_size - 1) / slice_size;
     index_length = (total_slices + 1) * out_zio.index_width;
-    memset(out_buffer, '\0', out_zio.slice_size);
+    memset(out_buffer, '\0', slice_size);
 
     if (!ebzip_test_flag) {
 	for (i = index_length + ZIO_SIZE_EBZIP_HEADER;
-	     out_zio.slice_size <= i; i -= out_zio.slice_size) {
-	    if (write(out_zio.file, out_buffer, out_zio.slice_size)
-		!= out_zio.slice_size) {
+	     slice_size <= i; i -= slice_size) {
+	    if (write(out_zio.file, out_buffer, slice_size) != slice_size) {
 		fprintf(stderr, _("%s: failed to write to the file: %s\n"),
 		    invoked_name, out_file_name);
 		goto failed;
@@ -297,165 +296,202 @@ ebzip_zip_file_internal(const char *out_file_name, const char *in_file_name,
     if (((total_slices + 999) / 1000) > progress_interval)
 	progress_interval = ((total_slices + 999) / 1000);
 
-    for (i = 0; i < total_slices; i++) {
-	/*
-	 * Read a slice from the original file.
-	 */
-	if (zio_lseek(&in_zio, in_total_length, SEEK_SET) < 0) {
-	    fprintf(stderr, _("%s: failed to seek the file: %s\n"),
-		invoked_name, in_file_name);
-	    goto failed;
-	}
-	in_length = zio_read(&in_zio, (char *)in_buffer, out_zio.slice_size);
-	if (in_length < 0) {
-	    fprintf(stderr, _("%s: failed to read from the file: %s\n"),
-		invoked_name, in_file_name);
-	    goto failed;
-	} else if (in_length == 0) {
-	    fprintf(stderr, _("%s: unexpected EOF: %s\n"),
-		invoked_name, in_file_name);
-	    goto failed;
-	} else if (in_length != out_zio.slice_size
-	    && in_total_length + in_length != out_zio.file_size) {
-	    fprintf(stderr, _("%s: unexpected EOF: %s\n"),
-		invoked_name, in_file_name);
-	    goto failed;
-	}
+    for (i = 0; i < total_slices; i += j) {
+	j = (i + ebzip_slice_number) < total_slices ?
+	    ebzip_slice_number : total_slices - i;
 
-	/*
-	 * Update CRC.  (Calculate adler32 again.)
-	 */
-	out_zio.crc = adler32((uLong)out_zio.crc, (Bytef *)in_buffer,
-	    (uInt)in_length);
-
-	/*
-	 * If this is last slice and its length is shorter than
-	 * `slice_size', fill `\0'.
-	 */
-	if (in_length < out_zio.slice_size) {
-	    memset(in_buffer + in_length, '\0',
-		out_zio.slice_size - in_length);
-	    in_length = out_zio.slice_size;
-	}
-
-	/*
-	 * Compress the slice.
-	 */
-	if (speedup != NULL
-	    && ebzip_is_speedup_slice(speedup, i, ebzip_level)) {
-	    out_length = out_zio.slice_size;
-	} else if (ebzip1_slice((char *)out_buffer, &out_length,
-	    (char *)in_buffer, out_zio.slice_size) < 0) {
-	    fprintf(stderr, _("%s: memory exhausted\n"), invoked_name);
-	    goto failed;
-	}
-	if (out_zio.slice_size <= out_length) {
-	    memcpy(out_buffer, in_buffer, out_zio.slice_size);
-	    out_length = out_zio.slice_size;
-	}
-
-	/*
-	 * Write the slice to the zip file.
-	 * If the length of the zipped slice is not shorter than
-	 * original, write orignal slice.
-	 */
-	if (!ebzip_test_flag) {
-	    slice_location = lseek(out_zio.file, 0, SEEK_END);
-	    if (slice_location < 0) {
-		fprintf(stderr, _("%s: failed to seek the file, %s: %s\n"),
-		    invoked_name, strerror(errno), out_file_name);
+	for (k = 0; k < j; k++) {
+	    /*
+	     * Read a slice from the original file.
+	     */
+	    if (zio_lseek(&in_zio, in_total_length, SEEK_SET) < 0) {
+		fprintf(stderr, _("%s: failed to seek the file: %s\n"),
+		    invoked_name, in_file_name);
 		goto failed;
 	    }
-	    if (write(out_zio.file, out_buffer, out_length) != out_length) {
-		fprintf(stderr, _("%s: failed to write to the file: %s\n"),
-		    invoked_name, out_file_name);
+	    in_length = zio_read(&in_zio, (char *)(in_buffer + k * slice_size),
+	        slice_size);
+	    if (in_length < 0) {
+		fprintf(stderr, _("%s: failed to read from the file: %s\n"),
+		    invoked_name, in_file_name);
 		goto failed;
+	    } else if (in_length == 0) {
+		fprintf(stderr, _("%s: unexpected EOF: %s\n"),
+		    invoked_name, in_file_name);
+		goto failed;
+	    } else if (in_length != slice_size
+		   && in_total_length + in_length != out_zio.file_size) {
+		fprintf(stderr, _("%s: unexpected EOF: %s\n"),
+		    invoked_name, in_file_name);
+		goto failed;
+	    }
+
+	    /*
+	     * Update CRC.  (Calculate adler32 again.)
+	     */
+	    out_zio.crc = adler32((uLong)out_zio.crc,
+	        (Bytef *)(in_buffer + k * slice_size), (uInt)in_length);
+
+	    /*
+	     * If this is last slice and its length is shorter than
+	     * `slice_size', fill `\0'.
+	     */
+	    if (in_length < slice_size) {
+		memset(in_buffer + k * slice_size + in_length, '\0',
+		   slice_size - in_length);
+		in_length = slice_size;
+	    }
+	    in_total_length += in_length;
+	}
+
+#pragma omp parallel for
+	for (k = 0; k < j; k++) {
+	    if (!failed) {
+		/*
+		 * Compress the slice.
+		 */
+		if (speedup != NULL
+		    && ebzip_is_speedup_slice(speedup, i + k, ebzip_level)) {
+		    out_length[k] = slice_size;
+		} else if (ebzip1_slice
+			       ((char *)(out_buffer
+			       + k * (slice_size + ZIO_SIZE_EBZIP_MARGIN)),
+				&out_length[k],
+				(char *)(in_buffer + k * slice_size),
+				slice_size) < 0) {
+		    fprintf(stderr, _("%s: memory exhausted\n"), invoked_name);
+		    failed = 1;
+		}
+		if (slice_size <= out_length[k]) {
+		    memcpy(out_buffer
+		        + k * (slice_size + ZIO_SIZE_EBZIP_MARGIN),
+			in_buffer + k * slice_size, slice_size);
+		    out_length[k] = slice_size;
+		}
+	    }
+	}
+	if (failed) goto failed;
+
+	for (k = 0; k < j; k++) {
+	    /*
+	     * Write the slice to the zip file.
+	     * If the length of the zipped slice is not shorter than
+	     * original, write orignal slice.
+	     */
+	    if (!ebzip_test_flag) {
+		slice_location[k] = lseek(out_zio.file, 0, SEEK_END);
+		if (slice_location[k] < 0) {
+		    fprintf(stderr, _("%s: failed to seek the file, %s: %s\n"),
+		        invoked_name, strerror(errno), out_file_name);
+		    goto failed;
+		}
+		if (write(out_zio.file, out_buffer
+		        + k * (slice_size + ZIO_SIZE_EBZIP_MARGIN),
+			out_length[k]) != out_length[k]) {
+		    fprintf(stderr, _("%s: failed to write to the file: %s\n"),
+		        invoked_name, out_file_name);
+		    goto failed;
+		}
 	    }
 	}
 
-	/*
-	 * Write an index for the slice.
-	 */
-	next_location = slice_location + out_length;
+	for (k = 0; k < j; k++) {
+	    /*
+	     * Write an index for the slice.
+	     */
+	    switch (out_zio.index_width) {
+	    case 2:
+		out_buffer[    2 * k] = (slice_location[k] >>  8) & 0xff;
+		out_buffer[1 + 2 * k] =  slice_location[k]        & 0xff;
+		break;
+	    case 3:
+		out_buffer[    3 * k] = (slice_location[k] >> 16) & 0xff;
+		out_buffer[1 + 3 * k] = (slice_location[k] >>  8) & 0xff;
+		out_buffer[2 + 3 * k] =  slice_location[k]        & 0xff;
+		break;
+	    case 4:
+		out_buffer[    4 * k] = (slice_location[k] >> 24) & 0xff;
+		out_buffer[1 + 4 * k] = (slice_location[k] >> 16) & 0xff;
+		out_buffer[2 + 4 * k] = (slice_location[k] >>  8) & 0xff;
+		out_buffer[3 + 4 * k] =  slice_location[k]        & 0xff;
+		break;
+	    case 5:
+		out_buffer[    5 * k] = (slice_location[k] >> 32) & 0xff;
+		out_buffer[1 + 5 * k] = (slice_location[k] >> 24) & 0xff;
+		out_buffer[2 + 5 * k] = (slice_location[k] >> 16) & 0xff;
+		out_buffer[3 + 5 * k] = (slice_location[k] >>  8) & 0xff;
+		out_buffer[4 + 5 * k] =  slice_location[k]        & 0xff;
+		break;
+	    }
+	    out_total_length += out_length[k] + out_zio.index_width;
+	}
+
+	next_location = slice_location[j - 1] + out_length[j - 1];
 	switch (out_zio.index_width) {
 	case 2:
-	    out_buffer[0] = (slice_location >>  8) & 0xff;
-	    out_buffer[1] =  slice_location        & 0xff;
-	    out_buffer[2] = (next_location  >>  8) & 0xff;
-	    out_buffer[3] =  next_location         & 0xff;
+	    out_buffer[    2 * j] = (next_location  >>  8) & 0xff;
+	    out_buffer[1 + 2 * j] =  next_location            & 0xff;
 	    break;
 	case 3:
-	    out_buffer[0] = (slice_location >> 16) & 0xff;
-	    out_buffer[1] = (slice_location >>  8) & 0xff;
-	    out_buffer[2] =  slice_location        & 0xff;
-	    out_buffer[3] = (next_location  >> 16) & 0xff;
-	    out_buffer[4] = (next_location  >>  8) & 0xff;
-	    out_buffer[5] =  next_location         & 0xff;
+	    out_buffer[    3 * j] = (next_location  >> 16) & 0xff;
+	    out_buffer[1 + 3 * j] = (next_location  >>  8) & 0xff;
+	    out_buffer[2 + 3 * j] =  next_location            & 0xff;
 	    break;
 	case 4:
-	    out_buffer[0] = (slice_location >> 24) & 0xff;
-	    out_buffer[1] = (slice_location >> 16) & 0xff;
-	    out_buffer[2] = (slice_location >>  8) & 0xff;
-	    out_buffer[3] =  slice_location        & 0xff;
-	    out_buffer[4] = (next_location  >> 24) & 0xff;
-	    out_buffer[5] = (next_location  >> 16) & 0xff;
-	    out_buffer[6] = (next_location  >>  8) & 0xff;
-	    out_buffer[7] =  next_location         & 0xff;
+	    out_buffer[    4 * j] = (next_location  >> 24) & 0xff;
+	    out_buffer[1 + 4 * j] = (next_location  >> 16) & 0xff;
+	    out_buffer[2 + 4 * j] = (next_location  >>  8) & 0xff;
+	    out_buffer[3 + 4 * j] =  next_location            & 0xff;
 	    break;
 	case 5:
-	    out_buffer[0] = (slice_location >> 32) & 0xff;
-	    out_buffer[1] = (slice_location >> 24) & 0xff;
-	    out_buffer[2] = (slice_location >> 16) & 0xff;
-	    out_buffer[3] = (slice_location >>  8) & 0xff;
-	    out_buffer[4] =  slice_location        & 0xff;
-	    out_buffer[5] = (next_location >>  32) & 0xff;
-	    out_buffer[6] = (next_location >>  24) & 0xff;
-	    out_buffer[7] = (next_location >>  16) & 0xff;
-	    out_buffer[8] = (next_location >>   8) & 0xff;
-	    out_buffer[9] =  next_location         & 0xff;
+	    out_buffer[    5 * j] = (next_location  >> 32) & 0xff;
+	    out_buffer[1 + 5 * j] = (next_location  >> 24) & 0xff;
+	    out_buffer[2 + 5 * j] = (next_location  >> 16) & 0xff;
+	    out_buffer[3 + 5 * j] = (next_location  >>  8) & 0xff;
+	    out_buffer[4 + 5 * j] =  next_location            & 0xff;
 	    break;
 	}
 
 	if (!ebzip_test_flag) {
 	    if (lseek(out_zio.file,
-		ZIO_SIZE_EBZIP_HEADER + (off_t) i * out_zio.index_width,
+	        ZIO_SIZE_EBZIP_HEADER + (off_t) i * out_zio.index_width,
 		SEEK_SET) < 0) {
 		fprintf(stderr, _("%s: failed to seek the file, %s: %s\n"),
 		    invoked_name, strerror(errno), out_file_name);
 		goto failed;
 	    }
-	    if (write(out_zio.file, out_buffer, out_zio.index_width * 2)
-		!= out_zio.index_width * 2) {
+	    if (write(out_zio.file, out_buffer, out_zio.index_width * (j + 1))
+		!= out_zio.index_width * (j + 1)) {
 		fprintf(stderr, _("%s: failed to write to the file, %s: %s\n"),
 		    invoked_name, strerror(errno), out_file_name);
 		goto failed;
 	    }
 	}
 
-	in_total_length += in_length;
-	out_total_length += out_length + out_zio.index_width;
-
 	/*
 	 * Output status information unless `quiet' mode.
 	 */
-	if (!ebzip_quiet_flag && (i + 1) % progress_interval == 0) {
+	if (!ebzip_quiet_flag
+	    || j >= progress_interval
+	    || ((i + k + 1) % progress_interval)
+	           > ((i + j) % progress_interval)) {
 #if defined(PRINTF_LL_MODIFIER)
 	    fprintf(stderr, _("%4.1f%% done (%llu / %llu bytes)\n"),
-		(double) (i + 1) * 100.0 / (double) total_slices,
-		(unsigned long long) in_total_length,
-		(unsigned long long) in_zio.file_size);
+		    (double) (i + k + 1) * 100.0 / (double) total_slices,
+		    (unsigned long long) in_total_length,
+		    (unsigned long long) in_zio.file_size);
 #elif defined(PRINTF_I64_MODIFIER)
 	    fprintf(stderr, _("%4.1f%% done (%I64u / %I64u bytes)\n"),
-		(double) (i + 1) * 100.0 / (double) total_slices,
-		(unsigned __int64) in_total_length,
-		(unsigned __int64) in_zio.file_size);
+		    (double) (i + k + 1) * 100.0 / (double) total_slices,
+		    (unsigned __int64) in_total_length,
+		    (unsigned __int64) in_zio.file_size);
 #else
 	    fprintf(stderr, _("%4.1f%% done (%lu / %lu bytes)\n"),
-		(double) (i + 1) * 100.0 / (double) total_slices,
-		(unsigned long) in_total_length,
-		(unsigned long) in_zio.file_size);
+		    (double) (i + k + 1) * 100.0 / (double) total_slices,
+		    (unsigned long) in_total_length,
+		    (unsigned long) in_zio.file_size);
 #endif
-	    fflush(stderr);
+		    fflush(stderr);
 	}
     }
 
@@ -495,7 +531,7 @@ ebzip_zip_file_internal(const char *out_file_name, const char *in_file_name,
     if (!ebzip_test_flag) {
 	if (lseek(out_zio.file, 0, SEEK_SET) < 0) {
 	    fprintf(stderr, _("%s: failed to seek the file, %s: %s\n"),
-		invoked_name, strerror(errno), out_file_name);
+	        invoked_name, strerror(errno), out_file_name);
 	    goto failed;
 	}
 	if (write(out_zio.file, out_buffer, ZIO_SIZE_EBZIP_HEADER)
@@ -514,17 +550,18 @@ ebzip_zip_file_internal(const char *out_file_name, const char *in_file_name,
     if (!ebzip_quiet_flag) {
 #if defined(PRINTF_LL_MODIFIER)
 	fprintf(stderr, _("completed (%llu / %llu bytes)\n"),
-	    (unsigned long long) in_zio.file_size,
-	    (unsigned long long) in_zio.file_size);
+		(unsigned long long) in_zio.file_size,
+		(unsigned long long) in_zio.file_size);
 	if (in_total_length != 0) {
 	    fprintf(stderr, _("%llu -> %llu bytes (%4.1f%%)\n\n"),
-		(unsigned long long) in_zio.file_size,
-		(unsigned long long) out_total_length,
-		(double) out_total_length * 100.0 / (double) in_zio.file_size);
+		    (unsigned long long) in_zio.file_size,
+		    (unsigned long long) out_total_length,
+		    (double) out_total_length * 100.0
+		    / (double) in_zio.file_size);
 	} else {
 	    fprintf(stderr, _("%llu -> %llu bytes\n\n"),
-		(unsigned long long) in_zio.file_size,
-		(unsigned long long) out_total_length);
+		    (unsigned long long) in_zio.file_size,
+		    (unsigned long long) out_total_length);
 	}
 #elif defined(PRINTF_I64_MODIFIER)
 	fprintf(stderr, _("completed (%I64u / %I64u bytes)\n"),
@@ -603,8 +640,7 @@ ebzip_zip_file_internal(const char *out_file_name, const char *in_file_name,
     /*
      * Dispose memories.
      */
-    free(in_buffer);
-    free(out_buffer);
+    free(buffer);
 
     return 0;
 
@@ -612,10 +648,8 @@ ebzip_zip_file_internal(const char *out_file_name, const char *in_file_name,
      * An error occurs...
      */
   failed:
-    if (in_buffer != NULL)
-	free(in_buffer);
-    if (out_buffer != NULL)
-	free(out_buffer);
+    if (buffer)
+      free(buffer);
 
     zio_close(&in_zio);
     zio_finalize(&in_zio);

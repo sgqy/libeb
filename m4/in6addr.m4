@@ -31,12 +31,16 @@ dnl * Check for struct in6_addr
 dnl * 
 AC_DEFUN([AC_STRUCT_IN6_ADDR],
 [AC_CACHE_CHECK(for struct in6_addr, ac_cv_struct_in6_addr,
-[AC_COMPILE_IFELSE([
+[AC_COMPILE_IFELSE([AC_LANG_SOURCE([
 #include <sys/types.h>
+#ifdef ENABLE_WINSOCK2
+#include <ws2tcpip.h>
+#else
 #include <sys/socket.h>
 #include <netinet/in.h>
+#endif
 struct in6_addr address;
-], [ac_cv_struct_in6_addr=yes], [ac_cv_struct_in6_addr=no])])
+])], [ac_cv_struct_in6_addr=yes], [ac_cv_struct_in6_addr=no])])
 if test "$ac_cv_struct_in6_addr" = yes; then
     AC_DEFINE(HAVE_STRUCT_IN6_ADDR, 1,
 [Define to 1 if <netinet/in.h> defines `struct in6_addr'])
@@ -50,12 +54,16 @@ AC_DEFUN([AC_DECL_IN6ADDR_ANY],
 if test $ac_cv_struct_in6_addr = no; then
     ac_cv_decl_in6addr_any=no
 else
-    AC_CACHE_CHECK(for in6addr_any declaration in netinet/in.h,
+    AC_CACHE_CHECK(for in6addr_any declaration in netinet/in.h or ws2tcpip.h,
     ac_cv_decl_in6addr_any,
-    [AC_COMPILE_IFELSE([
+    [AC_COMPILE_IFELSE([AC_LANG_SOURCE([
 #include <sys/types.h>
+#ifdef ENABLE_WINSOCK2
+#include <ws2tcpip.h>
+#else
 #include <sys/socket.h>
 #include <netinet/in.h>
+#endif
 
 void
 testfunc()
@@ -63,7 +71,7 @@ testfunc()
     unsigned char *address;
     address = (char *)&in6addr_any;
 }
-], [ac_cv_decl_in6addr_any=yes], [ac_cv_decl_in6addr_any=no])])
+])], [ac_cv_decl_in6addr_any=yes], [ac_cv_decl_in6addr_any=no])])
     if test "$ac_cv_decl_in6addr_any" = yes; then
         AC_DEFINE(IN6ADDR_ANY_DECLARED, 1,
 [Define to 1 if `in6addr_any' is declared by <netinet/in.h>])
@@ -78,12 +86,16 @@ AC_DEFUN([AC_DECL_IN6ADDR_LOOPBACK],
 if test $ac_cv_struct_in6_addr = no; then
     ac_cv_decl_in6addr_loopback=no
 else
-    AC_CACHE_CHECK(for in6addr_loopback declaration in netinet/in.h,
+    AC_CACHE_CHECK(for in6addr_loopback declaration in netinet/in.h or ws2tcpip.h,
     ac_cv_decl_in6addr_loopback,
-    [AC_COMPILE_IFELSE([
+    [AC_COMPILE_IFELSE([AC_LANG_SOURCE([
 #include <sys/types.h>
+#ifdef ENABLE_WINSOCK2
+#include <ws2tcpip.h>
+#else
 #include <sys/socket.h>
 #include <netinet/in.h>
+#endif
 
 int
 testfunc()
@@ -91,7 +103,7 @@ testfunc()
     unsigned char *address;
     address = (char *)&in6addr_loopback;
 }
-], [ac_cv_decl_in6addr_loopback=yes], [ac_cv_decl_in6addr_loopback=no])])
+])], [ac_cv_decl_in6addr_loopback=yes], [ac_cv_decl_in6addr_loopback=no])])
     if test "$ac_cv_decl_in6addr_loopback" = yes; then
         AC_DEFINE(IN6ADDR_LOOPBACK_DECLARED, 1,
 [Define to 1 if `in6addr_loopback' is declared by <netinet/in.h>])

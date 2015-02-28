@@ -88,8 +88,10 @@ AC_DEFUN([eb_GNU_GETTEXT], [dnl
   CPPFLAGS="$save_CPPFLAGS $iconv_includes"
   LIBS="$save_LIBS $iconv_libraries"
   AC_CHECK_LIB(iconv, iconv_open,
-    [ICONVLIBS="$iconv_libraries -liconv"; LIBS="$LIBS -liconv"])
-  AC_CHECK_FUNCS(iconv_open locale_charset)
+    [ICONVLIBS="$iconv_libraries -liconv"; LIBS="$LIBS -liconv"],
+    AC_CHECK_LIB(iconv, libiconv_open,
+    [ICONVLIBS="$iconv_libraries -liconv"; LIBS="$LIBS -liconv"]))
+  AC_CHECK_FUNCS(iconv_open libiconv_open locale_charset)
   AC_CHECK_HEADERS(iconv.h libcharset.h)
   if test $ac_cv_func_iconv_open != no; then
     ICONVINCS="$iconv_includes"
@@ -117,7 +119,7 @@ AC_DEFUN([eb_GNU_GETTEXT], [dnl
     dnl *
     CPPFLAGS="$save_CPPFLAGS $gettext_includes"
     LIBS="$save_LIBS $gettext_libraries -lintl $iconv_libraries -liconv"
-    AC_LINK_IFELSE([
+    AC_LINK_IFELSE([AC_LANG_SOURCE([
 #include <stdio.h>
 #ifdef ENABLE_NLS
 #undef ENABLE_NLS
@@ -139,7 +141,7 @@ main()
   gettext("foo");
   return 0;
 }
-], 
+])], 
     try_nls=yes, try_nls=no)
 
     if test "$try_nls" = yes; then
@@ -153,7 +155,7 @@ main()
     if test "$try_nls" = no; then
       CPPFLAGS="$save_CPPFLAGS $gettext_includes"
       LIBS="$save_LIBS $gettext_libraries -lintl"
-      AC_LINK_IFELSE([
+      AC_LINK_IFELSE([AC_LANG_SOURCE([
 #include <stdio.h>
 #ifdef ENABLE_NLS
 #undef ENABLE_NLS
@@ -175,7 +177,7 @@ main()
   gettext("foo");
   return 0;
 }
-], 
+])], 
       try_nls=yes, try_nls=no)
 
       if test "$try_nls" = yes; then
@@ -190,7 +192,7 @@ main()
     if test "$try_nls" = no; then
       CPPFLAGS="$save_CPPFLAGS"
       LIBS="$save_LIBS $iconv_libraries -liconv"
-      AC_LINK_IFELSE([
+      AC_LINK_IFELSE([AC_LANG_SOURCE([
 #include <stdio.h>
 #ifdef ENABLE_NLS
 #undef ENABLE_NLS
@@ -212,7 +214,7 @@ main()
   gettext("foo");
   return 0;
 }
-], 
+])], 
       try_nls=yes, try_nls=no)
 
       if test "$try_nls" = yes; then
@@ -227,7 +229,7 @@ main()
     if test "$try_nls" = no; then
       CPPFLAGS="$save_CPPFLAGS"
       LIBS="$save_LIBS"
-      AC_LINK_IFELSE([
+      AC_LINK_IFELSE([AC_LANG_SOURCE([
 #include <stdio.h>
 #ifdef ENABLE_NLS
 #undef ENABLE_NLS
@@ -249,7 +251,7 @@ main()
   gettext("foo");
   return 0;
 }
-], 
+])], 
       try_nls=yes, try_nls=no)
 
       if test "$try_nls" = yes; then

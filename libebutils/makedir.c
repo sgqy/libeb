@@ -64,7 +64,7 @@ make_missing_directory(const char *path, mode_t mode)
     if (stat(path, &status) == 0 && S_ISDIR(status.st_mode))
 	return 0;
 
-#ifndef WIN32
+#if (!defined(WIN32) && !defined(WIN64))
     if (mkdir(path, mode) < 0)
 	return -1;
 #else

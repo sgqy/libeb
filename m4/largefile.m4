@@ -32,7 +32,7 @@ dnl *
 AC_DEFUN([eb_SYS_LARGEFILE], [dnl
 AC_REQUIRE([AC_SYS_LARGEFILE])
 AC_CACHE_CHECK([for ll modifier of printf], ac_cv_func_printf_ll,
-[AC_RUN_IFELSE([
+[AC_RUN_IFELSE([AC_LANG_SOURCE([
     #include <stdio.h>
     #include <string.h>
     #include <limits.h>
@@ -41,9 +41,9 @@ AC_CACHE_CHECK([for ll modifier of printf], ac_cv_func_printf_ll,
 	sprintf(buffer, "%llx", (unsigned long long) 1 << 32);
 	return (strcmp(buffer, "100000000") == 0) ? 0 : 1;
     }
-], [ac_cv_func_printf_ll=yes], [ac_cv_func_printf_ll=no])])
+])], [ac_cv_func_printf_ll=yes], [ac_cv_func_printf_ll=no])])
 AC_CACHE_CHECK([for I64 modifier of printf], ac_cv_func_printf_i64,
-[AC_RUN_IFELSE([
+[AC_RUN_IFELSE([AC_LANG_SOURCE([
     #include <stdio.h>
     #include <string.h>
     #include <limits.h>
@@ -52,7 +52,7 @@ AC_CACHE_CHECK([for I64 modifier of printf], ac_cv_func_printf_i64,
 	sprintf(buffer, "%I64x", (unsigned __int64) 1 << 32);
 	return (strcmp(buffer, "100000000") == 0) ? 0 : 1;
     }
-], [ac_cv_func_printf_i64=yes], [ac_cv_func_printf_i64=no])])
+])], [ac_cv_func_printf_i64=yes], [ac_cv_func_printf_i64=no])])
 if test "$ac_cv_func_printf_ll" = yes; then
     AC_DEFINE(PRINTF_LL_MODIFIER, 1,
 [Define to `1' if printf() recognizes "ll" modifier for long long])

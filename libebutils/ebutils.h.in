@@ -33,12 +33,12 @@
 #include "config.h"
 #endif
 
-#include "eb/eb.h"
+#include "ebu/eb.h"
 
 /*
  * Text domain name for message catalog.
  */
-#define TEXT_DOMAIN_NAME	"ebutils"
+#define TEXT_DOMAIN_NAME	"ebuutils"
 
 /*
  * Path to the locale directory.

@@ -10,7 +10,7 @@
 top_builddir = ..
 subdir = po-ebutils
 
-TEXTDOMAIN = ebutils
+TEXTDOMAIN = ebuutils
 POFILES = ja.po
 MOFILES = ja.mo
 POTFILES = \

@@ -1,5 +1,6 @@
 /*                                                            -*- C -*-
  * Copyright (c) 1997-2006  Motoyuki Kasahara
+ * Copyright (c) 2008-2013  Kazuhiro Ito
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -57,9 +58,15 @@ int strncasecmp(const char *, const char *, size_t);
 #endif /* not MAXPATHLEN */
 #endif /* not PATH_MAX */
 
-#include "eb/eb.h"
-#include "eb/error.h"
+#include "ebu/eb.h"
+#include "ebu/error.h"
 #include "ebutils.h"
+
+/*
+ * Test whether `off_t' represents a large integer.
+ */
+#define off_t_is_large \
+	((((off_t) 1 << 41) + ((off_t) 1 << 40) + 1) % 9999991 == 7852006)
 
 /*
  * Tricks for gettext.
@@ -115,8 +122,57 @@ output_try_help(const char *invoked_name)
 void
 output_version(const char *program_name, const char *program_version)
 {
-    printf("%s (EB Library) version %s\n", program_name, program_version);
+    int tmp = 0;
+
+    printf("%s (EB Library with UTF-8 support) version %s\n", program_name, program_version);
+    printf("Features:");
+    if off_t_is_large {
+	    printf(" LARGEFILE");
+	    tmp = 1;
+	}
+#ifdef ENABLE_PTHREAD
+    if (tmp)
+	printf(", ");
+    else
+	printf(" ");
+    printf("PTHREAD");
+    tmp = 1;
+#endif
+#ifdef ENABLE_EBNET
+    if (tmp)
+	printf(", ");
+    else
+	printf(" ");
+    printf("EBNET");
+    tmp = 1;
+#endif
+#ifdef ENABLE_IPV6
+    if (tmp)
+	printf(", ");
+    else
+	printf(" ");
+    printf("IPV6");
+    tmp = 1;
+#endif
+#ifdef ENABLE_WINSOCK2
+    if (tmp)
+	printf(", ");
+    else
+	printf(" ");
+    printf("WINSOCK2");
+    tmp = 1;
+#endif
+#ifdef ENABLE_NLS
+    if (tmp)
+	printf(", ");
+    else
+	printf(" ");
+    printf("NLS");
+    tmp = 1;
+#endif
+    printf("\n");
     printf("Copyright (c) 1997-2006  Motoyuki Kasahara\n");
+    printf("Copyright (c) 2008-2013  Kazuhiro Ito\n");
     fflush(stdout);
 }
 

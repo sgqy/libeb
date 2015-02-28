@@ -1,8 +1,8 @@
 dnl *
 dnl * Process this file with autoconf to produce a configure script.
 dnl *
-AC_INIT(eb, 4.4.3)
-AC_CONFIG_SRCDIR(eb/eb.c)
+AC_INIT(ebu, 4.4.3-20150301)
+AC_CONFIG_SRCDIR(ebu/eb.c)
 AC_PREREQ(2.54)
 AM_INIT_AUTOMAKE
 
@@ -20,7 +20,7 @@ AC_SUBST(EB_VERSION_MINOR)
 dnl *
 dnl * Set mailing address.
 dnl *
-MAILING_ADDRESS='m-kasahr@sra.co.jp'
+MAILING_ADDRESS='kzhr@d1.dion.ne.jp'
 AC_SUBST(MAILING_ADDRESS)
 AC_DEFINE_UNQUOTED(MAILING_ADDRESS, "$MAILING_ADDRESS", [Mailing address])
 
@@ -31,6 +31,9 @@ AC_PROG_CC
 AC_PROG_LIBTOOL
 AC_PROG_LN_S
 AC_PROG_INSTALL
+
+AC_OPENMP
+CFLAGS="$CFLAGS $OPENMP_CFLAGS"
 
 AC_PATH_PROG(PERL, perl, no)
 if test "$PERL" = no; then
@@ -100,8 +103,8 @@ dnl * --with-pkgdocdir option.
 dnl *
 AC_ARG_WITH(pkgdocdir,
 AC_HELP_STRING([--with-pkgdocdir=DIR],
-    [HTML documents in DIR [[default=DATADIR/eb/doc]]]),
-[pkgdocdir="${withval}"],[pkgdocdir='${datadir}/eb/doc'])
+    [HTML documents in DIR [[default=DATADIR/ebu/doc]]]),
+[pkgdocdir="${withval}"],[pkgdocdir='${datadir}/ebu/doc'])
 AC_SUBST(pkgdocdir)
 
 dnl *
@@ -117,7 +120,7 @@ else
     CPPFLAGS="$CPPFLAGS $PTHREAD_CPPFLAGS"
     CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
     LDFLAGS="$LDFLAGS $PTHREAD_LDFLAGS"
-    AC_LINK_IFELSE([
+    AC_LINK_IFELSE([AC_LANG_SOURCE([
 #include <pthread.h>
 static pthread_mutex_t m=PTHREAD_MUTEX_INITIALIZER; 
 
@@ -127,7 +130,7 @@ main()
     pthread_mutex_lock(&m);
     return 0;
 }
-], 
+])], 
         try_pthread=yes, try_pthread=no)
     CPPFLAGS=$save_CPPFLAGS
     CFLAGS=$save_CFLAGS
@@ -183,7 +186,7 @@ save_CPPFLAGS=$CPPFLAGS
 save_LIBS=$LIBS
 CPPFLAGS="$CPPFLAGS $ZLIBINCS"
 LIBS="$LIBS $ZLIBLIBS"
-AC_LINK_IFELSE([
+AC_LINK_IFELSE([AC_LANG_SOURCE([
 #include <zlib.h>
 
 int
@@ -192,7 +195,7 @@ main()
     z_stream stream; inflate(&stream, Z_FINISH);
     return 0;
 }
-], 
+])], 
      try_zlib=yes, try_zlib=no)
 CPPFLAGS=$save_CPPFLAGS
 LIBS=$save_LIBS
@@ -220,6 +223,14 @@ AC_ARG_ENABLE(ipv6,
 AC_HELP_STRING([--enable-ipv6],
     [IPv6 support for EBNET [[yes]] (if the system supports IPv6)]),
 [ENABLE_IPV6="${enableval}"], [ENABLE_IPV6='auto'])
+
+dnl *
+dnl * --enable-winsock option.
+dnl *
+AC_ARG_ENABLE(winsock2,
+AC_HELP_STRING([--enable-winsock2],
+    [Use Winsock2 for EBNET [[auto]]]),
+[ENABLE_WINSOCK2="${enableval}"], [ENABLE_WINSOCK2='auto'])
 
 dnl * 
 dnl * Compiler Characteristics.
@@ -267,6 +278,43 @@ if test X$ac_exeext = X.exe; then
 fi
 
 dnl *
+dnl * Check for Winsock2
+dnl *
+if test "$ENABLE_EBNET" = yes; then
+   AC_CHECK_HEADERS(ws2tcpip.h sys/socket.h)
+   if test "$ENABLE_WINSOCK2" = auto; then
+      if test "$ac_cv_header_ws2tcpip_h" = yes; then
+         if test "$ac_cv_header_sys_socket_h" = no; then
+	    ENABLE_WINSOCK2=yes
+         else
+            ENABLE_WINSOCK2=no
+         fi
+      else 
+      ENABLE_WINSOCK2=no
+      fi
+   fi
+
+   if test "$ENABLE_WINSOCK2" = yes; then
+      if test "$ac_cv_header_ws2tcpip_h" = no; then
+         AC_MSG_ERROR(Winsock2 not available)
+      fi
+   AC_DEFINE(ENABLE_WINSOCK2, 1, [Define if build with Winsock2])
+   fi
+else
+   ENABLE_WINSOCK2=no
+fi
+AC_MSG_CHECKING(for Winsock2 support)
+AM_CONDITIONAL(ENABLE_WINSOCK2, test X$ENABLE_WINSOCK2 = Xyes)
+AC_MSG_RESULT($ENABLE_WINSOCK2)
+
+dnl *
+dnl * Check for getopt_long
+dnl *
+AC_CHECK_HEADERS(getopt.h)
+AC_CHECK_FUNCS(getopt_long)
+AM_CONDITIONAL(HAVE_GETOPT_LONG, test X$HAVE_GETOPT_LONG = Xyes)
+
+dnl *
 dnl * ebnet support
 dnl *
 if test "$ENABLE_EBNET" = yes; then
@@ -281,14 +329,18 @@ if test "$ENABLE_EBNET" = yes; then
     AC_DECL_IN6ADDR_ANY
     AC_DECL_IN6ADDR_LOOPBACK
 
-    AC_CHECK_FUNCS(getaddrinfo getnameinfo gai_strerror)
-
+    if test "$ENABLE_WINSOCK2" = yes; then
+       AC_CHECK_LIB(ws2_32, getaddrinfo)
+       AC_CHECK_FUNCS(getaddrinfo getnameinfo)
+    else
+       AC_CHECK_FUNCS(getaddrinfo getnameinfo gai_strerror)
+    fi
     if test "$ENABLE_IPV6" = auto; then
-        if test "$ac_cv_struct_in6_addr$ac_cv_func_getaddrinfo" = yesyes; then
-            ENABLE_IPV6=yes
-        else
-            ENABLE_IPV6=no
-        fi
+       if test "$ac_cv_struct_in6_addr$ac_cv_func_getaddrinfo" = yesyes; then
+       	  ENABLE_IPV6=yes
+       else
+          ENABLE_IPV6=no
+       fi
     fi
 
     AC_MSG_CHECKING(for IPv6 support)
@@ -303,6 +355,22 @@ if test "$ENABLE_EBNET" = yes; then
     fi
     AC_MSG_RESULT($ENABLE_IPV6)
 fi
+
+dnl *
+dnl * DOS style path support
+dnl * 
+AC_CANONICAL_HOST
+AC_MSG_CHECKING(for DOS style pathnames)
+
+dos_file_path="no"
+case ${host_os} in
+  *djgpp | *mingw* | *emx*) dos_file_path="yes" ;;
+esac
+
+if test "$dos_file_path" = yes; then
+    AC_DEFINE(DOS_FILE_PATH, 1, [Use DOS style pathnames])
+fi
+AC_MSG_RESULT($dos_file_path)
 
 dnl *
 dnl * Substitusion for eb.conf.
@@ -323,7 +391,11 @@ AC_SUBST(EBCONF_INTLINCS)
 AC_SUBST(EBCONF_INTLLIBS)
 
 EBCONF_EBINCS='-I$(includedir)'
-EBCONF_EBLIBS='-L$(libdir) -leb'
+if test "$ENABLE_WINSOCK2" = yes; then
+   EBCONF_EBLIBS='-L$(libdir) -lebu -lws2_32'
+else
+   EBCONF_EBLIBS='-L$(libdir) -lebu'
+fi
 AC_SUBST(EBCONF_EBINCS)
 AC_SUBST(EBCONF_EBLIBS)
 
@@ -331,7 +403,7 @@ dnl *
 dnl * Output Files.
 dnl * 
 AC_CONFIG_HEADER(config.h)
-AC_CONFIG_FILES([Makefile eb/Makefile libebutils/Makefile ebappendix/Makefile
+AC_CONFIG_FILES([Makefile ebu/Makefile libebutils/Makefile ebappendix/Makefile
     ebfont/Makefile ebinfo/Makefile ebrefile/Makefile ebstopcode/Makefile 
     ebzip/Makefile doc/Makefile po-eb/Makefile po-ebutils/Makefile 
     m4/Makefile samples/Makefile])

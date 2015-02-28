@@ -35,12 +35,16 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "eb/eb.h"
-#include "eb/error.h"
-#include "eb/font.h"
-#include "eb/booklist.h"
+#include "ebu/eb.h"
+#include "ebu/error.h"
+#include "ebu/font.h"
+#include "ebu/booklist.h"
 
+#ifdef HAVE_GETOPT_LOG
+#include <getopt.h>
+#else
 #include "getopt.h"
+#endif
 #include "ebutils.h"
 
 #ifdef ENABLE_NLS
@@ -341,6 +345,9 @@ output_information(const char *book_path, int multi_flag)
     case EB_CHARCODE_JISX0208_GB2312:
 	printf("JIS X 0208 + GB 2312\n");
 	break;
+    case EB_CHARCODE_UTF8:
+	printf("UTF-8\n");
+	break;
     default:
 	printf(_("unknown\n"));
 	break;
@@ -371,7 +378,7 @@ output_information(const char *book_path, int multi_flag)
 	    return_code = error_code;
 	    continue;
 	}
-	printf(_("  title: "), title);
+	fputs(_("  title: "), stdout);
 	fputs_eucjp_to_locale(title, stdout);
 	fputc('\n', stdout);
 
@@ -567,7 +574,7 @@ output_multi_information(EB_Book *book)
 	    return_code = error_code;
 	    continue;
 	}
-	printf(_("    title: "), search_title);
+	fputs(_("    title: "), stdout);
 	fputs_eucjp_to_locale(search_title, stdout);
 	fputc('\n', stdout);
 

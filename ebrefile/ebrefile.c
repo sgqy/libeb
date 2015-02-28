@@ -89,13 +89,17 @@ int strncasecmp(const char *, const char *, size_t);
     (MoveFileEx((old), (new), MOVEFILE_REPLACE_EXISTING) ? 0 : -1)
 #endif
 
-#include "eb.h"
-#include "error.h"
-#include "build-post.h"
+#include "ebu/eb.h"
+#include "ebu/error.h"
+#include "ebu/build-post.h"
 
 #include "ebutils.h"
 
+#ifdef HAVE_GETOPT_LOG
+#include <getopt.h>
+#else
 #include "getopt.h"
+#endif
 #include "getumask.h"
 #include "makedir.h"
 #include "samefile.h"

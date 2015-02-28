@@ -1,3 +1,39 @@
+2015-03-01  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* ebfont/ebfont.c (make_subbook_size_fonts): Fix error handling.
+
+2015-02-28  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* m4/gettext.m4 (eb_GNU_GETTEXT): Support Cygwin environment.
+
+	* libebutils/puts_eucjp.c (fputs_eucjp_to_locale): Support the
+	case which has libiconv_open and doesn't have iconv_open.
+
+2015-02-28  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* libebutils/makedir.c (make_missing_directory): Fix the case of
+	64-bit Windows.
+
+2015-02-28  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* ebu/urlparts.c (url_parts_parse): Do not perform a NULL-pointer
+	dereference.
+	Cf. Origin: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=715855#20
+
+2015-02-28  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* libebutils/makedir.c (make_missing_directory): Correct parameter
+	declarations.
+	Cf. https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=748030#12
+
+	* libebutils/makedir.h: Include sys/types.h.
+
+2015-02-28  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* ebinfo/ebinfo.c (output_multi_information, output_information):
+	Fix too many arguments for format string.
+	Cf. https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=776602#5
+
 2010-03-08  Motoyuki Kasahara  <m-kasahr@sra.co.jp>
 
 	* Version 4.4.3.
@@ -5,7 +41,7 @@
 	* configure.ac (AC_INIT): Set version to 4.4.3.
 	* eb/ebnet.c (ebnet_open): Use _atoi64() or atol(), when atoll()
 	is not available.
-	* configure.ac (LIBEB_VERSION_INFO): 
+	* configure.ac (LIBEB_VERSION_INFO):
 	EB Library verison 4.2.2 sets LIBEB_VERSION_INFO to 15:0:2,
 	but it is wrong.  To avoid the confusion, I decide to update
 	LIBEB_VERSION_INFO to 16:0:0.

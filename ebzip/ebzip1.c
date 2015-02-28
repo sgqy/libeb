@@ -35,7 +35,7 @@
 
 #include <zlib.h>
 
-#include "eb/eb.h"
+#include "ebu/eb.h"
 
 /*
  * Compress a slice with the ebzip compression format.

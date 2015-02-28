@@ -88,10 +88,10 @@ int strncasecmp(const char *, const char *, size_t);
 #endif /* not MAXPATHLEN */
 #endif /* not PATH_MAX */
 
-#include "eb.h"
-#include "error.h"
-#include "font.h"
-#include "build-post.h"
+#include "ebu/eb.h"
+#include "ebu/error.h"
+#include "ebu/font.h"
+#include "ebu/build-post.h"
 
 #include "getopt.h"
 #include "getumask.h"
@@ -168,6 +168,8 @@ int strncasecmp(const char *, const char *, size_t);
 #define EBZIP_DEFAULT_SKIP_GRAPHIC	0
 #define EBZIP_DEFAULT_SKIP_MOVIE	0
 #define EBZIP_DEFAULT_SKIP_SOUND	0
+#define EBZIP_DEFAULT_SLICE_NUMBER	64
+#define EBZIP_MAX_SLICE_NUMBER		10000
 
 /*
  * Region in HONMON or START file which ebzip doesn't compress.
@@ -202,6 +204,8 @@ extern int ebzip_skip_flag_font;
 extern int ebzip_skip_flag_graphic;
 extern int ebzip_skip_flag_movie;
 extern int ebzip_skip_flag_sound;
+
+extern int ebzip_slice_number;
 
 extern String_List unlinking_files;
 

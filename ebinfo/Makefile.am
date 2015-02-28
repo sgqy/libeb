@@ -1,13 +1,13 @@
 localedir = $(datadir)/locale
 
-LIBEB = $(top_builddir)/eb/libeb.la
+LIBEB = $(top_builddir)/ebu/libebu.la
 LIBEBUTILS = $(top_builddir)/libebutils/libebutils.a
 
-bin_PROGRAMS = ebinfo
+bin_PROGRAMS = ebuinfo
 
-ebinfo_SOURCES = ebinfo.c
-ebinfo_LDADD = $(LIBEBUTILS) $(LIBEB) $(ZLIBLIBS) $(INTLLIBS) $(ICONVLIBS)
-ebinfo_DEPENDENCIES = $(LIBEBUTILS) $(LIBEB) $(ZLIBDEPS) $(INTLDEPS) \
+ebuinfo_SOURCES = ebinfo.c
+ebuinfo_LDADD = $(LIBEBUTILS) $(LIBEB) $(ZLIBLIBS) $(INTLLIBS) $(ICONVLIBS)
+ebuinfo_DEPENDENCIES = $(LIBEBUTILS) $(LIBEB) $(ZLIBDEPS) $(INTLDEPS) \
 	$(ICONVDEPS)
 
 INCLUDES = -I../libebutils -I$(top_srcdir)/libebutils -I$(top_srcdir) \

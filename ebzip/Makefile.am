@@ -1,40 +1,33 @@
 localedir = $(datadir)/locale
 
-LIBEB = $(top_builddir)/eb/libeb.la
+LIBEB = $(top_builddir)/ebu/libebu.la
 LIBEBUTILS = $(top_builddir)/libebutils/libebutils.a
 
-bin_PROGRAMS = ebzip
+bin_PROGRAMS = ebuzip
 noinst_HEADERS = ebzip.h
 
-ebzip_SOURCES = ebzip.c ebzip1.c copyfile.c unzipbook.c unzipfile.c \
+ebuzip_SOURCES = ebzip.c ebzip1.c copyfile.c unzipbook.c unzipfile.c \
 	zipbook.c zipfile.c zipinfobook.c zipinfofile.c sebxa.c speedup.c \
 	unlinkfile.c
-ebzip_LDADD = $(LIBEBUTILS) $(LIBEB) $(ZLIBLIBS) $(INTLLIBS) $(ICONVLIBS)
-ebzip_DEPENDENCIES = $(LIBEB) $(LIBEBUTILS) $(ZLIBDEPS) $(INTLDEPS) \
+ebuzip_LDADD = $(LIBEBUTILS) $(LIBEB) $(ZLIBLIBS) $(INTLLIBS) $(ICONVLIBS)
+ebuzip_DEPENDENCIES = $(LIBEB) $(LIBEBUTILS) $(ZLIBDEPS) $(INTLDEPS) \
 	$(ICONVDEPS)
 
-INCLUDES = -I../libebutils -I$(top_srcdir)/libebutils \
-	-I../eb -I$(top_srcdir)/eb $(INTLINCS) $(ZLIBINCS)
-
-# Shorten command name `ebzipinfo' for DOS & Win32.
-if EXEEXT_EXE
-ebzipinfo = ebzipinf
-else
-ebzipinfo = ebzipinfo
-endif
+INCLUDES = -I../libebutils -I$(top_srcdir)/libebutils -I$(top_srcdir) \
+	-I../ebu -I$(top_srcdir)/ebu $(INTLINCS) $(ZLIBINCS)
 
 install-exec-hook:
-	rm -f $(DESTDIR)$(bindir)/ebunzip$(EXEEXT)
-	ln $(DESTDIR)$(bindir)/`echo ebzip|sed '$(transform)'`$(EXEEXT) \
-	   $(DESTDIR)$(bindir)/`echo ebunzip|sed '$(transform)'`$(EXEEXT) \
-	   || cp $(DESTDIR)$(bindir)/`echo ebzip|sed '$(transform)'`$(EXEEXT) \
-	      $(DESTDIR)$(bindir)/`echo ebunzip|sed '$(transform)'`$(EXEEXT)
-	rm -f $(DESTDIR)$(bindir)/ebzipinfo$(EXEEXT)
-	ln $(DESTDIR)$(bindir)/`echo ebzip|sed '$(transform)'`$(EXEEXT) \
-	   $(DESTDIR)$(bindir)/`echo $(ebzipinfo)|sed '$(transform)'`$(EXEEXT) \
-	   || cp $(DESTDIR)$(bindir)/`echo ebzip|sed '$(transform)'`$(EXEEXT) \
-	      $(DESTDIR)$(bindir)/`echo $(ebzipinfo)|sed '$(transform)'`$(EXEEXT)
+	rm -f $(DESTDIR)$(bindir)/ebuunzip$(EXEEXT)
+	ln $(DESTDIR)$(bindir)/`echo ebuzip|sed '$(transform)'`$(EXEEXT) \
+	   $(DESTDIR)$(bindir)/`echo ebuunzip|sed '$(transform)'`$(EXEEXT) \
+	   || cp $(DESTDIR)$(bindir)/`echo ebuzip|sed '$(transform)'`$(EXEEXT) \
+	      $(DESTDIR)$(bindir)/`echo ebuunzip|sed '$(transform)'`$(EXEEXT)
+	rm -f $(DESTDIR)$(bindir)/ebuzipinfo$(EXEEXT)
+	ln $(DESTDIR)$(bindir)/`echo ebuzip|sed '$(transform)'`$(EXEEXT) \
+	   $(DESTDIR)$(bindir)/`echo ebuzipinfo|sed '$(transform)'`$(EXEEXT) \
+	   || cp $(DESTDIR)$(bindir)/`echo ebuzip|sed '$(transform)'`$(EXEEXT) \
+	      $(DESTDIR)$(bindir)/`echo ebuzipinfo|sed '$(transform)'`$(EXEEXT)
 
 uninstall-hook:
-	rm -f $(DESTDIR)$(bindir)/`echo ebunzip|sed '$(transform)'`$(EXEEXT)
-	rm -f $(DESTDIR)$(bindir)/`echo $(ebzipinfo)|sed '$(transform)'`$(EXEEXT)
+	rm -f $(DESTDIR)$(bindir)/`echo ebuunzip|sed '$(transform)'`$(EXEEXT)
+	rm -f $(DESTDIR)$(bindir)/`echo ebuzipinfo|sed '$(transform)'`$(EXEEXT)

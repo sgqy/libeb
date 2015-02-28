@@ -99,7 +99,8 @@ ebzip_set_zip_speedup(Zip_Speedup *speedup, const char *file_name,
     buffer_p = buffer + 16;
     for (i = 0; i < index_count; i++) {
 	index_code = zio_uint1(buffer_p);
-	if (0x90 <= index_code && index_code <= 0x92) {
+	if ((0x90 <= index_code && index_code <= 0x92)
+	    || index_code == 0xc6) {
 	    if (EBZIP_MAX_SPEEDUP_REGION_COUNT <= speedup->region_count)
 		break;
 	    speedup->regions[speedup->region_count].start_page

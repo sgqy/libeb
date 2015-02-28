@@ -46,7 +46,7 @@ const char *invoked_name;
 /*
  * Command line options.
  */
-static const char *short_options = "fhikl:no:qs:S:tT:uvw:z";
+static const char *short_options = "fhikl:no:qs:S:tT:uvw:zr:";
 static struct option long_options[] = {
     {"force-overwrite",   no_argument,       NULL, 'f'},
     {"help",              no_argument,       NULL, 'h'},
@@ -64,6 +64,7 @@ static struct option long_options[] = {
     {"version",           no_argument,       NULL, 'v'},
     {"overwrite",         required_argument, NULL, 'w'},
     {"compress",          no_argument,       NULL, 'z'},
+    {"slice-number",      required_argument, NULL, 'r'},
     {NULL, 0, NULL, 0}
 };
 
@@ -101,6 +102,11 @@ int ebzip_skip_flag_movie   = EBZIP_DEFAULT_SKIP_MOVIE;
 int ebzip_skip_flag_sound   = EBZIP_DEFAULT_SKIP_SOUND;
 
 /*
+ * Number of slices to load at a time.
+ */
+int ebzip_slice_number = EBZIP_DEFAULT_SLICE_NUMBER;
+
+/*
  * List of files to be unlinked.
  */
 String_List unlinking_files;
@@ -125,6 +131,7 @@ static int subbook_name_count = 0;
  * Unexported functions.
  */
 static int parse_zip_level(const char *argument, int *zip_level);
+static int parse_slice_number(const char *argument, int *slice_number);
 static int parse_skip_content_argument(const char *argument);
 static void output_help(void);
 
@@ -175,18 +182,22 @@ main(int argc, char *argv[])
 	invoked_base_name = last_slash + 1;
 
 #ifndef EXEEXT_EXE
-    if (strcmp(invoked_base_name, "ebunzip") == 0)
+    if (strcmp(invoked_base_name, "ebunzip") == 0
+	|| strcmp(invoked_base_name, "ebuunzip") == 0)
 	action_mode = EBZIP_ACTION_UNZIP;
-    else if (strcmp(invoked_base_name, "ebzipinfo") == 0)
+    else if (strcmp(invoked_base_name, "ebzipinfo") == 0
+	     || strcmp(invoked_base_name, "ebuzipinfo") == 0)
 	action_mode = EBZIP_ACTION_INFO;
 #else /* EXEEXT_EXE */
     if (strcasecmp(invoked_base_name, "ebunzip") == 0
-	|| strcasecmp(invoked_base_name, "ebunzip.exe") == 0) {
+	|| strcasecmp(invoked_base_name, "ebunzip.exe") == 0
+	|| strcasecmp(invoked_base_name, "ebuunzip") == 0
+	|| strcasecmp(invoked_base_name, "ebuunzip.exe") == 0) {
 	action_mode = EBZIP_ACTION_UNZIP;
     } else if (strcasecmp(invoked_base_name, "ebzipinfo") == 0
 	|| strcasecmp(invoked_base_name, "ebzipinfo.exe") == 0
-	|| strcasecmp(invoked_base_name, "ebzipinf") == 0
-	|| strcasecmp(invoked_base_name, "ebzipinf.exe") == 0) {
+	|| strcasecmp(invoked_base_name, "ebuzipinfo") == 0
+	|| strcasecmp(invoked_base_name, "ebuzipinfo.exe") == 0) {
 	action_mode = EBZIP_ACTION_INFO;
     }
 #endif /* EXEEXT_EXE */
@@ -358,6 +369,14 @@ main(int argc, char *argv[])
 	    action_mode = EBZIP_ACTION_ZIP;
 	    break;
 
+        case 'r':
+            /*
+             * Option `-r'.  Specify a number of slices to load at a time.
+             */
+	    if (parse_slice_number(optarg, &ebzip_slice_number) < 0)
+		exit(1);
+	    break;
+
         default:
             output_try_help(invoked_name);
 	    goto die;
@@ -454,6 +473,32 @@ parse_zip_level(const char *argument, int *zip_level)
 
 
 /*
+ * Parse an argument to option `--slice-number (-r)'.
+ * If the argument is valid form, 0 is returned.
+ * Otherwise -1 is returned.
+ */
+static int
+parse_slice_number(const char *argument, int *slice_number)
+{
+    char *end_p;
+    int level;
+
+    level = (int)strtol(argument, &end_p, 10);
+    if (!ASCII_ISDIGIT(*argument) || *end_p != '\0'
+	|| level < 1 || EBZIP_MAX_SLICE_NUMBER < level) {
+      fprintf(stderr, _("%s: invalid slice number `%s'\n"),
+	  invoked_name, argument);
+      fflush(stderr);
+      return -1;
+    }
+
+    *slice_number = level;
+
+    return 0;
+}
+
+
+/*
  * Parse an argument to option `--skip-content (-S)'.
  * If the argument is valid form, 0 is returned.
  * Otherwise -1 is returned.
@@ -531,6 +576,11 @@ output_help(void)
 	ZIO_MAX_EBZIP_LEVEL);
     printf(_("                             (default: %d)\n"),
 	EBZIP_DEFAULT_LEVEL);
+    printf(_("  -r INTEGER  --slice-number INTEGER\n"));
+    printf(_("                             set a number of slices to load at a time; 1..%d\n"),
+	EBZIP_MAX_SLICE_NUMBER);
+    printf(_("                             (default: %d)\n"),
+	EBZIP_DEFAULT_SLICE_NUMBER);
     printf(_("  -n  --no-overwrite         set overwrite mode to `no'\n"));
     printf(_("                             (same as `--overwrite no')\n"));
     printf(_("  -o DIRECTORY  --output-directory DIRECTORY\n"));
@@ -557,13 +607,8 @@ output_help(void)
 	EBZIP_DEFAULT_BOOK_DIRECTORY);
 
     printf(_("\nDefault action:\n"));
-#ifndef EXEEXT
-    printf(_("  When invoked as `ebunzip', uncompression is the default action.\n"));
-    printf(_("  When invoked as `ebzipinfo', listing information is the default action.\n"));
-#else
-    printf(_("  When invoked as `ebunzip.exe', uncompression is the default action.\n"));
-    printf(_("  When invoked as `ebzipinf.exe', listing information is the default action.\n"));
-#endif
+    printf(_("  When invoked as `ebuunzip', uncompression is the default action.\n"));
+    printf(_("  When invoked as `ebuzipinfo', listing information is the default action.\n"));
     printf(_("  Otherwise, compression is the default action.\n"));
     printf(_("\nReport bugs to %s.\n"), MAILING_ADDRESS);
     fflush(stdout);

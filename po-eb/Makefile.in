@@ -10,11 +10,11 @@
 top_builddir = ..
 subdir = po-eb
 
-TEXTDOMAIN = eb
+TEXTDOMAIN = ebu
 POFILES = ja.po
 MOFILES = ja.mo
 POTFILES = \
-	$(top_srcdir)/eb/error.c 
+	$(top_srcdir)/ebu/error.c 
 ## end
 
 PACKAGE = @PACKAGE@

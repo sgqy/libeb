@@ -47,11 +47,15 @@
 #include <libintl.h>
 #endif
 
-#include "eb/eb.h"
-#include "eb/error.h"
-#include "eb/font.h"
+#include "ebu/eb.h"
+#include "ebu/error.h"
+#include "ebu/font.h"
 
+#ifdef HAVE_GETOPT_LOG
+#include <getopt.h>
+#else
 #include "getopt.h"
+#endif
 #include "getumask.h"
 #include "makedir.h"
 #include "ebutils.h"
@@ -784,7 +788,7 @@ make_subbook_size_fonts(EB_Book *book, const char *font_path,
      * Get the current subbook name.
      */
     error_code = eb_subbook_directory(book, subbook_directory);
-    if (subbook_directory == NULL) {
+    if (error_code != EB_SUCCESS) {
 	fprintf(stderr, "%s: %s\n", invoked_name,
 	    eb_error_message(error_code));
 	goto failed;

@@ -52,12 +52,16 @@
 #endif /* not MAXPATHLEN */
 #endif /* not PATH_MAX */
 
-#include "eb/eb.h"
-#include "eb/error.h"
-#include "eb/text.h"
-#include "eb/appendix.h"
+#include "ebu/eb.h"
+#include "ebu/error.h"
+#include "ebu/text.h"
+#include "ebu/appendix.h"
 
+#ifdef HAVE_GETOPT_LOG
+#include <getopt.h>
+#else
 #include "getopt.h"
+#endif
 #include "ebutils.h"
 
 /*
